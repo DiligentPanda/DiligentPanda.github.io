@@ -4,6 +4,12 @@
     <title><![CDATA[Formula Test]]></title>
     <url>%2F2017%2F06%2F16%2FFormula-Test%2F</url>
     <content type="text"><![CDATA[\[ \theta_i = \theta_i - \alpha\frac\partial{\partial\theta_i}J(\theta) \]]]></content>
+      <categories>
+        <category>test</category>
+      </categories>
+      <tags>
+        <tag>test</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[Panda]]></title>
