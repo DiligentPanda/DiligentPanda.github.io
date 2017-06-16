@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://DiligentPanda.github.io/"/>
-  <updated>2017-06-16T02:08:56.191Z</updated>
+  <updated>2017-06-16T03:05:49.179Z</updated>
   <id>http://DiligentPanda.github.io/</id>
   
   <author>
@@ -14,6 +14,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Formula Test</title>
+    <link href="http://DiligentPanda.github.io/2017/06/16/Formula-Test/"/>
+    <id>http://DiligentPanda.github.io/2017/06/16/Formula-Test/</id>
+    <published>2017-06-16T03:02:58.000Z</published>
+    <updated>2017-06-16T03:05:49.179Z</updated>
+    
+    <content type="html"><![CDATA[<p><span class="math display">\[
+\theta_i = \theta_i - \alpha\frac\partial{\partial\theta_i}J(\theta)
+\]</span></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;span class=&quot;math display&quot;&gt;\[
+\theta_i = \theta_i - \alpha\frac\partial{\partial\theta_i}J(\theta)
+\]&lt;/span&gt;&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Panda</title>
