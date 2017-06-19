@@ -211,13 +211,13 @@ q_*(s,a)&amp;=E[R_{t+1}+\gamma \max_{a&#39;}q_*(S_{t+1},a&#39;)|S_t=s,A_t=a]\\
       <category term="Reading/Psychology/The Art of Loving" scheme="http://DiligentPanda.github.io/categories/Reading-Psychology-The-Art-of-Loving/"/>
     
     
+      <category term="book" scheme="http://DiligentPanda.github.io/tags/book/"/>
+    
       <category term="psychology" scheme="http://DiligentPanda.github.io/tags/psychology/"/>
     
       <category term="love" scheme="http://DiligentPanda.github.io/tags/love/"/>
     
       <category term="reading" scheme="http://DiligentPanda.github.io/tags/reading/"/>
-    
-      <category term="book" scheme="http://DiligentPanda.github.io/tags/book/"/>
     
   </entry>
   
@@ -226,7 +226,7 @@ q_*(s,a)&amp;=E[R_{t+1}+\gamma \max_{a&#39;}q_*(S_{t+1},a&#39;)|S_t=s,A_t=a]\\
     <link href="http://DiligentPanda.github.io/2017/06/16/Formula-Test/"/>
     <id>http://DiligentPanda.github.io/2017/06/16/Formula-Test/</id>
     <published>2017-06-16T03:02:58.000Z</published>
-    <updated>2017-06-19T07:47:00.417Z</updated>
+    <updated>2017-06-19T08:07:20.124Z</updated>
     
     <content type="html"><![CDATA[<p><span class="math display">\[
 \begin{align}
