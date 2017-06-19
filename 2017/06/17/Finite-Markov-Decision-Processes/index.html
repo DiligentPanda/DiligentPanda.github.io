@@ -102,7 +102,7 @@
 <meta property="og:url" content="http://DiligentPanda.github.io/2017/06/17/Finite-Markov-Decision-Processes/index.html">
 <meta property="og:site_name" content="Playground">
 <meta property="og:description" content="Finite Markov Decision Processes  Book Name: Reinforcement Learning: An Introduction Authors: Richard S.Sutton, Andrew G.Barto Version: Second edition, 2016 Chapter 3  The Mathematical Structur">
-<meta property="og:updated_time" content="2017-06-19T07:51:27.810Z">
+<meta property="og:updated_time" content="2017-06-19T07:53:10.254Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Finite Markov Decision Processes">
 <meta name="twitter:description" content="Finite Markov Decision Processes  Book Name: Reinforcement Learning: An Introduction Authors: Richard S.Sutton, Andrew G.Barto Version: Second edition, 2016 Chapter 3  The Mathematical Structur">
@@ -397,9 +397,18 @@
 </ul>
 <h2 id="the-mathematical-structure-of-the-rl-problem">The Mathematical Structure of the RL Problem</h2>
 <h3 id="the-agent-environment-interface">The Agent-Environment Interface</h3>
-<p>RL Problem: learning from interaction to achieve goal. Interaction between: * agent: learner and decision maker * environment</p>
+<p>RL Problem: learning from interaction to achieve goal. Interaction between:</p>
+<ul>
+<li>agent: learner and decision maker</li>
+<li>environment</li>
+</ul>
 <p>over a sequence of steps.</p>
-<p>The specification of their interface defines a particular task: * states: some representation of the env (Notice that this representation depends on how env looks like, how agent observes the env (probably limited) and how agent concludes the received information(see MDP).) * actions: The set of feasible acitons at a state, <span class="math inline">\(A(S_t)\)</span> * rewards: Specified by env.</p>
+<p>The specification of their interface defines a particular task:</p>
+<ul>
+<li>states: some representation of the env (Notice that this representation depends on how env looks like, how agent observes the env (probably limited) and how agent concludes the received information(see MDP).)</li>
+<li>actions: The set of feasible acitons at a state, <span class="math inline">\(A(S_t)\)</span></li>
+<li>rewards: Specified by env.</li>
+</ul>
 <p>policy: Probability of actions at states s, <span class="math inline">\(\pi_t(a|s)\)</span>.</p>
 <blockquote>
 <p>Everything inside the agent is <em>completely</em> known and controllable; everything outside (env) is <em>incomepletely</em> controllable but may or may not be complete known.</p>
@@ -597,7 +606,7 @@ q_*(s,a)&amp;=E[R_{t+1}+\gamma \max_{a&#39;}q_*(S_{t+1},a&#39;)|S_t=s,A_t=a]\\
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
