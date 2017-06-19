@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Formula Test]]></title>
     <url>%2F2017%2F06%2F16%2FFormula-Test%2F</url>
-    <content type="text"><![CDATA[\[ \begin{align} \theta_i = \theta_i - \alpha\frac\partial{\partial\theta_i}J(\theta) \end{align} \]]]></content>
+    <content type="text"><![CDATA[\[ \begin{align} \alpha&amp;=3\\ \theta_i&amp; = \theta_i - \alpha\frac\partial{\partial\theta_i}J(\theta) \end{align} \]]]></content>
       <categories>
         <category>test</category>
       </categories>

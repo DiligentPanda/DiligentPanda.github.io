@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://DiligentPanda.github.io/"/>
-  <updated>2017-06-19T07:21:04.547Z</updated>
+  <updated>2017-06-19T07:22:14.925Z</updated>
   <id>http://DiligentPanda.github.io/</id>
   
   <author>
@@ -20,11 +20,12 @@
     <link href="http://DiligentPanda.github.io/2017/06/16/Formula-Test/"/>
     <id>http://DiligentPanda.github.io/2017/06/16/Formula-Test/</id>
     <published>2017-06-16T03:02:58.000Z</published>
-    <updated>2017-06-19T07:21:04.547Z</updated>
+    <updated>2017-06-19T07:22:14.925Z</updated>
     
     <content type="html"><![CDATA[<p><span class="math display">\[
 \begin{align}
-\theta_i = \theta_i - \alpha\frac\partial{\partial\theta_i}J(\theta)
+\alpha&amp;=3\\
+\theta_i&amp; = \theta_i - \alpha\frac\partial{\partial\theta_i}J(\theta)
 \end{align}
 \]</span></p>
 ]]></content>
@@ -33,9 +34,8 @@
     
       &lt;p&gt;&lt;span class=&quot;math display&quot;&gt;\[
 \begin{align}
-\theta_i = \theta_i - \alpha\frac\partial{\partial\theta_i}J(\theta)
-\end{align}
-\]&lt;/span
+\alpha&amp;amp;=3\\
+\theta_i&amp;amp; = \theta_i - \alpha\frac\partial{\partial\theta_i}J(\theta)
     
     </summary>
     
