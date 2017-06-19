@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="book,AI,Reinforcement Learning,FMDP,MDP," />
 
 
 
@@ -95,12 +95,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Playground">
-<meta property="og:url" content="http://DiligentPanda.github.io/tags/psychology/index.html">
+<meta name="description" content="Finite Markov Decision Processes  Book Name: Reinforcement Learning: An Introduction Authors: Richard S.Sutton, Andrew G.Barto Version: Second edition, 2016 Chapter 3  The Mathematical Structur">
+<meta name="keywords" content="book,AI,Reinforcement Learning,FMDP,MDP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Finite Markov Decision Processes">
+<meta property="og:url" content="http://DiligentPanda.github.io/2017/06/17/Finite-Markov-Decision-Processes/index.html">
 <meta property="og:site_name" content="Playground">
+<meta property="og:description" content="Finite Markov Decision Processes  Book Name: Reinforcement Learning: An Introduction Authors: Richard S.Sutton, Andrew G.Barto Version: Second edition, 2016 Chapter 3  The Mathematical Structur">
+<meta property="og:updated_time" content="2017-06-19T07:51:27.810Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Playground">
+<meta name="twitter:title" content="Finite Markov Decision Processes">
+<meta name="twitter:description" content="Finite Markov Decision Processes  Book Name: Reinforcement Learning: An Introduction Authors: Richard S.Sutton, Andrew G.Barto Version: Second edition, 2016 Chapter 3  The Mathematical Structur">
 
 
 
@@ -128,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://DiligentPanda.github.io/tags/psychology/"/>
+  <link rel="canonical" href="http://DiligentPanda.github.io/2017/06/17/Finite-Markov-Decision-Processes/"/>
 
 
 
 
 
-  <title>Tag: psychology | Playground</title>
+  <title>Finite Markov Decision Processes | Playground</title>
   
 
 
@@ -159,7 +164,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -287,44 +292,245 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h1>psychology<small>Tag</small>
-      </h1>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://DiligentPanda.github.io/2017/06/17/Finite-Markov-Decision-Processes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DiligentPanda">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Playground">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Finite Markov Decision Processes</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-17T14:24:08+08:00">
+                2017-06-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-AI-Reinforcement-Learning-Reinforcement-Learning-An-Introduction/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming/AI/Reinforcement Learning/Reinforcement Learning An Introduction</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <h1 id="finite-markov-decision-processes">Finite Markov Decision Processes</h1>
+<ul>
+<li>Book Name: Reinforcement Learning: An Introduction</li>
+<li>Authors: Richard S.Sutton, Andrew G.Barto</li>
+<li>Version: Second edition, 2016</li>
+<li>Chapter 3</li>
+</ul>
+<h2 id="the-mathematical-structure-of-the-rl-problem">The Mathematical Structure of the RL Problem</h2>
+<h3 id="the-agent-environment-interface">The Agent-Environment Interface</h3>
+<p>RL Problem: learning from interaction to achieve goal. Interaction between: * agent: learner and decision maker * environment</p>
+<p>over a sequence of steps.</p>
+<p>The specification of their interface defines a particular task: * states: some representation of the env (Notice that this representation depends on how env looks like, how agent observes the env (probably limited) and how agent concludes the received information(see MDP).) * actions: The set of feasible acitons at a state, <span class="math inline">\(A(S_t)\)</span> * rewards: Specified by env.</p>
+<p>policy: Probability of actions at states s, <span class="math inline">\(\pi_t(a|s)\)</span>.</p>
+<blockquote>
+<p>Everything inside the agent is <em>completely</em> known and controllable; everything outside (env) is <em>incomepletely</em> controllable but may or may not be complete known.</p>
+</blockquote>
+<p>The agent affects environment through its actions.</p>
+<p>Notice all of there is how we model the world.</p>
+<h3 id="goals-rewards-and-returns">Goals, Rewards and Returns</h3>
+<p>Reward hypothesis: Goals = maxmization of the <em>expected cumulative sum</em> of reward.</p>
+<blockquote>
+<p>It is crucial that the rewards we set up truly indicate what we want accomplished.</p>
+</blockquote>
+<ul>
+<li>Rewards = intermediate feedback from env.</li>
+<li>Returns = the sum of rewards. (A long-run term)</li>
+<li>Episodic tasks: <span class="math inline">\(G_T=R_{t+1}+R_{t+2}+...+R_T\)</span></li>
+<li>Continuing tasks: <span class="math inline">\(G_T=R_{t+1}+\gamma R_{t+2}+\gamma^2R_{t+3}+...\)</span> (discounted return, could be applied to episodic tasks as well.)</li>
+</ul>
+<p>To unify episodic tasks and continuing tasks, we can consider episode termination to be the entering of a special absorbing state that transitions only to itself with zero rewards.</p>
+<h3 id="markov-property">Markov Property</h3>
+<p>If the state signal has the <em>Markov property</em>, env’s dynamics can be defined by specifying only <span class="math display">\[p(s&#39;,r|s,a)=Pr\{S_{t+1}=s&#39;,R_{t+1}=r|S_t=s,A_t=a\}\quad(1)\]</span></p>
+<p>State signals are a complete (and compact) summary of all history.</p>
+<h3 id="markov-decision-processes-mdp">Markov Decision Processes (MDP)</h3>
+<p>If action and state spaces are finite, then it is called a <em>finite MDP</em>.</p>
+<p>The dynamics of env as described above can be specified only by <span class="math inline">\(p(s&#39;,r|s,a)\)</span>.</p>
+<p>Some other useful values: * Expected rewards for state-action pairs, <span class="math inline">\(r(s,a)\)</span> * State-transition probabilities, <span class="math inline">\(p(s&#39;|s,a)\)</span> * Expected rewards for state-action-next-state triples <span class="math inline">\(r(s,a,s&#39;)\)</span></p>
+<p><strong>Transition graph</strong></p>
+<h3 id="value-functions">Value Functions</h3>
+<blockquote>
+<p>A <em>policy’s value function</em> assign to each state or state-action pair, the expected return from that state or state-action pair, given that agent uses the policy.</p>
+</blockquote>
+<p>They are evaluated for comparing the policies. * State-value function <span class="math display">\[V_{\pi}(s)=E_\pi[G_t|S_t=s]=E_\pi[\sum^\inf_{k=0}\gamma^kR_{t+1+k}|S_t=s]\]</span> * Action-value function <span class="math display">\[Q_\pi(s,a)=E_\pi[G_t|S_t=s,A_t=a]=E_\pi[\sum^\inf_{k=0}\gamma^kR_{t+1+k}|S_t=s,A_t=a]\]</span></p>
+<p>They can be estimated: * Mento Carlo methods + average * Parameterization</p>
+<h4 id="bellman-equation">Bellman Equation</h4>
+<p><span class="math display">\[
+\begin{align}
+v_\pi(s)&amp;=E_\pi[R_{t+1}+\gamma v_\pi(S_{t+1})|S_t=s]\\
+&amp;=\sum_a\pi(a|s)\sum_{s&#39;,r|s,a}p(s&#39;,r|s,a)[r+\gamma v_\pi(s&#39;)]\\
+q_\pi(s,a)&amp;=E_\pi[R_{t+1}+\gamma q_\pi(S_{t+1},A_{t+1})|S_t=s,A_t=a]\\
+&amp;=\sum_{s&#39;,r}p(s&#39;,r|s,a)(r+\gamma\sum_{a&#39;}\pi(a&#39;|s&#39;)v_\pi(s&#39;,a&#39;))
+\end{align}
+\]</span></p>
+<p>The value function is the unique solution to its Bellman equation.</p>
+<p><strong>Backup diagrams</strong> #### Optimal Value Functions Policy <span class="math inline">\(\pi\)</span> is better than or equal to Policy <span class="math inline">\(\pi&#39;\)</span>: <span class="math display">\[v_\pi(s)\geq v_{\pi&#39;}(s)\]</span> for <em>all</em> <span class="math inline">\(s\in S\)</span>.</p>
+<p>We have a <em>unique</em> optimal value function (state <span class="math inline">\(v_*\)</span>; action <span class="math inline">\(q_*\)</span>, but possibly multiple optimal policies (<span class="math inline">\(\pi_*\)</span>).</p>
+<h4 id="bellman-optimality-equation">Bellman Optimality Equation</h4>
+<p>First of all, we pick the best action for each state. So we have: <span class="math display">\[V_*(s)=\max_{a\in A(s)}q_{\pi_*}(s,a)\]</span></p>
+<p>We have two equations as well: <span class="math display">\[
+\begin{align}
+v_*(s)&amp;=\max_aE[R_{t+1}+\gamma v_*(S_{t+1})|S_t=s,A_t=a]\\
+&amp;=\max_{a\in A(s)}\sum_{s&#39;,r}p(s&#39;,r|s,a)(r+\gamma v_*(s&#39;))\\
+q_*(s,a)&amp;=E[R_{t+1}+\gamma \max_{a&#39;}q_*(S_{t+1},a&#39;)|S_t=s,A_t=a]\\
+&amp;=\sum_{s&#39;,r}p(s&#39;,r|s,a)[r+\gamma \max_{a&#39;}q_*(s&#39;,a&#39;)]\\
+\end{align}
+\]</span></p>
+<p><strong>Backup diagrams</strong></p>
+<p>Notice that at cost of representing a function of state-action pairs instead of just of states, the optimal action-value funciton <span class="math inline">\(q_*\)</span> allows optimal actions to be selected without having to know anything about the env’s dynamics.</p>
 
-      <h2 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2017/06/16/The-Theory-of-Love/" itemprop="url">
-              
-                <span itemprop="name">The Theory of Love</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-16T13:00:49+08:00"
-              content="2017-06-16" >
-          06-16
-        </time>
-      </div>
+      
+    </div>
 
-    </header>
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/book/" rel="tag"># book</a>
+          
+            <a href="/tags/AI/" rel="tag"># AI</a>
+          
+            <a href="/tags/Reinforcement-Learning/" rel="tag"># Reinforcement Learning</a>
+          
+            <a href="/tags/FMDP/" rel="tag"># FMDP</a>
+          
+            <a href="/tags/MDP/" rel="tag"># MDP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/16/The-Theory-of-Love/" rel="next" title="The Theory of Love">
+                <i class="fa fa-chevron-left"></i> The Theory of Love
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -332,6 +538,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -351,8 +561,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -432,6 +651,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#finite-markov-decision-processes"><span class="nav-number">1.</span> <span class="nav-text">Finite Markov Decision Processes</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-mathematical-structure-of-the-rl-problem"><span class="nav-number">1.1.</span> <span class="nav-text">The Mathematical Structure of the RL Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-agent-environment-interface"><span class="nav-number">1.1.1.</span> <span class="nav-text">The Agent-Environment Interface</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#goals-rewards-and-returns"><span class="nav-number">1.1.2.</span> <span class="nav-text">Goals, Rewards and Returns</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#markov-property"><span class="nav-number">1.1.3.</span> <span class="nav-text">Markov Property</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#markov-decision-processes-mdp"><span class="nav-number">1.1.4.</span> <span class="nav-text">Markov Decision Processes (MDP)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#value-functions"><span class="nav-number">1.1.5.</span> <span class="nav-text">Value Functions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bellman-equation"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">Bellman Equation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bellman-optimality-equation"><span class="nav-number">1.1.5.2.</span> <span class="nav-text">Bellman Optimality Equation</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -545,10 +780,10 @@
   
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-  
+
 
   
 
@@ -920,26 +1155,6 @@
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

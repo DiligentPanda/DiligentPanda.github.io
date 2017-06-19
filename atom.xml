@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://DiligentPanda.github.io/"/>
-  <updated>2017-06-19T07:22:14.925Z</updated>
+  <updated>2017-06-19T07:51:27.810Z</updated>
   <id>http://DiligentPanda.github.io/</id>
   
   <author>
@@ -16,16 +16,197 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Finite Markov Decision Processes</title>
+    <link href="http://DiligentPanda.github.io/2017/06/17/Finite-Markov-Decision-Processes/"/>
+    <id>http://DiligentPanda.github.io/2017/06/17/Finite-Markov-Decision-Processes/</id>
+    <published>2017-06-17T06:24:08.000Z</published>
+    <updated>2017-06-19T07:51:27.810Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="finite-markov-decision-processes">Finite Markov Decision Processes</h1>
+<ul>
+<li>Book Name: Reinforcement Learning: An Introduction</li>
+<li>Authors: Richard S.Sutton, Andrew G.Barto</li>
+<li>Version: Second edition, 2016</li>
+<li>Chapter 3</li>
+</ul>
+<h2 id="the-mathematical-structure-of-the-rl-problem">The Mathematical Structure of the RL Problem</h2>
+<h3 id="the-agent-environment-interface">The Agent-Environment Interface</h3>
+<p>RL Problem: learning from interaction to achieve goal. Interaction between: * agent: learner and decision maker * environment</p>
+<p>over a sequence of steps.</p>
+<p>The specification of their interface defines a particular task: * states: some representation of the env (Notice that this representation depends on how env looks like, how agent observes the env (probably limited) and how agent concludes the received information(see MDP).) * actions: The set of feasible acitons at a state, <span class="math inline">\(A(S_t)\)</span> * rewards: Specified by env.</p>
+<p>policy: Probability of actions at states s, <span class="math inline">\(\pi_t(a|s)\)</span>.</p>
+<blockquote>
+<p>Everything inside the agent is <em>completely</em> known and controllable; everything outside (env) is <em>incomepletely</em> controllable but may or may not be complete known.</p>
+</blockquote>
+<p>The agent affects environment through its actions.</p>
+<p>Notice all of there is how we model the world.</p>
+<h3 id="goals-rewards-and-returns">Goals, Rewards and Returns</h3>
+<p>Reward hypothesis: Goals = maxmization of the <em>expected cumulative sum</em> of reward.</p>
+<blockquote>
+<p>It is crucial that the rewards we set up truly indicate what we want accomplished.</p>
+</blockquote>
+<ul>
+<li>Rewards = intermediate feedback from env.</li>
+<li>Returns = the sum of rewards. (A long-run term)</li>
+<li>Episodic tasks: <span class="math inline">\(G_T=R_{t+1}+R_{t+2}+...+R_T\)</span></li>
+<li>Continuing tasks: <span class="math inline">\(G_T=R_{t+1}+\gamma R_{t+2}+\gamma^2R_{t+3}+...\)</span> (discounted return, could be applied to episodic tasks as well.)</li>
+</ul>
+<p>To unify episodic tasks and continuing tasks, we can consider episode termination to be the entering of a special absorbing state that transitions only to itself with zero rewards.</p>
+<h3 id="markov-property">Markov Property</h3>
+<p>If the state signal has the <em>Markov property</em>, env’s dynamics can be defined by specifying only <span class="math display">\[p(s&#39;,r|s,a)=Pr\{S_{t+1}=s&#39;,R_{t+1}=r|S_t=s,A_t=a\}\quad(1)\]</span></p>
+<p>State signals are a complete (and compact) summary of all history.</p>
+<h3 id="markov-decision-processes-mdp">Markov Decision Processes (MDP)</h3>
+<p>If action and state spaces are finite, then it is called a <em>finite MDP</em>.</p>
+<p>The dynamics of env as described above can be specified only by <span class="math inline">\(p(s&#39;,r|s,a)\)</span>.</p>
+<p>Some other useful values: * Expected rewards for state-action pairs, <span class="math inline">\(r(s,a)\)</span> * State-transition probabilities, <span class="math inline">\(p(s&#39;|s,a)\)</span> * Expected rewards for state-action-next-state triples <span class="math inline">\(r(s,a,s&#39;)\)</span></p>
+<p><strong>Transition graph</strong></p>
+<h3 id="value-functions">Value Functions</h3>
+<blockquote>
+<p>A <em>policy’s value function</em> assign to each state or state-action pair, the expected return from that state or state-action pair, given that agent uses the policy.</p>
+</blockquote>
+<p>They are evaluated for comparing the policies. * State-value function <span class="math display">\[V_{\pi}(s)=E_\pi[G_t|S_t=s]=E_\pi[\sum^\inf_{k=0}\gamma^kR_{t+1+k}|S_t=s]\]</span> * Action-value function <span class="math display">\[Q_\pi(s,a)=E_\pi[G_t|S_t=s,A_t=a]=E_\pi[\sum^\inf_{k=0}\gamma^kR_{t+1+k}|S_t=s,A_t=a]\]</span></p>
+<p>They can be estimated: * Mento Carlo methods + average * Parameterization</p>
+<h4 id="bellman-equation">Bellman Equation</h4>
+<p><span class="math display">\[
+\begin{align}
+v_\pi(s)&amp;=E_\pi[R_{t+1}+\gamma v_\pi(S_{t+1})|S_t=s]\\
+&amp;=\sum_a\pi(a|s)\sum_{s&#39;,r|s,a}p(s&#39;,r|s,a)[r+\gamma v_\pi(s&#39;)]\\
+q_\pi(s,a)&amp;=E_\pi[R_{t+1}+\gamma q_\pi(S_{t+1},A_{t+1})|S_t=s,A_t=a]\\
+&amp;=\sum_{s&#39;,r}p(s&#39;,r|s,a)(r+\gamma\sum_{a&#39;}\pi(a&#39;|s&#39;)v_\pi(s&#39;,a&#39;))
+\end{align}
+\]</span></p>
+<p>The value function is the unique solution to its Bellman equation.</p>
+<p><strong>Backup diagrams</strong> #### Optimal Value Functions Policy <span class="math inline">\(\pi\)</span> is better than or equal to Policy <span class="math inline">\(\pi&#39;\)</span>: <span class="math display">\[v_\pi(s)\geq v_{\pi&#39;}(s)\]</span> for <em>all</em> <span class="math inline">\(s\in S\)</span>.</p>
+<p>We have a <em>unique</em> optimal value function (state <span class="math inline">\(v_*\)</span>; action <span class="math inline">\(q_*\)</span>, but possibly multiple optimal policies (<span class="math inline">\(\pi_*\)</span>).</p>
+<h4 id="bellman-optimality-equation">Bellman Optimality Equation</h4>
+<p>First of all, we pick the best action for each state. So we have: <span class="math display">\[V_*(s)=\max_{a\in A(s)}q_{\pi_*}(s,a)\]</span></p>
+<p>We have two equations as well: <span class="math display">\[
+\begin{align}
+v_*(s)&amp;=\max_aE[R_{t+1}+\gamma v_*(S_{t+1})|S_t=s,A_t=a]\\
+&amp;=\max_{a\in A(s)}\sum_{s&#39;,r}p(s&#39;,r|s,a)(r+\gamma v_*(s&#39;))\\
+q_*(s,a)&amp;=E[R_{t+1}+\gamma \max_{a&#39;}q_*(S_{t+1},a&#39;)|S_t=s,A_t=a]\\
+&amp;=\sum_{s&#39;,r}p(s&#39;,r|s,a)[r+\gamma \max_{a&#39;}q_*(s&#39;,a&#39;)]\\
+\end{align}
+\]</span></p>
+<p><strong>Backup diagrams</strong></p>
+<p>Notice that at cost of representing a function of state-action pairs instead of just of states, the optimal action-value funciton <span class="math inline">\(q_*\)</span> allows optimal actions to be selected without having to know anything about the env’s dynamics.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;finite-markov-decision-processes&quot;&gt;Finite Markov Decision Processes&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Book Name: Reinforcement Learning: An Introductio
+    
+    </summary>
+    
+      <category term="Programming/AI/Reinforcement Learning/Reinforcement Learning An Introduction" scheme="http://DiligentPanda.github.io/categories/Programming-AI-Reinforcement-Learning-Reinforcement-Learning-An-Introduction/"/>
+    
+    
+      <category term="book" scheme="http://DiligentPanda.github.io/tags/book/"/>
+    
+      <category term="AI" scheme="http://DiligentPanda.github.io/tags/AI/"/>
+    
+      <category term="Reinforcement Learning" scheme="http://DiligentPanda.github.io/tags/Reinforcement-Learning/"/>
+    
+      <category term="FMDP" scheme="http://DiligentPanda.github.io/tags/FMDP/"/>
+    
+      <category term="MDP" scheme="http://DiligentPanda.github.io/tags/MDP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>The Theory of Love</title>
+    <link href="http://DiligentPanda.github.io/2017/06/16/The-Theory-of-Love/"/>
+    <id>http://DiligentPanda.github.io/2017/06/16/The-Theory-of-Love/</id>
+    <published>2017-06-16T05:00:49.000Z</published>
+    <updated>2017-06-19T07:18:26.360Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="ii.-the-theory-of-love">II. The Theory of Love</h1>
+<h2 id="i.-love-the-answer-to-the-problem-of-human-existence">I. Love, The Answer To The Problem Of Human Existence</h2>
+<h3 id="separateness">Separateness</h3>
+<p>Human has emerged from animal kingdom and transcended nature. As a result, he is trown out of the state of original oneness with nature. Man can only develop his reason, by finding a new harmony because the prehuman harmony is irretrievably lost.</p>
+<p>Human is gifted with reason and is capable of awaring of itself. This awareness of himself as a <em>separate</em> entity, of helplessness before the forces of nature and of society, makes him desire to unite himself with men, with the world outside.</p>
+<p>This experience of separateness is the source of all anxiety. Thus, the deepest need of human is to overcome this separateness. All man is confonted with the solution of this question: how to overcome separateness and achieve union.</p>
+<p>The answer, to some extent, depends on the individualization reached by an individual. Infant has develop little I-ness and thus, would be satisfied with the physical presence of mother. Similarly, the human race in its infancy still feels one with nature. More intense becomes the need to find new ways of escaping separateness as human race emerges from the primary bonds.</p>
+<h3 id="solutions-without-love">Solutions Without Love</h3>
+<h4 id="orgiastic-union">Orgiastic Union</h4>
+<p>Examples: * Social patterned solution: * Rituals of primitive tribes * (Close related) Sexual orgasm (e.g. Rites of communal sexual orgies) * In a non-orgiastic culture (guilt and remorse): * Alcoholism and drug addiction * Compulsive sexual orgasm (out of control)</p>
+<p>Main Characteristics: * Intense and violent * Occur in both body and mind * Transitory and periodical</p>
+<h4 id="conformity">Conformity</h4>
+<p>Opposite to orgiastic union in characteristics. The most frequent solution.</p>
+<p>Dictorial systems: * threatsand and terror -&gt; conformity * non-conformity is possible and by no means absent.</p>
+<p>Democratic systems: * suggestion and propaganda -&gt; conformity * only few, like unusual herods, can be expected to refuse obedience.</p>
+<p>Actually, people want to conform to a much higher degree than they are forced to conform.</p>
+<p>…</p>
+<p>Thus, it is a pseudo-unity.</p>
+<h4 id="creative-acitivity">Creative Acitivity</h4>
+<p>In any kind of creative work, the creating person unites himself with his material, which represents the world outside them.</p>
+<p>In some morden jobs like clerk, little is left of this uniting quality of work. The worker becomes an appendix to the machine or to the bureaucratic organization.</p>
+<p>But not Interpesonal!</p>
+<h3 id="words-and-phrases">Words and Phrases</h3>
+<ul>
+<li>instinctive: 本能的；直觉的；天生的</li>
+<li>transcend: 胜过；超越</li>
+<li>tear away: 逼xxx离开</li>
+<li>reason: 理性</li>
+<li>irretrievably: 不能挽回地；不能补救地</li>
+<li>disunited: 分裂的；不和的</li>
+<li>disobey</li>
+<li>emancipate</li>
+<li>prudish: 装正经的；过分规矩的</li>
+<li>inasmuch as: 因为，由于</li>
+<li>insanity</li>
+<li>atonement</li>
+<li>ascetic</li>
+<li>renunciation: 放弃；抛弃；弃权</li>
+<li>innumerable</li>
+<li>individuation: 个性化</li>
+<li>totem: 图腾</li>
+<li>worship</li>
+<li>orgiastic: 狂欢的</li>
+<li>exaltation: 异常兴奋；提拔</li>
+<li>transitory: 短暂的</li>
+<li>trance: 恍惚；入迷</li>
+<li>refuge: 避难；庇护</li>
+<li>recourse: 求助；援助</li>
+<li>assume a function</li>
+<li>bridge the gap</li>
+<li>scepticism: 怀疑论；怀疑论主义</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;ii.-the-theory-of-love&quot;&gt;II. The Theory of Love&lt;/h1&gt;
+&lt;h2 id=&quot;i.-love-the-answer-to-the-problem-of-human-existence&quot;&gt;I. Love, The Answ
+    
+    </summary>
+    
+      <category term="Reading/Psychology/The Art of Loving" scheme="http://DiligentPanda.github.io/categories/Reading-Psychology-The-Art-of-Loving/"/>
+    
+    
+      <category term="psychology" scheme="http://DiligentPanda.github.io/tags/psychology/"/>
+    
+      <category term="love" scheme="http://DiligentPanda.github.io/tags/love/"/>
+    
+      <category term="reading" scheme="http://DiligentPanda.github.io/tags/reading/"/>
+    
+      <category term="book" scheme="http://DiligentPanda.github.io/tags/book/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Formula Test</title>
     <link href="http://DiligentPanda.github.io/2017/06/16/Formula-Test/"/>
     <id>http://DiligentPanda.github.io/2017/06/16/Formula-Test/</id>
     <published>2017-06-16T03:02:58.000Z</published>
-    <updated>2017-06-19T07:22:14.925Z</updated>
+    <updated>2017-06-19T07:47:00.417Z</updated>
     
     <content type="html"><![CDATA[<p><span class="math display">\[
 \begin{align}
-\alpha&amp;=3\\
-\theta_i&amp; = \theta_i - \alpha\frac\partial{\partial\theta_i}J(\theta)
+\theta_i = 3\\
+a=3
 \end{align}
 \]</span></p>
 ]]></content>
@@ -34,8 +215,11 @@
     
       &lt;p&gt;&lt;span class=&quot;math display&quot;&gt;\[
 \begin{align}
-\alpha&amp;amp;=3\\
-\theta_i&amp;amp; = \theta_i - \alpha\frac\partial{\partial\theta_i}J(\theta)
+\theta_i = 3\\
+a=3
+\end{align}
+\]&lt;/span&gt;&lt;/p&gt;
+
     
     </summary>
     
