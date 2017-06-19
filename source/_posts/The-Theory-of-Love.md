@@ -2,7 +2,7 @@
 title: The Theory of Love
 date: 2017-06-16 13:00:49
 categories: Reading/Psychology/The Art of Loving
-tags: [psychology,love,reading]
+tags: [psychology,love,reading,book]
 ---
 
 # II. The Theory of Love
