@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://DiligentPanda.github.io/"/>
-  <updated>2017-06-19T08:00:51.748Z</updated>
+  <updated>2017-06-19T08:03:14.002Z</updated>
   <id>http://DiligentPanda.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://DiligentPanda.github.io/2017/06/17/Finite-Markov-Decision-Processes/"/>
     <id>http://DiligentPanda.github.io/2017/06/17/Finite-Markov-Decision-Processes/</id>
     <published>2017-06-17T06:24:08.000Z</published>
-    <updated>2017-06-19T08:00:51.748Z</updated>
+    <updated>2017-06-19T08:03:14.002Z</updated>
     
     <content type="html"><![CDATA[<h1 id="finite-markov-decision-processes">Finite Markov Decision Processes</h1>
 <ul>
@@ -79,8 +79,16 @@
 <blockquote>
 <p>A <em>policy’s value function</em> assign to each state or state-action pair, the expected return from that state or state-action pair, given that agent uses the policy.</p>
 </blockquote>
-<p>They are evaluated for comparing the policies. * State-value function <span class="math display">\[V_{\pi}(s)=E_\pi[G_t|S_t=s]=E_\pi[\sum^\inf_{k=0}\gamma^kR_{t+1+k}|S_t=s]\]</span> * Action-value function <span class="math display">\[Q_\pi(s,a)=E_\pi[G_t|S_t=s,A_t=a]=E_\pi[\sum^\inf_{k=0}\gamma^kR_{t+1+k}|S_t=s,A_t=a]\]</span></p>
-<p>They can be estimated: * Mento Carlo methods + average * Parameterization</p>
+<p>They are evaluated for comparing the policies.</p>
+<ul>
+<li>State-value function <span class="math display">\[V_{\pi}(s)=E_\pi[G_t|S_t=s]=E_\pi[\sum^\inf_{k=0}\gamma^kR_{t+1+k}|S_t=s]\]</span></li>
+<li>Action-value function <span class="math display">\[Q_\pi(s,a)=E_\pi[G_t|S_t=s,A_t=a]=E_\pi[\sum^\inf_{k=0}\gamma^kR_{t+1+k}|S_t=s,A_t=a]\]</span></li>
+</ul>
+<p>They can be estimated:</p>
+<ul>
+<li>Mento Carlo methods + average</li>
+<li>Parameterization</li>
+</ul>
 <h4 id="bellman-equation">Bellman Equation</h4>
 <p><span class="math display">\[
 \begin{align}
@@ -92,7 +100,7 @@ q_\pi(s,a)&amp;=E_\pi[R_{t+1}+\gamma q_\pi(S_{t+1},A_{t+1})|S_t=s,A_t=a]\\
 \]</span></p>
 <p>The value function is the unique solution to its Bellman equation.</p>
 <p><strong>Backup diagrams</strong> #### Optimal Value Functions Policy <span class="math inline">\(\pi\)</span> is better than or equal to Policy <span class="math inline">\(\pi&#39;\)</span>: <span class="math display">\[v_\pi(s)\geq v_{\pi&#39;}(s)\]</span> for <em>all</em> <span class="math inline">\(s\in S\)</span>.</p>
-<p>We have a <em>unique</em> optimal value function (state <span class="math inline">\(v_*\)</span>; action <span class="math inline">\(q_*\)</span>, but possibly multiple optimal policies (<span class="math inline">\(\pi_*\)</span>).</p>
+<p>We have a <em>unique</em> optimal value function (state <span class="math inline">\(v_*\)</span>; action <span class="math inline">\(q_*\)</span>), but possibly multiple optimal policies (<span class="math inline">\(\pi_*\)</span>).</p>
 <h4 id="bellman-optimality-equation">Bellman Optimality Equation</h4>
 <p>First of all, we pick the best action for each state. So we have: <span class="math display">\[V_*(s)=\max_{a\in A(s)}q_{\pi_*}(s,a)\]</span></p>
 <p>We have two equations as well: <span class="math display">\[
