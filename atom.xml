@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://DiligentPanda.github.io/"/>
-  <updated>2017-06-19T07:53:10.254Z</updated>
+  <updated>2017-06-19T07:56:46.348Z</updated>
   <id>http://DiligentPanda.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://DiligentPanda.github.io/2017/06/17/Finite-Markov-Decision-Processes/"/>
     <id>http://DiligentPanda.github.io/2017/06/17/Finite-Markov-Decision-Processes/</id>
     <published>2017-06-17T06:24:08.000Z</published>
-    <updated>2017-06-19T07:53:10.254Z</updated>
+    <updated>2017-06-19T07:56:46.348Z</updated>
     
     <content type="html"><![CDATA[<h1 id="finite-markov-decision-processes">Finite Markov Decision Processes</h1>
 <ul>
@@ -62,7 +62,8 @@
 </ul>
 <p>To unify episodic tasks and continuing tasks, we can consider episode termination to be the entering of a special absorbing state that transitions only to itself with zero rewards.</p>
 <h3 id="markov-property">Markov Property</h3>
-<p>If the state signal has the <em>Markov property</em>, env’s dynamics can be defined by specifying only <span class="math display">\[p(s&#39;,r|s,a)=Pr\{S_{t+1}=s&#39;,R_{t+1}=r|S_t=s,A_t=a\}\quad(1)\]</span></p>
+<p>If the state signal has the <em>Markov property</em>, env’s dynamics can be defined by specifying only</p>
+<p><span class="math display">\[p(s&#39;,r|s,a)=Pr\{S_{t+1}=s&#39;,R_{t+1}=r|S_t=s,A_t=a\}\quad(1)\]</span></p>
 <p>State signals are a complete (and compact) summary of all history.</p>
 <h3 id="markov-decision-processes-mdp">Markov Decision Processes (MDP)</h3>
 <p>If action and state spaces are finite, then it is called a <em>finite MDP</em>.</p>
