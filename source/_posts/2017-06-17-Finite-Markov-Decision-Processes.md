@@ -1,10 +1,13 @@
 ---
 title: Finite Markov Decision Processes
 date: 2017-06-17 14:24:08
-categories: Programming/AI/Reinforcement Learning/Reinforcement Learning: An Introduction
+categories: Programming/AI/Reinforcement Learning/Reinforcement Learning An Introduction
 tags: [book,AI,Reinforcement Learning,FMDP,MDP]
+mathjax: true
 ---
+
 # Finite Markov Decision Processes
+
 * Book Name: Reinforcement Learning: An Introduction
 * Authors: Richard S.Sutton, Andrew G.Barto
 * Version: Second edition, 2016
@@ -14,12 +17,14 @@ tags: [book,AI,Reinforcement Learning,FMDP,MDP]
 ### The Agent-Environment Interface
 RL Problem: learning from interaction to achieve goal.
 Interaction between:
+
 * agent: learner and decision maker
 * environment
 
 over a sequence of steps.
 
 The specification of their interface defines a particular task:
+
 * states: some representation of the env (Notice that this representation depends on how env looks like, how agent observes the env (probably limited) and how agent concludes the received information(see MDP).)
 * actions: The set of feasible acitons at a state, $A(S_t)$
 * rewards: Specified by env.
@@ -46,6 +51,7 @@ To unify episodic tasks and continuing tasks, we can consider episode terminatio
 
 ### Markov Property
 If the state signal has the *Markov property*, env's dynamics can be defined by specifying only
+
  $$p(s',r|s,a)=Pr\{S_{t+1}=s',R_{t+1}=r|S_t=s,A_t=a\}\quad(1)$$
 
  State signals are a complete (and compact) summary of all history.
@@ -56,6 +62,7 @@ If action and state spaces are finite, then it is called a *finite MDP*.
 The dynamics of env as described above can be specified only by $p(s',r|s,a)$.
 
 Some other useful values:
+
 * Expected rewards for state-action pairs, $r(s,a)$
 * State-transition probabilities, $p(s'|s,a)$
 * Expected rewards for state-action-next-state triples $r(s,a,s')$
@@ -66,14 +73,16 @@ Some other useful values:
 > A *policy's value function* assign to each state or state-action pair, the expected return from that state or state-action pair, given that agent uses the policy.
 
 They are evaluated for comparing the policies.
+
 * State-value function
 $$V_{\pi}(s)=E_\pi[G_t|S_t=s]=E_\pi[\sum^\inf_{k=0}\gamma^kR_{t+1+k}|S_t=s]$$
 * Action-value function
 $$Q_\pi(s,a)=E_\pi[G_t|S_t=s,A_t=a]=E_\pi[\sum^\inf_{k=0}\gamma^kR_{t+1+k}|S_t=s,A_t=a]$$
 
 They can be estimated:
+
 * Mento Carlo methods + average
-* parameterization
+* Parameterization
 
 #### Bellman Equation
 $$
@@ -88,12 +97,13 @@ $$
 The value function is the unique solution to its Bellman equation.
 
 **Backup diagrams**
+
 #### Optimal Value Functions
 Policy $\pi$ is better than or equal to Policy $\pi'$:
 $$v_\pi(s)\geq v_{\pi'}(s)$$
 for *all* $s\in S$.
 
-We have a *unique* optimal value function (state $v_*$; action $q_*$, but possibly multiple optimal policies ($\pi_*$).
+We have a *unique* optimal value function (state $v_*$; action $q_*$), but possibly multiple optimal policies ($\pi_*$).
 
 #### Bellman Optimality Equation
 First of all, we pick the best action for each state. So we have:
