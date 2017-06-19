@@ -466,7 +466,9 @@ q_\pi(s,a)&amp;=E_\pi[R_{t+1}+\gamma q_\pi(S_{t+1},A_{t+1})|S_t=s,A_t=a]\\
 \end{align}
 \]</span></p>
 <p>The value function is the unique solution to its Bellman equation.</p>
-<p><strong>Backup diagrams</strong> #### Optimal Value Functions Policy <span class="math inline">\(\pi\)</span> is better than or equal to Policy <span class="math inline">\(\pi&#39;\)</span>: <span class="math display">\[v_\pi(s)\geq v_{\pi&#39;}(s)\]</span> for <em>all</em> <span class="math inline">\(s\in S\)</span>.</p>
+<p><strong>Backup diagrams</strong></p>
+<h4 id="optimal-value-functions">Optimal Value Functions</h4>
+<p>Policy <span class="math inline">\(\pi\)</span> is better than or equal to Policy <span class="math inline">\(\pi&#39;\)</span>: <span class="math display">\[v_\pi(s)\geq v_{\pi&#39;}(s)\]</span> for <em>all</em> <span class="math inline">\(s\in S\)</span>.</p>
 <p>We have a <em>unique</em> optimal value function (state <span class="math inline">\(v_*\)</span>; action <span class="math inline">\(q_*\)</span>), but possibly multiple optimal policies (<span class="math inline">\(\pi_*\)</span>).</p>
 <h4 id="bellman-optimality-equation">Bellman Optimality Equation</h4>
 <p>First of all, we pick the best action for each state. So we have: <span class="math display">\[V_*(s)=\max_{a\in A(s)}q_{\pi_*}(s,a)\]</span></p>
