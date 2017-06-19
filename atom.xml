@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Hexo</title>
+  <title>Playground</title>
   
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://DiligentPanda.github.io/"/>
-  <updated>2017-06-17T03:30:22.327Z</updated>
+  <updated>2017-06-17T06:26:28.859Z</updated>
   <id>http://DiligentPanda.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://DiligentPanda.github.io/2017/06/16/The-Theory-of-Love/"/>
     <id>http://DiligentPanda.github.io/2017/06/16/The-Theory-of-Love/</id>
     <published>2017-06-16T05:00:49.000Z</published>
-    <updated>2017-06-17T03:30:22.327Z</updated>
+    <updated>2017-06-17T06:26:28.859Z</updated>
     
     <content type="html"><![CDATA[<h1 id="ii.-the-theory-of-love">II. The Theory of Love</h1>
 <h2 id="i.-love-the-answer-to-the-problem-of-human-existence">I. Love, The Answer To The Problem Of Human Existence</h2>
@@ -91,6 +91,8 @@
       <category term="love" scheme="http://DiligentPanda.github.io/tags/love/"/>
     
       <category term="reading" scheme="http://DiligentPanda.github.io/tags/reading/"/>
+    
+      <category term="book" scheme="http://DiligentPanda.github.io/tags/book/"/>
     
   </entry>
   
