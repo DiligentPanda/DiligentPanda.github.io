@@ -299,121 +299,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://DiligentPanda.github.io/2017/06/19/Embed-PDF-Test/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="DiligentPanda">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Playground">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/19/Embed-PDF-Test/" itemprop="url">Embed PDF Test</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-19T16:27:15+08:00">
-                2017-06-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <div class="figure">
-<img src="../arxiv/img/cat.jpg">
-
-</div>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://DiligentPanda.github.io/2017/06/17/Finite-Markov-Decision-Processes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -582,6 +467,10 @@ q_\pi(s,a)&amp;=E_\pi[R_{t+1}+\gamma q_\pi(S_{t+1},A_{t+1})|S_t=s,A_t=a]\\
 \]</span></p>
 <p>The value function is the unique solution to its Bellman equation.</p>
 <p><strong>Backup diagrams</strong></p>
+<div class="figure">
+<img src="/2017/06/17/Finite-Markov-Decision-Processes/backup_diagrams_1.png">
+
+</div>
 <h4 id="optimal-value-functions">Optimal Value Functions</h4>
 <p>Policy <span class="math inline">\(\pi\)</span> is better than or equal to Policy <span class="math inline">\(\pi&#39;\)</span>: <span class="math display">\[v_\pi(s)\geq v_{\pi&#39;}(s)\]</span> for <em>all</em> <span class="math inline">\(s\in S\)</span>.</p>
 <p>We have a <em>unique</em> optimal value function (state <span class="math inline">\(v_*\)</span>; action <span class="math inline">\(q_*\)</span>), but possibly multiple optimal policies (<span class="math inline">\(\pi_*\)</span>).</p>
@@ -596,6 +485,10 @@ q_*(s,a)&amp;=E[R_{t+1}+\gamma \max_{a&#39;}q_*(S_{t+1},a&#39;)|S_t=s,A_t=a]\\
 \end{align}
 \]</span></p>
 <p><strong>Backup diagrams</strong></p>
+<div class="figure">
+<img src="/2017/06/17/Finite-Markov-Decision-Processes/backup_diagrams_2.png">
+
+</div>
 <p>Notice that at cost of representing a function of state-action pairs instead of just of states, the optimal action-value funciton <span class="math inline">\(q_*\)</span> allows optimal actions to be selected without having to know anything about the env’s dynamics.</p>
 
           
@@ -1125,7 +1018,7 @@ a=3
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

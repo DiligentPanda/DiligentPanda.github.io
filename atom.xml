@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://DiligentPanda.github.io/"/>
-  <updated>2017-06-19T08:32:19.417Z</updated>
+  <updated>2017-06-20T13:23:11.028Z</updated>
   <id>http://DiligentPanda.github.io/</id>
   
   <author>
@@ -16,37 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Embed PDF Test</title>
-    <link href="http://DiligentPanda.github.io/2017/06/19/Embed-PDF-Test/"/>
-    <id>http://DiligentPanda.github.io/2017/06/19/Embed-PDF-Test/</id>
-    <published>2017-06-19T08:27:15.000Z</published>
-    <updated>2017-06-19T08:32:19.417Z</updated>
-    
-    <content type="html"><![CDATA[<div class="figure">
-<img src="../arxiv/img/cat.jpg">
-
-</div>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;div class=&quot;figure&quot;&gt;
-&lt;img src=&quot;../arxiv/img/cat.jpg&quot;&gt;
-
-&lt;/div&gt;
-
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>Finite Markov Decision Processes</title>
     <link href="http://DiligentPanda.github.io/2017/06/17/Finite-Markov-Decision-Processes/"/>
     <id>http://DiligentPanda.github.io/2017/06/17/Finite-Markov-Decision-Processes/</id>
     <published>2017-06-17T06:24:08.000Z</published>
-    <updated>2017-06-19T08:04:26.533Z</updated>
+    <updated>2017-06-20T13:23:11.028Z</updated>
     
     <content type="html"><![CDATA[<h1 id="finite-markov-decision-processes">Finite Markov Decision Processes</h1>
 <ul>
@@ -126,6 +100,10 @@ q_\pi(s,a)&amp;=E_\pi[R_{t+1}+\gamma q_\pi(S_{t+1},A_{t+1})|S_t=s,A_t=a]\\
 \]</span></p>
 <p>The value function is the unique solution to its Bellman equation.</p>
 <p><strong>Backup diagrams</strong></p>
+<div class="figure">
+<img src="/2017/06/17/Finite-Markov-Decision-Processes/backup_diagrams_1.png">
+
+</div>
 <h4 id="optimal-value-functions">Optimal Value Functions</h4>
 <p>Policy <span class="math inline">\(\pi\)</span> is better than or equal to Policy <span class="math inline">\(\pi&#39;\)</span>: <span class="math display">\[v_\pi(s)\geq v_{\pi&#39;}(s)\]</span> for <em>all</em> <span class="math inline">\(s\in S\)</span>.</p>
 <p>We have a <em>unique</em> optimal value function (state <span class="math inline">\(v_*\)</span>; action <span class="math inline">\(q_*\)</span>), but possibly multiple optimal policies (<span class="math inline">\(\pi_*\)</span>).</p>
@@ -140,6 +118,10 @@ q_*(s,a)&amp;=E[R_{t+1}+\gamma \max_{a&#39;}q_*(S_{t+1},a&#39;)|S_t=s,A_t=a]\\
 \end{align}
 \]</span></p>
 <p><strong>Backup diagrams</strong></p>
+<div class="figure">
+<img src="/2017/06/17/Finite-Markov-Decision-Processes/backup_diagrams_2.png">
+
+</div>
 <p>Notice that at cost of representing a function of state-action pairs instead of just of states, the optimal action-value funciton <span class="math inline">\(q_*\)</span> allows optimal actions to be selected without having to know anything about the env’s dynamics.</p>
 ]]></content>
     
