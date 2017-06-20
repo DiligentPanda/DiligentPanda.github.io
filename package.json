@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "hexo": "^3.2.0",
+    "hexo-asset-image": "git+https://github.com/CodeFalling/hexo-asset-image.git",
     "hexo-deployer-git": "^0.3.0",
     "hexo-deployer-heroku": "^0.1.1",
     "hexo-deployer-openshift": "^0.1.1",
@@ -18,6 +19,7 @@
     "hexo-generator-searchdb": "^1.0.7",
     "hexo-generator-sitemap": "^1.2.0",
     "hexo-generator-tag": "^0.2.0",
+    "hexo-pdf": "^1.1.1",
     "hexo-renderer-ejs": "^0.2.0",
     "hexo-renderer-pandoc": "^0.1.1",
     "hexo-renderer-stylus": "^0.2.3",
