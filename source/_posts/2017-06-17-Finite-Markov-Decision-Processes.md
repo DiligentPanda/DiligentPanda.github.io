@@ -98,6 +98,8 @@ The value function is the unique solution to its Bellman equation.
 
 **Backup diagrams**
 
+![](2017-06-17-Finite-Markov-Decision-Processes/backup_diagrams_1.png)
+
 #### Optimal Value Functions
 Policy $\pi$ is better than or equal to Policy $\pi'$:
 $$v_\pi(s)\geq v_{\pi'}(s)$$
@@ -120,5 +122,8 @@ q_*(s,a)&=E[R_{t+1}+\gamma \max_{a'}q_*(S_{t+1},a')|S_t=s,A_t=a]\\
 $$
 
 **Backup diagrams**
+
+![](2017-06-17-Finite-Markov-Decision-Processes/backup_diagrams_2.png)
+
 
 Notice that at cost of representing a function of state-action pairs instead of just of states, the optimal action-value funciton $q_*$ allows optimal actions to be selected without having to know anything about the env's dynamics.
