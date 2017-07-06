@@ -341,6 +341,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-AI-Search-How-to-Solve-it/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming/AI/Search/How to Solve it</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -395,8 +417,72 @@
 <li>devise a way to organize the subspaces so that they can be searched efficiently. (Tree search)</li>
 <li>create a new evaluation function that can assess the quality of partial solutions. (Branch and bound)</li>
 </ul>
-<p>Different representations of solutions = different sizes of search space + potentially different manners of search (different optimization methods).</p>
+<p>Notice: Different representations of solutions -&gt; different sizes of search space + potentially different manners of search (different optimization methods).</p>
 <h2 id="exhaustive-search">Exhaustive Search</h2>
+<p>Recall that to solve a problem algorithmatically, we have to specify following three things: 1. the representation (of solution) 2. the objective 3. the evaluation function (ordinal or numeric)</p>
+<blockquote>
+<p>The only requirement for exhaustive search is to generate evey possible solution to the problem <em>systematically</em>.</p>
+</blockquote>
+<p>We could reduce the amount of work in many ways, e.g. cut off some branches in a search tree.</p>
+<h3 id="enumerate-sat-tsp-nlp-non-linear-programming">Enumerate SAT, TSP, NLP (Non-Linear Programming)</h3>
+<p>In SAT, we could exhaustively search solutions by DFS.</p>
+<p>In TSP, we have to enumerate the permutations.</p>
+<ol style="list-style-type: decimal">
+<li>Mapping Between permutations and intergers</li>
+<li>Recursive generation</li>
+<li>Successive generation (e.g. in lexicographic ordering)</li>
+</ol>
+<p>Notice: the specific algorithms could be checked on books and wiki.</p>
+<p>In NLP, we use grid methods to approximate exhaustive search. The whole domain is divided into cells, the best of which could be futher divided for finer-granularity results.</p>
+<h2 id="local-search">Local Search</h2>
+<p>Local Search:</p>
+<ol style="list-style-type: decimal">
+<li>Pick a solution as the <em>current</em> solution.</li>
+<li>Apply a transformation in the given set to this solution to generate a new solution</li>
+<li>If the <em>current</em> one is better, discard the new solution; else replace the <em>current</em> one with the new solution.</li>
+<li>Repeat 2. and 3. until no transformation improves the <em>current</em> solution.</li>
+</ol>
+<p>The key lies in the type of trasformation (can be deterministic or stochastic). Two extremes are: 1. select a solution in search space uniformly at random. (Large neighbor) 2. only return the <em>current</em> solution. (Small neighbor)</p>
+<p>Notice: hill climbing methods is similar to this procedure except the solution updating the current solution is required to be the best among all neighbors.</p>
+<p>To avoid local optima, usually a large number of random initializations are required.</p>
+<h3 id="sat">SAT</h3>
+<h4 id="gsat">GSAT</h4>
+<p>Random flip a binary string.</p>
+<h3 id="tsp">TSP</h3>
+<h4 id="k-opt">K-opt</h4>
+<p>Change nonadjacent edges to generate new Hamiltonian cycles.</p>
+<h4 id="lin-kernighan">Lin-Kernighan</h4>
+<ul>
+<li>Representation of solution is based on <span class="math inline">\(\delta\)</span>-path. Hamiltonian cycle is implied. One <span class="math inline">\(\delta\)</span>-path could generate two possible Hamiltonian cycles.</li>
+<li>Using a simple operation called <em>switch</em>, we could generate a new <span class="math inline">\(delta\)</span>-path.</li>
+</ul>
+<p>TODO: There are several lines in the book that are difficult to understand.</p>
+<p>Anyway, this algorithm runs vary fast and generates near-optimal solutions (within 2 percent of optimum path).</p>
+<h3 id="nlp">NLP</h3>
+<p>We also consider the problem of finding the zeros of a function. It could be treated as a optimization problem. For example, we evaluate how close the result is to 0.</p>
+<h4 id="bracketing-methods">Bracketing Methods</h4>
+<ul>
+<li>Methods of bisecting the range.</li>
+<li>Faster convergence: Regula Flasi.</li>
+</ul>
+<p><a href="">an image here</a> * Brent’s method: relies on parabolic auxilary functions (Three points rather than two points in a bracket).</p>
+<h4 id="fixed-point-methods">Fixed-Point Methods</h4>
+<ul>
+<li><p>Newton’s methods: Faster, but may even fail to convege for continous functions.</p></li>
+<li>need good initial guess.</li>
+<li><p>the calculation of derivatives may be computationally expensive.</p></li>
+</ul>
+<p><a href="">an image here</a></p>
+<ul>
+<li>Secant methods: NOT Fixed-Point Methods! Newton’s methods without derivatives.</li>
+</ul>
+<h4 id="gradient-methods-of-minimization">Gradient Methods of Minimization</h4>
+<ul>
+<li>make use of gradients.</li>
+<li>May incorporate second-order derivative (Hessian Matrix) information into update. (Newton’s method)</li>
+</ul>
+<h2 id="linear-programming">Linear Programming</h2>
+<h3 id="the-simplex-method">The Simplex Method</h3>
 
           
         
@@ -1389,7 +1475,7 @@ a=3
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -1400,7 +1486,7 @@ a=3
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

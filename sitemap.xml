@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://DiligentPanda.github.io/2017/06/26/Traditional-Methods/</loc>
+    
+    <lastmod>2017-07-06T23:30:11.495Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://DiligentPanda.github.io/2017/06/17/Finite-Markov-Decision-Processes/</loc>
     
     <lastmod>2017-06-30T02:40:49.649Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://DiligentPanda.github.io/2017/06/24/Dynamic-Programming/</loc>
     
     <lastmod>2017-06-30T02:19:11.152Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://DiligentPanda.github.io/2017/06/26/Traditional-Methods/</loc>
-    
-    <lastmod>2017-06-26T06:23:51.797Z</lastmod>
     
   </url>
   

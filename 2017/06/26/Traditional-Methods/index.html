@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="book,AI,Search," />
 
 
 
@@ -96,12 +96,13 @@
 
 
 <meta name="description" content="Traditional Methods Traditional (optimization) methods:  NOT robust. Effective when appropriate. two disjoint classes: Only evaluate complete solutions.  e.g.  Require the evaluation of part">
+<meta name="keywords" content="book,AI,Search">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Traditional Methods">
 <meta property="og:url" content="http://DiligentPanda.github.io/2017/06/26/Traditional-Methods/index.html">
 <meta property="og:site_name" content="Playground">
 <meta property="og:description" content="Traditional Methods Traditional (optimization) methods:  NOT robust. Effective when appropriate. two disjoint classes: Only evaluate complete solutions.  e.g.  Require the evaluation of part">
-<meta property="og:updated_time" content="2017-06-26T06:23:51.797Z">
+<meta property="og:updated_time" content="2017-07-06T23:30:11.495Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Traditional Methods">
 <meta name="twitter:description" content="Traditional Methods Traditional (optimization) methods:  NOT robust. Effective when appropriate. two disjoint classes: Only evaluate complete solutions.  e.g.  Require the evaluation of part">
@@ -341,6 +342,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-AI-Search-How-to-Solve-it/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming/AI/Search/How to Solve it</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -393,8 +416,72 @@
 <li>devise a way to organize the subspaces so that they can be searched efficiently. (Tree search)</li>
 <li>create a new evaluation function that can assess the quality of partial solutions. (Branch and bound)</li>
 </ul>
-<p>Different representations of solutions = different sizes of search space + potentially different manners of search (different optimization methods).</p>
+<p>Notice: Different representations of solutions -&gt; different sizes of search space + potentially different manners of search (different optimization methods).</p>
 <h2 id="exhaustive-search">Exhaustive Search</h2>
+<p>Recall that to solve a problem algorithmatically, we have to specify following three things: 1. the representation (of solution) 2. the objective 3. the evaluation function (ordinal or numeric)</p>
+<blockquote>
+<p>The only requirement for exhaustive search is to generate evey possible solution to the problem <em>systematically</em>.</p>
+</blockquote>
+<p>We could reduce the amount of work in many ways, e.g. cut off some branches in a search tree.</p>
+<h3 id="enumerate-sat-tsp-nlp-non-linear-programming">Enumerate SAT, TSP, NLP (Non-Linear Programming)</h3>
+<p>In SAT, we could exhaustively search solutions by DFS.</p>
+<p>In TSP, we have to enumerate the permutations.</p>
+<ol style="list-style-type: decimal">
+<li>Mapping Between permutations and intergers</li>
+<li>Recursive generation</li>
+<li>Successive generation (e.g. in lexicographic ordering)</li>
+</ol>
+<p>Notice: the specific algorithms could be checked on books and wiki.</p>
+<p>In NLP, we use grid methods to approximate exhaustive search. The whole domain is divided into cells, the best of which could be futher divided for finer-granularity results.</p>
+<h2 id="local-search">Local Search</h2>
+<p>Local Search:</p>
+<ol style="list-style-type: decimal">
+<li>Pick a solution as the <em>current</em> solution.</li>
+<li>Apply a transformation in the given set to this solution to generate a new solution</li>
+<li>If the <em>current</em> one is better, discard the new solution; else replace the <em>current</em> one with the new solution.</li>
+<li>Repeat 2. and 3. until no transformation improves the <em>current</em> solution.</li>
+</ol>
+<p>The key lies in the type of trasformation (can be deterministic or stochastic). Two extremes are: 1. select a solution in search space uniformly at random. (Large neighbor) 2. only return the <em>current</em> solution. (Small neighbor)</p>
+<p>Notice: hill climbing methods is similar to this procedure except the solution updating the current solution is required to be the best among all neighbors.</p>
+<p>To avoid local optima, usually a large number of random initializations are required.</p>
+<h3 id="sat">SAT</h3>
+<h4 id="gsat">GSAT</h4>
+<p>Random flip a binary string.</p>
+<h3 id="tsp">TSP</h3>
+<h4 id="k-opt">K-opt</h4>
+<p>Change nonadjacent edges to generate new Hamiltonian cycles.</p>
+<h4 id="lin-kernighan">Lin-Kernighan</h4>
+<ul>
+<li>Representation of solution is based on <span class="math inline">\(\delta\)</span>-path. Hamiltonian cycle is implied. One <span class="math inline">\(\delta\)</span>-path could generate two possible Hamiltonian cycles.</li>
+<li>Using a simple operation called <em>switch</em>, we could generate a new <span class="math inline">\(delta\)</span>-path.</li>
+</ul>
+<p>TODO: There are several lines in the book that are difficult to understand.</p>
+<p>Anyway, this algorithm runs vary fast and generates near-optimal solutions (within 2 percent of optimum path).</p>
+<h3 id="nlp">NLP</h3>
+<p>We also consider the problem of finding the zeros of a function. It could be treated as a optimization problem. For example, we evaluate how close the result is to 0.</p>
+<h4 id="bracketing-methods">Bracketing Methods</h4>
+<ul>
+<li>Methods of bisecting the range.</li>
+<li>Faster convergence: Regula Flasi.</li>
+</ul>
+<p><a href="">an image here</a> * Brent’s method: relies on parabolic auxilary functions (Three points rather than two points in a bracket).</p>
+<h4 id="fixed-point-methods">Fixed-Point Methods</h4>
+<ul>
+<li><p>Newton’s methods: Faster, but may even fail to convege for continous functions.</p></li>
+<li>need good initial guess.</li>
+<li><p>the calculation of derivatives may be computationally expensive.</p></li>
+</ul>
+<p><a href="">an image here</a></p>
+<ul>
+<li>Secant methods: NOT Fixed-Point Methods! Newton’s methods without derivatives.</li>
+</ul>
+<h4 id="gradient-methods-of-minimization">Gradient Methods of Minimization</h4>
+<ul>
+<li>make use of gradients.</li>
+<li>May incorporate second-order derivative (Hessian Matrix) information into update. (Newton’s method)</li>
+</ul>
+<h2 id="linear-programming">Linear Programming</h2>
+<h3 id="the-simplex-method">The Simplex Method</h3>
 
       
     </div>
@@ -421,6 +508,16 @@
     </div>
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/book/" rel="tag"># book</a>
+          
+            <a href="/tags/AI/" rel="tag"># AI</a>
+          
+            <a href="/tags/Search/" rel="tag"># Search</a>
+          
+        </div>
       
 
       
@@ -522,7 +619,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -533,7 +630,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -595,7 +692,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#traditional-methods"><span class="nav-number">1.</span> <span class="nav-text">Traditional Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#exhaustive-search"><span class="nav-number">1.1.</span> <span class="nav-text">Exhaustive Search</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#traditional-methods"><span class="nav-number">1.</span> <span class="nav-text">Traditional Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#exhaustive-search"><span class="nav-number">1.1.</span> <span class="nav-text">Exhaustive Search</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#enumerate-sat-tsp-nlp-non-linear-programming"><span class="nav-number">1.1.1.</span> <span class="nav-text">Enumerate SAT, TSP, NLP (Non-Linear Programming)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#local-search"><span class="nav-number">1.2.</span> <span class="nav-text">Local Search</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sat"><span class="nav-number">1.2.1.</span> <span class="nav-text">SAT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#gsat"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">GSAT</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tsp"><span class="nav-number">1.2.2.</span> <span class="nav-text">TSP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#k-opt"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">K-opt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lin-kernighan"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">Lin-Kernighan</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nlp"><span class="nav-number">1.2.3.</span> <span class="nav-text">NLP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bracketing-methods"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">Bracketing Methods</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fixed-point-methods"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">Fixed-Point Methods</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gradient-methods-of-minimization"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">Gradient Methods of Minimization</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linear-programming"><span class="nav-number">1.3.</span> <span class="nav-text">Linear Programming</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-simplex-method"><span class="nav-number">1.3.1.</span> <span class="nav-text">The Simplex Method</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
