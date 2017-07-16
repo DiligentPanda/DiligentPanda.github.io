@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://DiligentPanda.github.io/"/>
-  <updated>2017-07-06T23:30:11.495Z</updated>
+  <updated>2017-07-16T07:38:48.538Z</updated>
   <id>http://DiligentPanda.github.io/</id>
   
   <author>
@@ -14,6 +14,147 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Cython for NumPy</title>
+    <link href="http://DiligentPanda.github.io/2017/07/16/Cython-for-NumPy/"/>
+    <id>http://DiligentPanda.github.io/2017/07/16/Cython-for-NumPy/</id>
+    <published>2017-07-16T06:01:28.000Z</published>
+    <updated>2017-07-16T07:38:48.538Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="cython-for-numpy">Cython for NumPy</h1>
+<h2 id="cython">Cython</h2>
+<ul>
+<li><p>A compiler &gt; Cython is an optimizing static compiler for both the Python and the extended Cython.</p></li>
+<li><p>A language &gt; Cython is a language that makes writing C extensions for the Python language as easy as Python itself.</p></li>
+</ul>
+<h3 id="speed-up">Speed-Up</h3>
+<p>In the later discussion, we will achieve speed-up from the following aspects. * static data type * no negative indices * no boundary check * eliminates overhead of for-loop * eliminates overhead of fuction calls: specify type of parameters and return values * efficient indexing * …</p>
+<p>Anyway, the main ideas here are:</p>
+<ul>
+<li>Whatever is convenient in Python may be slow in execution. We convert those part into explicit coding in C to speed up the process. (Even though always a C file is generated for .pyx file, but runing of some codes need python interpreter, which makes execution slow.)</li>
+<li>Those functionalities in Python are usually more generic. So we have to provide addtional information. If the compiler lacks of some information, the codes still runs in Python way rather than C. (For newbies like me, we don’t know how much information is sufficient for cython’s optimization.)</li>
+<li>In another direction, we want to make use of many useful tools already implementd in Pyhon.For instance, We want to exploit Numpy, which provides convenient API of Multi-dimensional arrays. However, note that most of time-comsuming operations of this library are implemented in C fundamentally, which means when we call those functions, we would gain little speed-up.</li>
+</ul>
+<h3 id="steps-of-using-cython">Steps of Using Cython</h3>
+<ol style="list-style-type: decimal">
+<li>write .pyx source file</li>
+<li>run Cython compiler: generate C file</li>
+<li>run C compiler: generate a compiled library(.so, a shared library)</li>
+<li>import the libaray into other modules.</li>
+</ol>
+<p>It is very <strong>IMPORTANT</strong> to check whether we obtain expected elegant C codes in .c file.</p>
+<h3 id="compile-libaray-by-setup.py">Compile Libaray by <em>setup.py</em></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> distutils.core <span class="keyword">import</span> setup</div><div class="line"><span class="keyword">from</span> Cython.Build <span class="keyword">import</span> cythonize</div><div class="line"></div><div class="line">setup(</div><div class="line">  ext_module=cythonize(<span class="string">"xxx.pyx"</span>)</div><div class="line">)</div></pre></td></tr></table></figure>
+<h3 id="syntax">Syntax</h3>
+<ol style="list-style-type: decimal">
+<li><p>First of all, we could write any python codes. When it is possible to be converted to C implementation, it would speed up.</p></li>
+<li><p><code>cdef</code> to add types for variables:</p></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cdef int i = <span class="number">1</span></div><div class="line">cdef np.ndarray x = np.zeros(...)</div></pre></td></tr></table></figure>
+<p>For efficient indexing, we also specify the data type and the number of dimensions for <code>ndarray</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cdef np.ndarray[DTYPE_t, ndim=<span class="number">2</span>] x = np.zeros(...)</div></pre></td></tr></table></figure>
+<p>Note that it can only be used at the top indentation level.</p>
+<ol start="3" style="list-style-type: decimal">
+<li><code>cdef</code> can also be used to define functions: it is used for Cython functions that are intended to be pure ‘C’ functions. Types of parameters and return value should be specified. However, this function can not be called in Python. We are writing Python codes, but evetually it is C code.</li>
+</ol>
+<p>Functions defined by <code>def</code> can be called direcly from Python codes. We can specify types for parameters of the function. (Return value as local variable can also be specified with a type.) However, it incurs a high overhead.</p>
+<p>Besides, there is <code>cpdef</code>, which is both.</p>
+<p>We could futher use <code>inline</code> for <code>cdef</code> function.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cdef inline int max(int a,int b): <span class="keyword">return</span> a <span class="keyword">if</span> a&gt;=b <span class="keyword">else</span> b</div></pre></td></tr></table></figure>
+<ol start="4" style="list-style-type: decimal">
+<li>Notice there is two type of <em>TYPE</em> here: one is used for compilation, another is for run-time. In those python codes we write, run-time types are used, which are exactly the same as what we used in python, e.g. <code>np.int</code>. Types like <code>int</code> (and other default types in C like <code>unsigned int</code> …) or <code>np.int_t</code> (In NumPy, suffix <code>_t</code> means the type is used for compilation.? I guess this is only for those default type.) are used to specify types for compilation.</li>
+</ol>
+<p><code>ctypedef</code> have the same usage as <code>#typedef</code> in C. <code>cimport</code> is used to import special compile-time information, such as <code>np.int_t</code>. It acts like <code>#include</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line">cimport numpy <span class="keyword">as</span> np</div><div class="line">DTYPE=np.int <span class="comment"># run-time  type</span></div><div class="line">ctypedef np.int_t DTYPE_t<span class="comment"># compile-time type</span></div></pre></td></tr></table></figure>
+<ol start="5" style="list-style-type: decimal">
+<li>Specify iteration variable also help with fast loops. <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cdef int i</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</div><div class="line">  ...</div></pre></td></tr></table></figure></li>
+</ol>
+<p>We have to check whether pure C-loop is generated in the .c file.</p>
+<ol start="6" style="list-style-type: decimal">
+<li>Even faster indexing:</li>
+</ol>
+<ul>
+<li>using <code>@cython.boundscheck(False)</code> could turn off boundary check.</li>
+<li>Force index variable to be <code>unsigned int</code> to eliminate negative indexing. <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">i = &lt;unsigned int&gt; i <span class="comment"># casting if needed</span></div></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;cython-for-numpy&quot;&gt;Cython for NumPy&lt;/h1&gt;
+&lt;h2 id=&quot;cython&quot;&gt;Cython&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;A compiler &amp;gt; Cython is an optimizing static co
+    
+    </summary>
+    
+      <category term="Programming/Python" scheme="http://DiligentPanda.github.io/categories/Programming-Python/"/>
+    
+    
+      <category term="cython" scheme="http://DiligentPanda.github.io/tags/cython/"/>
+    
+      <category term="python" scheme="http://DiligentPanda.github.io/tags/python/"/>
+    
+      <category term="numpy" scheme="http://DiligentPanda.github.io/tags/numpy/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Tree-Based Methods</title>
+    <link href="http://DiligentPanda.github.io/2017/07/13/Tree-Based-Methods/"/>
+    <id>http://DiligentPanda.github.io/2017/07/13/Tree-Based-Methods/</id>
+    <published>2017-07-13T03:52:22.000Z</published>
+    <updated>2017-07-15T12:47:29.078Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="tree-based-methods">Tree-Based Methods</h1>
+<h2 id="decision-tree">Decision Tree</h2>
+<p>Divide the feature space into multiple regions. Assign each region a value (mean value for regression)/label (majority label for classification).</p>
+<p>Construction: * Binary Split to build an internal nodes. We always split at a feature leading to the most increase in some metrics. * Continuous Predictor * Discrete Predictor * Stop when the number of nodes in a region is smaller than a threshold, e.g. 5 observations. * Pruning (Regularization) * Pre-pruning: Stop futher spliting if increase in some metric is smaller than a threshold * Post-pruning: Collapse internal nodes to minimize the modified objective = the original objective + <span class="math inline">\(\alpha|T|\)</span>, after a large tree is constuctured. (Here, we talk about Cost Complexity Pruning) ### Regression Tree Train: * Minimize Mean Square Error</p>
+<p>Valid: * Mean Square Error</p>
+<h3 id="classification-tree">Classification Tree</h3>
+<p>Train: * Minimize Gini Index or Entropy, which are capable of evaluating purity of a distribution</p>
+<p>Valid: * Classification Error Rate</p>
+<h3 id="compared-with-linear-models">Compared with Linear Models</h3>
+<p>Advantage: * Even more interpretable * Can handle non-linear mapping * Mirror human’s decision making</p>
+<p>Disadvantage: * Not robust. For slightly different datasets, different trees may be constructed. * Generally not accurate as those linear models.</p>
+<h2 id="bagging">Bagging</h2>
+<p>Sample several subsets from training dataset. Learn a tree for each subset. Combine predictions from those trees. Those tree can grow deep without being pruned.</p>
+<p>Bagging will not result in <em>overfitting</em>.</p>
+<h3 id="bootstrapping">Bootstrapping</h3>
+<h3 id="out-of-bag-error-estimation">Out-of-Bag Error Estimation</h3>
+<h3 id="variable-importance">Variable Importance</h3>
+<h2 id="random-forest">Random Forest</h2>
+<p>As bagging, we build multiple trees on bootstrapped training subset.</p>
+<p>At each split, sample <span class="math inline">\(m\)</span> features out of total <span class="math inline">\(p\)</span> features and restrict the spliting only happens at those features. The core idea here is to decorrelate multiple trees. If features are more correlated, we should pick smaller <span class="math inline">\(m\)</span>.</p>
+<p>Bagging is a special case with <span class="math inline">\(m=p\)</span>.</p>
+<p>No <em>overfitting</em>.</p>
+<h2 id="boosting">Boosting</h2>
+<p>We construct the current tree based on the residual error resulted from the previously construcred trees.</p>
+<p>The algorithm can be described as follows: <img src="/2017/07/13/Tree-Based-Methods/Boosting_Algo.png"></p>
+<p>Tunable Parameters:</p>
+<ol style="list-style-type: decimal">
+<li>The shrinkage parameter <span class="math inline">\(\lambda\)</span>, a small positive number, controlling the rate at which boosting learns. A small <span class="math inline">\(\lambda\)</span> requires more trees to achieve good performance.</li>
+<li>d splits (d=1 could work well: a stump leads to an additive model). d is the <em>interaction depth</em>, controling the interaction between variables (Involving at most d variables.). Small d is sufficient.</li>
+<li>B trees (may overfit, even slowly)</li>
+</ol>
+<h3 id="gdbt">GDBT</h3>
+<h3 id="xgboost">XGBOOST</h3>
+<blockquote>
+<p>Boosting and Bagging are general approaches that can be applied to many statiscal methods.</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;tree-based-methods&quot;&gt;Tree-Based Methods&lt;/h1&gt;
+&lt;h2 id=&quot;decision-tree&quot;&gt;Decision Tree&lt;/h2&gt;
+&lt;p&gt;Divide the feature space into multiple re
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Traditional Methods</title>
