@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://DiligentPanda.github.io/"/>
-  <updated>2017-08-07T10:52:28.808Z</updated>
+  <updated>2017-08-10T06:29:58.626Z</updated>
   <id>http://DiligentPanda.github.io/</id>
   
   <author>
@@ -16,31 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Tofel Listening Preparation</title>
-    <link href="http://DiligentPanda.github.io/2017/08/07/Tofel-Listening-Preparation/"/>
-    <id>http://DiligentPanda.github.io/2017/08/07/Tofel-Listening-Preparation/</id>
-    <published>2017-08-07T10:52:28.000Z</published>
-    <updated>2017-08-07T10:52:28.808Z</updated>
-    
-    <content type="html"><![CDATA[
-]]></content>
-    
-    <summary type="html">
-    
-      
-
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>Paper Reading List 2017</title>
     <link href="http://DiligentPanda.github.io/2017/08/07/Paper-Reading-List-2017/"/>
     <id>http://DiligentPanda.github.io/2017/08/07/Paper-Reading-List-2017/</id>
     <published>2017-08-07T10:49:32.000Z</published>
-    <updated>2017-08-07T10:51:37.574Z</updated>
+    <updated>2017-08-10T06:29:58.626Z</updated>
     
     <content type="html"><![CDATA[<h1 id="machine-learning">Machine Learning</h1>
 <h2 id="cvpr-2017">CVPR 2017</h2>
@@ -54,38 +34,6 @@
 &lt;h2 id=&quot;cvpr-2017&quot;&gt;CVPR 2017&lt;/h2&gt;
 &lt;h2 id=&quot;icml-2017&quot;&gt;ICML 2017&lt;/h2&gt;
 &lt;h2 id=&quot;arxiv&quot;&gt;Arxiv&lt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Tofel</title>
-    <link href="http://DiligentPanda.github.io/2017/08/05/Tofel/"/>
-    <id>http://DiligentPanda.github.io/2017/08/05/Tofel/</id>
-    <published>2017-08-05T14:11:26.000Z</published>
-    <updated>2017-08-07T00:30:49.828Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="关于听力进一步提分的要点">关于听力进一步提分的要点</h1>
-<ol style="list-style-type: decimal">
-<li>分学科加强对于不熟悉学科的熟悉程度：单词和听读</li>
-<li>长时间连续听</li>
-<li>笔记记重点，面对大段听不懂的不要慌</li>
-</ol>
-<h1 id="关于口语的重要问题">关于口语的重要问题</h1>
-<ol style="list-style-type: decimal">
-<li>在说口语的时候要注意，注意力要往后去想之后要说什么而不要往前去判断自己之前说的对不对。</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;关于听力进一步提分的要点&quot;&gt;关于听力进一步提分的要点&lt;/h1&gt;
-&lt;ol style=&quot;list-style-type: decimal&quot;&gt;
-&lt;li&gt;分学科加强对于不熟悉学科的熟悉程度：单词和听读&lt;/li&gt;
-&lt;li&gt;长时间连续听&lt;/li&gt;
-&lt;li&gt;笔记记重点
     
     </summary>
     
@@ -164,88 +112,6 @@
     
       &lt;h1 id=&quot;implement-roialign-operation-in-mxnet&quot;&gt;Implement ROIAlign Operation in Mxnet&lt;/h1&gt;
 &lt;p&gt;Recently, I’m trying to implement ROIAlign ope
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>经验</title>
-    <link href="http://DiligentPanda.github.io/2017/07/24/experience/"/>
-    <id>http://DiligentPanda.github.io/2017/07/24/experience/</id>
-    <published>2017-07-24T01:38:18.000Z</published>
-    <updated>2017-08-09T14:19:03.599Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="关于机器学习">关于机器学习：</h1>
-<ol style="list-style-type: decimal">
-<li>我觉得面对一个实际问题最先应该考虑inference的过程，然后考虑learning的方法。我们要接受这两者之间可能存在<em>巨大的差异</em>，尤其是在工程中。在inference的构建过程中，我们要假设我们能学到某些结构和部件，从而它们可以直接像黑箱一样被使用。</li>
-<li>Sample 始终是一种重要的手段来避免空间上或者时间的限制。比如learning的时候, 可以采用sample.</li>
-<li>学习新的库或者框架的时候要注意效率。官方的tutorial一定要仔细看完，做好笔记，documentation要大致浏览，笔记中应记录库的各个部分所能实现的功能，知道库的所有能实现的所有功能。当需要某个功能的时候应能够快速找到其API。写代码的时候，要注意：为了快速写代码，多参照官方样例和源码中的实现。注意代码要先注意功能的实现，其次再追求运行时空的优化。代码一定要想办法测试，看看官方如何测试。</li>
-<li>github上的代码注意看它的issue。</li>
-<li>要注意分类和保存可用的代码。</li>
-<li>数值计算的时候要注意精度问题。尤其注意float的有效位数只有7-8位。</li>
-<li>如果无法做到随机测试，就进行人工设计测试点。</li>
-<li>绝对不要一开始就想要实现什么非常大的结构或成果。先从切实可行的小结构开始。一定要有耐心，尤其是在结果的分析上，这中分析的难度绝不亚于提出一个新的idea。因为往往一个idea本身很难一下子成功，它涉及到许多构思时不曾考虑到的细节和复杂程度，而是不断地改进和实验使它们成为可能。</li>
-<li>有可能的话，多看看别人写的好的代码。</li>
-<li>如同 1. 所说， 我现在认为写代码的时候也应该先写inference,再写training. 相对而言，inference是我们习惯性的思维， 而training可能在逻辑上更难以被接受。</li>
-<li>在我现在的理解中，静态的计算图需要与它的执行本身分开看。它的静态性实际表现在其定义与计算的分离上。理论上，我们应该这样理解一个计算图，它就像我们的c++程序。通过某种编译器，我们把它翻译成了一些像机器码一样的底层操作，包括空间的申明，数学计算等等。一个计算的引擎，就像操作系统一样可以执行这个程序。每一个batch, 空间都会开辟和释放，只有要学习的参数和一些起辅助功能的数据需要持续的保留。所以理论上我们可以实现任何操作，包扩基于数据自身的if-else，for这种看似比较动态的行为，只要编译器和执行的引擎足够强大。而tensorflow其实做到了。那么真正的问题在于哪里呢，在于一个batch中的计算可能不一致。不同的sample可能要走不同的branch或者迭代不同的次数。这个问题在rnn处理变长输入的时候也有出现。有几种处理思路：</li>
-<li>傻等最长的那个走完</li>
-<li>bucket: 把长度一样的或接近的放在一个batch里，可能还需要填补。</li>
-<li>对1.改进，对于for这种，把这个for操作看成更小的一次次迭代操作，然后通过调度来使计算资源时刻保持busy. 那么如何处理嵌套的for呢？ 对于这种这些问题，即使是pytorch这种自称动态语言也没法解决的。这就像线程并发时流水线上的问题。</li>
-<li>阅读他人代码的时候，要注意效率，因此：</li>
-<li>熟读论文</li>
-<li>对应论文，尽量动态阅读，即开启调试模式阅读</li>
-<li>迫不得已再进行静态的阅读</li>
-<li>注意整个框架由几个部分构成，各自解决什么问题，注意可替换的部分和可改进的内容。</li>
-<li>有了idea后，在写代码前要构思好整个框架，这样写代码的时候就能更有效率，不会翻来覆去。</li>
-</ol>
-<h1 id="general-stuff">general stuff</h1>
-<ol style="list-style-type: decimal">
-<li>一定要每天阅读论文。</li>
-<li>注重事物之间的平衡，专注一件事的时候不要想另外一件事，提高效率。</li>
-<li>不要对别人说的话非常信任或者投入，尤其不要改变自己的计划。不要在意别人的想法。总是以完成自己的计划为首要目标。</li>
-<li>每天记录论文笔记。</li>
-</ol>
-<h1 id="近期">近期</h1>
-<ol style="list-style-type: decimal">
-<li>每天1篇论文，论文笔记1(11:00-12:00)。每周一复现(有代码的)。</li>
-<li>英语：单词1list(1h)+短语2pages(1h)+词组5(0.5h)+听力2(1h 9:00-10:00)+口语2(1h 10:00-11:00)+阅读1(0.5h)。</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;关于机器学习&quot;&gt;关于机器学习：&lt;/h1&gt;
-&lt;ol style=&quot;list-style-type: decimal&quot;&gt;
-&lt;li&gt;我觉得面对一个实际问题最先应该考虑inference的过程，然后考虑learning的方法。我们要接受这两者之间可能存在&lt;em&gt;巨大的
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Technology 1</title>
-    <link href="http://DiligentPanda.github.io/2017/07/17/Technology-1/"/>
-    <id>http://DiligentPanda.github.io/2017/07/17/Technology-1/</id>
-    <published>2017-07-17T13:16:37.000Z</published>
-    <updated>2017-07-18T13:38:15.766Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="technology-1">Technology 1</h1>
-<h2 id="are-we-happier">Are We Happier?</h2>
-<p>No one can argue that technologies do bring us much more convenience, probably than the level we could imagine. But are we happier?</p>
-<p>Convenience is sometimes not so easy to enjoy. That sounds ridiculous at first but it is really a severe situation in reality. Consider those old people, when smart phones comes to the world, do they enjoy those handy tools? If you really care about them, you would notice how they suffer at the begining. They learn much slower than our young people, which means much more efforts are required for them to finally become familiar with all kinds of applications on smart phones. As a sad consequence, most of them never actually learn to make use of those cutting-edge productions well. Even though many functionalities are available, they still stick to only making calls and messaging. You may think that for young people, learning never becomes a problem. That’s clearly wrong. Computers are one of invention that revolutionize the whole world. In current infomation era, tons of millions of people engage themselves in work related to computers. However, do you still remember how much time you suffer from installing a software and how long-time you spend on learning those stuff. The truth is that life never becomes easier.</p>
-<p>What technologies bring to our future? Human are different from other animals in that we make much longer planning. Ever since we start to learn about how this crue world works, we begin to worry about tomorrow. However, tomorrow may be totally different from what we feel about today. We describe the potential problems technologies bring to us in three folds. First of all, many inventions seems briliant now but becomes disaster in the future. One of the representative is the plastic. This is an award innovation that transfom our daily life. They are extensively used in many productions. However, who can imagine it becomes a heavy burden for the ecosystem tens of years later. Second, some technologies just becomes obstacles to our worring about futures, a crucial nature of our human. People are satisfying with today but then overwhelmed by the problems emerged later. For example, many children are fascinated by a bunch of attractive games but later dicover the importance of study. At last, as stated in the previous paragraph, we spent a lot of time to get accustomed to a new technology. But currently, in the information era, with the explosion of information and new technologies, we are forced to repeatly process or learn new things. We are left no time to enjoy our lives.</p>
-<p>Are our happiness still complete? That’s the final point I want to argue about. My parents used to tell me that what matters is not the consequence but the process. Deep down in our mind, do we really just need convenience. Is a good result what we really care about or those efforts and those time we spent with who we love what we really treasure. Nowadays, so many things are standardized, mechanized and automated. Ironically and miserably, we use those machines merely like a machine. We seem to enjoy the easy life. But in fact, this kind of life is tasteless. We are deprived of every enjoyment of achievement and we lost those critical bonds and connections with others. Our happyiness are incomplete and even fabricated.</p>
-<p>We are never sadder and worrier. That’s probably the real feeling.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;technology-1&quot;&gt;Technology 1&lt;/h1&gt;
-&lt;h2 id=&quot;are-we-happier&quot;&gt;Are We Happier?&lt;/h2&gt;
-&lt;p&gt;No one can argue that technologies do bring us muc
     
     </summary>
     
