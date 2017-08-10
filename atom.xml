@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://DiligentPanda.github.io/"/>
-  <updated>2017-08-10T06:29:58.626Z</updated>
+  <updated>2017-08-10T08:47:49.004Z</updated>
   <id>http://DiligentPanda.github.io/</id>
   
   <author>
@@ -16,27 +16,159 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>R-FCN</title>
+    <link href="http://DiligentPanda.github.io/2017/08/10/R-FCN/"/>
+    <id>http://DiligentPanda.github.io/2017/08/10/R-FCN/</id>
+    <published>2017-08-10T06:55:56.000Z</published>
+    <updated>2017-08-10T08:47:49.004Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="r-fcn-object-detection-via-region-based-fully-convolutional-networks">R-FCN: Object Detection via Region-based Fully Convolutional Networks</h1>
+<ul>
+<li>Jifeng Dai, Yi Li, Kaiming He, and Jian Sun</li>
+<li>Conference on Neural Information Processing Systems (NIPS), 2016</li>
+<li>https://arxiv.org/abs/1605.06409</li>
+<li>https://github.com/daijifeng001/r-fcn</li>
+</ul>
+<h2 id="abstract">Abstract</h2>
+<ol style="list-style-type: decimal">
+<li>Fully Convolution and Position-Sensitive Score Maps for Object Detection
+<ul>
+<li><p>Previous region based networks auch as <em>Fast/Faster R-CNN</em> apply a costly per-region subnetworks(those headers for classification and regression) hundreds of times. (Note after roi-pooling, even though we can implement headers in the convolutional way, the computation is no longer shared. Overlaps of rois are repeatedly computed.)</p></li>
+<li><p>The region-based detector in this paper is <strong>fully convolutional</strong>, and allow all the computation shared on the entire image. This paper proposes <strong>position-sensitive</strong> score maps to address the dilemma between <strong>translation invariance</strong> in image classification and <strong>traslation variance</strong> in object detection. (By translation, we mean an object move relative to its bbox.)</p></li>
+</ul></li>
+<li>Results:
+<ul>
+<li>83.6% map on PASCAL VOC 2007. 82.0% on 2012.</li>
+<li>170ms/img in inference: 2.5-20 times faster then <em>Faster R-CNN</em></li>
+</ul></li>
+</ol>
+<h2 id="introduction">Introduction</h2>
+<ol style="list-style-type: decimal">
+<li>RoI pooling layer divides previous prevalent deep object detectors into two subnets:
+<ul>
+<li>A shared convolutional one for feature extraction</li>
+<li>A RoI-wise subnet don’t share computation</li>
+</ul>
+<p>resulted from old classification system.(final spatial pooling layer -&gt; roi pooling layer)</p></li>
+<li>The state-of-art classification system is fully convolutional, like <em>ResNets</em>. In order to use fully convolutional backbone, we have to solve the aforementioned dilemma. Inserting RoI pooling (a region-specific operation) is a solution but it introduce heavy headers(those headers lead to translation variance). See Table 1. <img src="/2017/08/10/R-FCN/table1.PNG">
+<ul>
+<li>TODO Review Faster R-CNN</li>
+<li>Examples:
+<ul>
+<li>Translation of objects should reflect the change of overlap between gt object and bbox.</li>
+<li>The left hands appering in the right of bbox should be the hands of others.</li>
+</ul></li>
+</ul></li>
+<li>Structure Comparison
+<ul>
+<li>fully convolution (output feature maps) -&gt; roi pooling -&gt; roi-wise opertaion (fc or conv)</li>
+<li>fully convolution (output position-sensitive score maps) -&gt; position-sensitive poooling -&gt; without weighted layer</li>
+</ul></li>
+</ol>
+<h2 id="approach">Approach</h2>
+<ul>
+<li>RPN &amp; R-FCN share features</li>
+<li>Backbone: ResNet-101 with feature reduction to 1024 channels.</li>
+<li>ps score maps: <span class="math inline">\(k^2(C+1)\)</span> channels, <span class="math inline">\(k^2\)</span> is corespoing to <span class="math inline">\(k^2\)</span> bin.</li>
+<li>ps roi pooling: for class c, bin location x,y, selectively pool the corespondent channel. Aggregate scores from <span class="math inline">\(k^2\)</span> channels.</li>
+<li>Average <span class="math inline">\(k^2\)</span> scores as final voting results.</li>
+<li>Similar class agnostic bbox regresssion.</li>
+<li>OHEM: online hard example mining.</li>
+<li>hole algorithm.</li>
+</ul>
+<h1 id="archtecture">archtecture</h1>
+<p><img src="/2017/08/10/R-FCN/figure2.PNG"> # visualization <img src="/2017/08/10/R-FCN/figure_3_4.PNG"></p>
+<h2 id="experiments">Experiments</h2>
+<h3 id="results">results</h3>
+<ul>
+<li>voc 2007/2012 <img src="/2017/08/10/R-FCN/table_3_4_5.PNG"></li>
+<li>coco <img src="/2017/08/10/R-FCN/table6.PNG"></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;r-fcn-object-detection-via-region-based-fully-convolutional-networks&quot;&gt;R-FCN: Object Detection via Region-based Fully Convolutional N
+    
+    </summary>
+    
+      <category term="paper/cv/detection" scheme="http://DiligentPanda.github.io/categories/paper-cv-detection/"/>
+    
+    
+      <category term="Detection" scheme="http://DiligentPanda.github.io/tags/Detection/"/>
+    
+      <category term="cv" scheme="http://DiligentPanda.github.io/tags/cv/"/>
+    
+      <category term="paper_notes" scheme="http://DiligentPanda.github.io/tags/paper-notes/"/>
+    
+      <category term="Object Detection" scheme="http://DiligentPanda.github.io/tags/Object-Detection/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Paper Reading List 2017</title>
     <link href="http://DiligentPanda.github.io/2017/08/07/Paper-Reading-List-2017/"/>
     <id>http://DiligentPanda.github.io/2017/08/07/Paper-Reading-List-2017/</id>
     <published>2017-08-07T10:49:32.000Z</published>
-    <updated>2017-08-10T06:29:58.626Z</updated>
+    <updated>2017-08-10T08:47:51.061Z</updated>
     
     <content type="html"><![CDATA[<h1 id="machine-learning">Machine Learning</h1>
-<h2 id="cvpr-2017">CVPR 2017</h2>
-<h2 id="icml-2017">ICML 2017</h2>
-<h2 id="arxiv">Arxiv</h2>
+<h2 id="computer-vision">Computer Vision</h2>
+<h3 id="detection-and-segmentation">Detection and Segmentation</h3>
+<ol style="list-style-type: decimal">
+<li><p>Feature Pyramid Networks for Object Detection</p>
+<p>Tsung-Yi Lin, Piotr Dollár, Ross Girshick, Kaiming He, Bharath Hariharan, and Serge Belongie</p>
+<p>IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017</p>
+<p>https://arxiv.org/abs/1612.03144</p></li>
+<li><p>R-FCN: Object Detection via Region-based Fully Convolutional Networks</p>
+<p>Jifeng Dai, Yi Li, Kaiming He, and Jian Sun</p>
+<p>Conference on Neural Information Processing Systems (NIPS), 2016</p>
+<p>https://arxiv.org/abs/1605.06409</p>
+<p>https://github.com/daijifeng001/r-fcn</p></li>
+<li><p>Deformable Convolutional Networks</p></li>
+</ol>
+<p>Jifeng Dai, Haozhi Qi, Yuwen Xiong, Yi Li, Guodong Zhang, Han Hu, and Yichen Wei</p>
+<pre><code>International Conference on Computer Vision (ICCV), 2017.
+
+https://arxiv.org/abs/1703.06211
+
+https://github.com/msracver/Deformable-ConvNets</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Fully Convolutional Instance-aware Semantic Segmentation</p>
+<p>Yi Li, Haozhi Qi, Jifeng Dai, Xiangyang Ji, and Yichen Wei IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017. (Spotlight)</p>
+<p>1-st place winner of the COCO 2016 segmentation challenge</p>
+<p>0.24 sec/image test speed (using ResNet-101 net)</p>
+<p>https://arxiv.org/abs/1611.07709</p>
+<p>https://github.com/msracver/FCIS</p></li>
+<li><p>Mask R-CNN</p>
+<p>Kaiming He, Georgia Gkioxari, Piotr Dollár, and Ross Girshick</p>
+<p>IEEE International Conference on Computer Vision (ICCV), 2017 (Oral)</p>
+<p>https://arxiv.org/abs/1703.06870</p></li>
+<li><p>Focal Loss for Dense Object Detection</p>
+<p>Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, and Piotr Dollár</p>
+<p>IEEE International Conference on Computer Vision (ICCV), 2017 (Oral)</p>
+<p>https://arxiv.org/abs/1708.02002</p></li>
+<li><p>Flow-Guided Feature Aggregation for Video Object Detection</p>
+<p>Xizhou Zhu, Yujie Wang, Jifeng Dai, Lu Yuan, and Yichen Wei</p>
+<p>International Conference on Computer Vision (ICCV), 2017.</p>
+<p>https://arxiv.org/abs/1703.10025</p></li>
+</ol>
 ]]></content>
     
     <summary type="html">
     
       &lt;h1 id=&quot;machine-learning&quot;&gt;Machine Learning&lt;/h1&gt;
-&lt;h2 id=&quot;cvpr-2017&quot;&gt;CVPR 2017&lt;/h2&gt;
-&lt;h2 id=&quot;icml-2017&quot;&gt;ICML 2017&lt;/h2&gt;
-&lt;h2 id=&quot;arxiv&quot;&gt;Arxiv&lt;
+&lt;h2 id=&quot;computer-vision&quot;&gt;Computer Vision&lt;/h2&gt;
+&lt;h3 id=&quot;detection-and-segmentation&quot;&gt;Detectio
     
     </summary>
     
+      <category term="paper/lists" scheme="http://DiligentPanda.github.io/categories/paper-lists/"/>
+    
+    
+      <category term="papers" scheme="http://DiligentPanda.github.io/tags/papers/"/>
+    
+      <category term="resources" scheme="http://DiligentPanda.github.io/tags/resources/"/>
     
   </entry>
   

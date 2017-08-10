@@ -1,9 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[R-FCN]]></title>
+    <url>%2F2017%2F08%2F10%2FR-FCN%2F</url>
+    <content type="text"><![CDATA[R-FCN: Object Detection via Region-based Fully Convolutional Networks Jifeng Dai, Yi Li, Kaiming He, and Jian Sun Conference on Neural Information Processing Systems (NIPS), 2016 https://arxiv.org/abs/1605.06409 https://github.com/daijifeng001/r-fcn Abstract Fully Convolution and Position-Sensitive Score Maps for Object Detection Previous region based networks auch as Fast/Faster R-CNN apply a costly per-region subnetworks(those headers for classification and regression) hundreds of times. (Note after roi-pooling, even though we can implement headers in the convolutional way, the computation is no longer shared. Overlaps of rois are repeatedly computed.) The region-based detector in this paper is fully convolutional, and allow all the computation shared on the entire image. This paper proposes position-sensitive score maps to address the dilemma between translation invariance in image classification and traslation variance in object detection. (By translation, we mean an object move relative to its bbox.) Results: 83.6% map on PASCAL VOC 2007. 82.0% on 2012. 170ms/img in inference: 2.5-20 times faster then Faster R-CNN Introduction RoI pooling layer divides previous prevalent deep object detectors into two subnets: A shared convolutional one for feature extraction A RoI-wise subnet don’t share computation resulted from old classification system.(final spatial pooling layer -&gt; roi pooling layer) The state-of-art classification system is fully convolutional, like ResNets. In order to use fully convolutional backbone, we have to solve the aforementioned dilemma. Inserting RoI pooling (a region-specific operation) is a solution but it introduce heavy headers(those headers lead to translation variance). See Table 1. TODO Review Faster R-CNN Examples: Translation of objects should reflect the change of overlap between gt object and bbox. The left hands appering in the right of bbox should be the hands of others. Structure Comparison fully convolution (output feature maps) -&gt; roi pooling -&gt; roi-wise opertaion (fc or conv) fully convolution (output position-sensitive score maps) -&gt; position-sensitive poooling -&gt; without weighted layer Approach RPN &amp; R-FCN share features Backbone: ResNet-101 with feature reduction to 1024 channels. ps score maps: \(k^2(C+1)\) channels, \(k^2\) is corespoing to \(k^2\) bin. ps roi pooling: for class c, bin location x,y, selectively pool the corespondent channel. Aggregate scores from \(k^2\) channels. Average \(k^2\) scores as final voting results. Similar class agnostic bbox regresssion. OHEM: online hard example mining. hole algorithm. archtecture # visualization Experiments results voc 2007/2012 coco]]></content>
+      <categories>
+        <category>paper/cv/detection</category>
+      </categories>
+      <tags>
+        <tag>Detection</tag>
+        <tag>cv</tag>
+        <tag>paper_notes</tag>
+        <tag>Object Detection</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Paper Reading List 2017]]></title>
     <url>%2F2017%2F08%2F07%2FPaper-Reading-List-2017%2F</url>
-    <content type="text"><![CDATA[Machine Learning CVPR 2017 ICML 2017 Arxiv]]></content>
+    <content type="text"><![CDATA[Machine Learning Computer Vision Detection and Segmentation Feature Pyramid Networks for Object Detection Tsung-Yi Lin, Piotr Dollár, Ross Girshick, Kaiming He, Bharath Hariharan, and Serge Belongie IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017 https://arxiv.org/abs/1612.03144 R-FCN: Object Detection via Region-based Fully Convolutional Networks Jifeng Dai, Yi Li, Kaiming He, and Jian Sun Conference on Neural Information Processing Systems (NIPS), 2016 https://arxiv.org/abs/1605.06409 https://github.com/daijifeng001/r-fcn Deformable Convolutional Networks Jifeng Dai, Haozhi Qi, Yuwen Xiong, Yi Li, Guodong Zhang, Han Hu, and Yichen Wei International Conference on Computer Vision (ICCV), 2017. https://arxiv.org/abs/1703.06211 https://github.com/msracver/Deformable-ConvNets Fully Convolutional Instance-aware Semantic Segmentation Yi Li, Haozhi Qi, Jifeng Dai, Xiangyang Ji, and Yichen Wei IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017. (Spotlight) 1-st place winner of the COCO 2016 segmentation challenge 0.24 sec/image test speed (using ResNet-101 net) https://arxiv.org/abs/1611.07709 https://github.com/msracver/FCIS Mask R-CNN Kaiming He, Georgia Gkioxari, Piotr Dollár, and Ross Girshick IEEE International Conference on Computer Vision (ICCV), 2017 (Oral) https://arxiv.org/abs/1703.06870 Focal Loss for Dense Object Detection Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, and Piotr Dollár IEEE International Conference on Computer Vision (ICCV), 2017 (Oral) https://arxiv.org/abs/1708.02002 Flow-Guided Feature Aggregation for Video Object Detection Xizhou Zhu, Yujie Wang, Jifeng Dai, Lu Yuan, and Yichen Wei International Conference on Computer Vision (ICCV), 2017. https://arxiv.org/abs/1703.10025]]></content>
+      <categories>
+        <category>paper/lists</category>
+      </categories>
+      <tags>
+        <tag>papers</tag>
+        <tag>resources</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[Write Custom Operator for Mxent]]></title>
