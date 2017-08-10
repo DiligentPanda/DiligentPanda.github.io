@@ -95,17 +95,17 @@
 
 
 
-<meta name="description" content="Tree-Based Methods Decision Tree Divide the feature space into multiple regions. Assign each region a value (mean value for regression)/label (majority label for classification). Construction: * Bi">
+<meta name="description" content="Tree-Based Methods Decision Tree Divide the feature space into multiple regions. Assign each region a value (mean value for regression)/label (majority label for classification). Construction:  B">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tree-Based Methods">
 <meta property="og:url" content="http://DiligentPanda.github.io/2017/07/13/Tree-Based-Methods/index.html">
 <meta property="og:site_name" content="Playground">
-<meta property="og:description" content="Tree-Based Methods Decision Tree Divide the feature space into multiple regions. Assign each region a value (mean value for regression)/label (majority label for classification). Construction: * Bi">
+<meta property="og:description" content="Tree-Based Methods Decision Tree Divide the feature space into multiple regions. Assign each region a value (mean value for regression)/label (majority label for classification). Construction:  B">
 <meta property="og:image" content="http://diligentpanda.github.io/2017/07/13/Tree-Based-Methods/Boosting_Algo.png">
-<meta property="og:updated_time" content="2017-07-15T12:47:29.078Z">
+<meta property="og:updated_time" content="2017-07-16T08:15:08.124Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tree-Based Methods">
-<meta name="twitter:description" content="Tree-Based Methods Decision Tree Divide the feature space into multiple regions. Assign each region a value (mean value for regression)/label (majority label for classification). Construction: * Bi">
+<meta name="twitter:description" content="Tree-Based Methods Decision Tree Divide the feature space into multiple regions. Assign each region a value (mean value for regression)/label (majority label for classification). Construction:  B">
 <meta name="twitter:image" content="http://diligentpanda.github.io/2017/07/13/Tree-Based-Methods/Boosting_Algo.png">
 
 
@@ -370,14 +370,46 @@
         <h1 id="tree-based-methods">Tree-Based Methods</h1>
 <h2 id="decision-tree">Decision Tree</h2>
 <p>Divide the feature space into multiple regions. Assign each region a value (mean value for regression)/label (majority label for classification).</p>
-<p>Construction: * Binary Split to build an internal nodes. We always split at a feature leading to the most increase in some metrics. * Continuous Predictor * Discrete Predictor * Stop when the number of nodes in a region is smaller than a threshold, e.g. 5 observations. * Pruning (Regularization) * Pre-pruning: Stop futher spliting if increase in some metric is smaller than a threshold * Post-pruning: Collapse internal nodes to minimize the modified objective = the original objective + <span class="math inline">\(\alpha|T|\)</span>, after a large tree is constuctured. (Here, we talk about Cost Complexity Pruning) ### Regression Tree Train: * Minimize Mean Square Error</p>
-<p>Valid: * Mean Square Error</p>
+<p>Construction:</p>
+<ul>
+<li><p>Binary Split to build an internal nodes. We always split at a feature leading to the most increase in some metrics.</p>
+<ul>
+<li>Continuous Predictor</li>
+<li>Discrete Predictor</li>
+</ul></li>
+<li>Stop when the number of nodes in a region is smaller than a threshold, e.g. 5 observations.</li>
+<li><p>Pruning (Regularization)</p>
+<ul>
+<li>Pre-pruning: Stop futher spliting if increase in some metric is smaller than a threshold</li>
+<li>Post-pruning: Collapse internal nodes to minimize the modified objective = the original objective + <span class="math inline">\(\alpha|T|\)</span>, after a large tree is constuctured. (Here, we talk about Cost Complexity Pruning) ### Regression Tree Train:</li>
+</ul></li>
+<li><p>Minimize Mean Square Error</p></li>
+</ul>
+<p>Valid:</p>
+<ul>
+<li>Mean Square Error</li>
+</ul>
 <h3 id="classification-tree">Classification Tree</h3>
-<p>Train: * Minimize Gini Index or Entropy, which are capable of evaluating purity of a distribution</p>
-<p>Valid: * Classification Error Rate</p>
+<p>Train:</p>
+<ul>
+<li>Minimize Gini Index or Entropy, which are capable of evaluating purity of a distribution</li>
+</ul>
+<p>Valid:</p>
+<ul>
+<li>Classification Error Rate</li>
+</ul>
 <h3 id="compared-with-linear-models">Compared with Linear Models</h3>
-<p>Advantage: * Even more interpretable * Can handle non-linear mapping * Mirror human’s decision making</p>
-<p>Disadvantage: * Not robust. For slightly different datasets, different trees may be constructed. * Generally not accurate as those linear models.</p>
+<p>Advantage:</p>
+<ul>
+<li>Even more interpretable</li>
+<li>Can handle non-linear mapping</li>
+<li>Mirror human’s decision making</li>
+</ul>
+<p>Disadvantage:</p>
+<ul>
+<li>Not robust. For slightly different datasets, different trees may be constructed.</li>
+<li>Generally not accurate as those linear models.</li>
+</ul>
 <h2 id="bagging">Bagging</h2>
 <p>Sample several subsets from training dataset. Learn a tree for each subset. Combine predictions from those trees. Those tree can grow deep without being pruned.</p>
 <p>Bagging will not result in <em>overfitting</em>.</p>
@@ -523,7 +555,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

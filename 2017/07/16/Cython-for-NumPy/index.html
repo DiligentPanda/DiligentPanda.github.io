@@ -82,6 +82,8 @@
 
 
 
+  
+
 
   <link rel="alternate" href="/atom.xml" title="Playground" type="application/atom+xml" />
 
@@ -95,17 +97,17 @@
 
 
 
-<meta name="description" content="Cython for NumPy Cython  A compiler &amp;gt; Cython is an optimizing static compiler for both the Python and the extended Cython. A language &amp;gt; Cython is a language that makes writing C extensions f">
+<meta name="description" content="Cython for NumPy Cython  A compiler   Cython is an optimizing static compiler for both the Python and the extended Cython.   A language   Cython is a language that makes writing C extensio">
 <meta name="keywords" content="cython,python,numpy">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cython for NumPy">
 <meta property="og:url" content="http://DiligentPanda.github.io/2017/07/16/Cython-for-NumPy/index.html">
 <meta property="og:site_name" content="Playground">
-<meta property="og:description" content="Cython for NumPy Cython  A compiler &amp;gt; Cython is an optimizing static compiler for both the Python and the extended Cython. A language &amp;gt; Cython is a language that makes writing C extensions f">
-<meta property="og:updated_time" content="2017-07-16T07:38:48.538Z">
+<meta property="og:description" content="Cython for NumPy Cython  A compiler   Cython is an optimizing static compiler for both the Python and the extended Cython.   A language   Cython is a language that makes writing C extensio">
+<meta property="og:updated_time" content="2017-08-06T14:29:17.340Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cython for NumPy">
-<meta name="twitter:description" content="Cython for NumPy Cython  A compiler &amp;gt; Cython is an optimizing static compiler for both the Python and the extended Cython. A language &amp;gt; Cython is a language that makes writing C extensions f">
+<meta name="twitter:description" content="Cython for NumPy Cython  A compiler   Cython is an optimizing static compiler for both the Python and the extended Cython.   A language   Cython is a language that makes writing C extensio">
 
 
 
@@ -391,16 +393,24 @@
         <h1 id="cython-for-numpy">Cython for NumPy</h1>
 <h2 id="cython">Cython</h2>
 <ul>
-<li><p>A compiler &gt; Cython is an optimizing static compiler for both the Python and the extended Cython.</p></li>
-<li><p>A language &gt; Cython is a language that makes writing C extensions for the Python language as easy as Python itself.</p></li>
+<li>A compiler</li>
 </ul>
+<blockquote>
+<p>Cython is an optimizing static compiler for both the Python and the extended Cython.</p>
+</blockquote>
+<ul>
+<li>A language</li>
+</ul>
+<blockquote>
+<p>Cython is a language that makes writing C extensions for the Python language as easy as Python itself.</p>
+</blockquote>
 <h3 id="speed-up">Speed-Up</h3>
 <p>In the later discussion, we will achieve speed-up from the following aspects. * static data type * no negative indices * no boundary check * eliminates overhead of for-loop * eliminates overhead of fuction calls: specify type of parameters and return values * efficient indexing * …</p>
 <p>Anyway, the main ideas here are:</p>
 <ul>
 <li>Whatever is convenient in Python may be slow in execution. We convert those part into explicit coding in C to speed up the process. (Even though always a C file is generated for .pyx file, but runing of some codes need python interpreter, which makes execution slow.)</li>
 <li>Those functionalities in Python are usually more generic. So we have to provide addtional information. If the compiler lacks of some information, the codes still runs in Python way rather than C. (For newbies like me, we don’t know how much information is sufficient for cython’s optimization.)</li>
-<li>In another direction, we want to make use of many useful tools already implementd in Pyhon.For instance, We want to exploit Numpy, which provides convenient API of Multi-dimensional arrays. However, note that most of time-comsuming operations of this library are implemented in C fundamentally, which means when we call those functions, we would gain little speed-up.</li>
+<li>In another direction, we want to make use of many useful tools already implementd in Pyhon. For instance, We want to exploit Numpy, which provides convenient API of Multi-dimensional arrays. However, note that most of time-comsuming operations of this library are implemented in C fundamentally, which means when we call those functions, we would gain little speed-up.</li>
 </ul>
 <h3 id="steps-of-using-cython">Steps of Using Cython</h3>
 <ol style="list-style-type: decimal">
@@ -500,6 +510,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/07/17/Technology-1/" rel="prev" title="Technology 1">
+                Technology 1 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -570,7 +584,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

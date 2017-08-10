@@ -1,0 +1,1133 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Playground" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Implement ROIAlign Operation in Mxnet Recently, I’m trying to implement ROIAlign operation (reference to mask rcnn) in mxent. I want to write down some keypoints here. Note my version is not official">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Write Custom Operator for Mxent">
+<meta property="og:url" content="http://DiligentPanda.github.io/2017/07/29/Write-Custom-Operator-for-Mxent/index.html">
+<meta property="og:site_name" content="Playground">
+<meta property="og:description" content="Implement ROIAlign Operation in Mxnet Recently, I’m trying to implement ROIAlign operation (reference to mask rcnn) in mxent. I want to write down some keypoints here. Note my version is not official">
+<meta property="og:updated_time" content="2017-08-03T14:10:56.642Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Write Custom Operator for Mxent">
+<meta name="twitter:description" content="Implement ROIAlign Operation in Mxnet Recently, I’m trying to implement ROIAlign operation (reference to mask rcnn) in mxent. I want to write down some keypoints here. Note my version is not official">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://DiligentPanda.github.io/2017/07/29/Write-Custom-Operator-for-Mxent/"/>
+
+
+
+
+
+  <title>Write Custom Operator for Mxent | Playground</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Playground</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://DiligentPanda.github.io/2017/07/29/Write-Custom-Operator-for-Mxent/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DiligentPanda">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Playground">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Write Custom Operator for Mxent</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-29T14:55:55+08:00">
+                2017-07-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="implement-roialign-operation-in-mxnet">Implement ROIAlign Operation in Mxnet</h1>
+<p>Recently, I’m trying to implement ROIAlign operation (reference to mask rcnn) in mxent. I want to write down some keypoints here. Note my version is not official and I copy a lot of codes from github ([ to do: add references]). Anyway, what we focus here is not the specific implementation but some required steps for general cases.</p>
+<h2 id="official-guidances">Official Guidances</h2>
+<ol style="list-style-type: decimal">
+<li><a href="http://mxnet.io/how_to/new_op.html" target="_blank" rel="external">How to create new operation</a></li>
+<li><a href="http://mxnet.io/community/contribute.html" target="_blank" rel="external">Contribute to community</a>: there are links to <a href="https://github.com/apache/incubator-mxnet/tree/master/tests" target="_blank" rel="external">test cases</a> and <a href="https://github.com/apache/incubator-mxnet/tree/master/example" target="_blank" rel="external">examples</a>. Some files that I found useful are:
+<ol style="list-style-type: decimal">
+<li><a href="https://github.com/apache/incubator-mxnet/blob/master/tests/python/unittest/test_operator.py" target="_blank" rel="external">test_operator.py</a></li>
+<li><a href="https://github.com/apache/incubator-mxnet/blob/master/python/mxnet/test_utils.py" target="_blank" rel="external">test_utils.py</a></li>
+<li><a href="https://github.com/apache/incubator-mxnet/blob/master/example/numpy-ops/custom_softmax.py" target="_blank" rel="external">custom_softmax.py</a></li>
+</ol></li>
+<li><a href="http://mxnet.io/architecture/overview.html#operators-in-mxnet" target="_blank" rel="external">Operator In Mxnet</a></li>
+<li><a href="https://github.com/apache/incubator-mxnet/tree/master/src/operator" target="_blank" rel="external">Source files for operator</a>: Specifically, we may want to take a look at files in <a href="https://github.com/apache/incubator-mxnet/tree/master/src/operator/contrib" target="_blank" rel="external">contrib</a> folder.</li>
+<li><a href="https://github.com/dmlc/mshadow" target="_blank" rel="external">Mshadow</a>: a lightweight CPU/GPU Matrix/Tensor Template Library in C++/CUDA. Just use it as a library when needed.</li>
+</ol>
+<p>Specifically, we need to look at the implementation of ROIPoolingOp: <a href="https://github.com/apache/incubator-mxnet/blob/master/src/operator/roi_pooling-int.h" target="_blank" rel="external">roi_pooling-inl.h</a>, <a href="https://github.com/apache/incubator-mxnet/blob/master/src/operator/roi_pooling.cc" target="_blank" rel="external">roi_pooling.cc</a>, <a href="https://github.com/apache/incubator-mxnet/blob/master/src/operator/roi_pooling.cu" target="_blank" rel="external">roi_pooling.cu</a>.</p>
+<h2 id="gpu-implementation">GPU Implementation</h2>
+<p>We focus on GPU implementation here.</p>
+<p>First of all there are three files need to write: roi_align-inl.h, roi_align.cc, roi_align.cu.</p>
+<h3 id="roi_align-inl.h">roi_align-inl.h</h3>
+<h4 id="an-overview">An Overview</h4>
+<p>To do.</p>
+<h4 id="headers-and-enumerations">Headers and enumerations</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;dmlc/logging.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;dmlc/parameter.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mxnet/operator.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utility&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"../mshadow_op.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"../operator_common.h"</span></span></div></pre></td></tr></table></figure>
+<ul>
+<li><p>logging.h: you will find something like <code>CHECK_LT(x, y)</code> and <code>LOG_INFO</code>, which are handy for logging (see google logging).</p></li>
+<li><p>parameter.h: I guess it is used for defining and parsing fields for our operators.</p></li>
+<li><p>operator.h: Our custom operator has to extend Operator class.</p></li>
+<li>mshadow_op.h: ? There are matrix operations using mshadow templates. All the operations are in mxnet::op::mshdow_op namespace.</li>
+<li><p>operator_common.h: ? .This header includes utility functions operator can use</p></li>
+</ul>
+<p>The following codes are enclosed in mxnet::op namespace. Sincerely speaking, I’m not familiar with namespace. But generally, I think namespace has two effects:</p>
+<ol style="list-style-type: decimal">
+<li>The things you defined are in this namespace.</li>
+<li>When use those things outside the namespace, you have to use :: operation.</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Declare enumeration of input order to make code more intuitive.</span></div><div class="line"><span class="comment">// These enums are only visible within this header</span></div><div class="line"><span class="keyword">namespace</span> roialign &#123;</div><div class="line"><span class="keyword">enum</span> ROIAlignOpInputs &#123;kData, kBox&#125;;</div><div class="line"><span class="keyword">enum</span> ROIAlignOpOutputs &#123;kOut,kMaxIdxX,kMaxIdxY&#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>We actually use those enumerations as indics for input and outputs, e.g. <code>input[roialign::kData]</code>, which returns <code>input[0]</code>, are actually <code>data</code> input for this operator.</p>
+<h4 id="operator-parameters">Operator parameters</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ROIAlignParam</span> :</span> <span class="keyword">public</span> dmlc::Parameter&lt;ROIAlignParam&gt; &#123;</div><div class="line">  TShape pooled_size;</div><div class="line">  <span class="keyword">float</span> spatial_scale;</div><div class="line">  DMLC_DECLARE_PARAMETER(ROIAlignParam) &#123;</div><div class="line">    DMLC_DECLARE_FIELD(pooled_size)</div><div class="line">    .set_expect_ndim(<span class="number">2</span>).enforce_nonzero()</div><div class="line">    .describe(<span class="string">"ROI pooling output shape (h,w) "</span>);</div><div class="line">    DMLC_DECLARE_FIELD(spatial_scale).set_range(<span class="number">0.0</span>, <span class="number">1.0</span>)</div><div class="line">    .describe(<span class="string">"Ratio of input feature map height (or w) to raw image height (or w). "</span></div><div class="line">    <span class="string">"Equals the reciprocal of total stride in convolutional layers"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>We define the parameters that are addtional to those blob-like data here using the tools provided in the parameter.h.</p>
+<h4 id="operator-operations">Operator operations</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> xpu, <span class="keyword">typename</span> DType&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ROIAlignOp</span> :</span> <span class="keyword">public</span> Operator &#123;</div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  <span class="function"><span class="keyword">explicit</span> <span class="title">ROIAlignOp</span><span class="params">(ROIAlignParam p)</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>-&gt;param_ = p;</div><div class="line">  &#125;</div><div class="line"></div><div class="line"> <span class="comment">//</span></div><div class="line"> <span class="comment">// ... codes ...</span></div><div class="line"> <span class="comment">//</span></div><div class="line"></div><div class="line"> <span class="keyword">private</span>:</div><div class="line"> ROIAlignParam param_;</div><div class="line">&#125;;  <span class="comment">// class ROIPoolingOp</span></div></pre></td></tr></table></figure>
+<p>Then we define the ROIAlignOp. Its constructor should accept pre-defined Parameter structure as input. <code>explicit</code> prohibits the implicit conversion.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Forward</span><span class="params">(<span class="keyword">const</span> OpContext &amp;ctx,</span></span></div><div class="line">                     <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TBlob&gt; &amp;in_data,</div><div class="line">                     <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;OpReqType&gt; &amp;req,</div><div class="line">                     <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TBlob&gt; &amp;out_data,</div><div class="line">                     <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TBlob&gt; &amp;aux_args) &#123;</div><div class="line">  <span class="keyword">using</span> <span class="keyword">namespace</span> mshadow;</div><div class="line">  CHECK_EQ(in_data.size(), <span class="number">2</span>);</div><div class="line">  CHECK_EQ(out_data.size(), <span class="number">3</span>);</div><div class="line">  CHECK_EQ(out_data[roialign::kOut].shape_[<span class="number">0</span>], in_data[roialign::kBox].shape_[<span class="number">0</span>]);</div><div class="line">  CHECK_EQ(out_data[roialign::kMaxIdxX].shape_[<span class="number">0</span>], in_data[roialign::kBox].shape_[<span class="number">0</span>]);</div><div class="line">  CHECK_EQ(out_data[roialign::kMaxIdxY].shape_[<span class="number">0</span>], in_data[roialign::kBox].shape_[<span class="number">0</span>]);</div><div class="line">  Stream&lt;xpu&gt; *s = ctx.get_stream&lt;xpu&gt;();</div><div class="line"></div><div class="line">  Tensor&lt;xpu, <span class="number">4</span>, DType&gt; data = in_data[roialign::kData].get&lt;xpu, <span class="number">4</span>, DType&gt;(s);</div><div class="line">  Tensor&lt;xpu, <span class="number">2</span>, DType&gt; bbox = in_data[roialign::kBox].get&lt;xpu, <span class="number">2</span>, DType&gt;(s);</div><div class="line">  Tensor&lt;xpu, <span class="number">4</span>, DType&gt; out = out_data[roialign::kOut].get&lt;xpu, <span class="number">4</span>, DType&gt;(s);</div><div class="line">  Tensor&lt;xpu, <span class="number">4</span>, DType&gt; max_idx_x = out_data[roialign::kMaxIdxX].get&lt;xpu, <span class="number">4</span>, DType&gt;(s);</div><div class="line">  Tensor&lt;xpu, <span class="number">4</span>, DType&gt; max_idx_y = out_data[roialign::kMaxIdxY].get&lt;xpu, <span class="number">4</span>, DType&gt;(s);</div><div class="line"></div><div class="line">  CHECK_EQ(data.CheckContiguous(), <span class="literal">true</span>);</div><div class="line">  CHECK_EQ(bbox.CheckContiguous(), <span class="literal">true</span>);</div><div class="line">  CHECK_EQ(out.CheckContiguous(), <span class="literal">true</span>);</div><div class="line">  CHECK_EQ(max_idx_x.CheckContiguous(), <span class="literal">true</span>);</div><div class="line">  CHECK_EQ(max_idx_y.CheckContiguous(), <span class="literal">true</span>);</div><div class="line"></div><div class="line">  <span class="comment">// initialization</span></div><div class="line">  out = -FLT_MAX;</div><div class="line">  max_idx_x = <span class="number">-1.0f</span>;</div><div class="line">  max_idx_y = <span class="number">-1.0f</span>;</div><div class="line"></div><div class="line">  ROIAlignForward(out, data, bbox, max_idx_x, max_idx_y, param_.spatial_scale);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>We define <code>virtual</code> <code>Forward</code> function here. The real implementation is located at the final call to <code>ROIAlignForward</code>. Before that call, certain preparetaion are done, including checking, obtaining tensors from <code>in_data</code> and <code>out_data</code> and initialization of tensors. Initialization here requires functions of mashdow, e.g. <code>max_idx_x = -1.0f;</code> set all elements to -1.0 in the matrix. That’s why <code>using namespace mashdow;</code> is required. <code>CHECK_EQ</code>s are typical functions in logging system.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Backward</span><span class="params">(<span class="keyword">const</span> OpContext &amp;ctx,</span></span></div><div class="line">                      <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TBlob&gt; &amp;out_grad,</div><div class="line">                      <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TBlob&gt; &amp;in_data,</div><div class="line">                      <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TBlob&gt; &amp;out_data,</div><div class="line">                      <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;OpReqType&gt; &amp;req,</div><div class="line">                      <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TBlob&gt; &amp;in_grad,</div><div class="line">                      <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TBlob&gt; &amp;aux_args) &#123;</div><div class="line">  <span class="keyword">using</span> <span class="keyword">namespace</span> mshadow;</div><div class="line">  CHECK_EQ(in_data.size(), <span class="number">2</span>);</div><div class="line">  CHECK_EQ(out_data.size(), <span class="number">3</span>);</div><div class="line">  CHECK_EQ(out_grad[roialign::kOut].shape_[<span class="number">0</span>], in_data[roialign::kBox].shape_[<span class="number">0</span>]);</div><div class="line">  CHECK_EQ(out_data[roialign::kMaxIdxX].shape_[<span class="number">0</span>], in_data[roialign::kBox].shape_[<span class="number">0</span>]);</div><div class="line">  CHECK_EQ(out_data[roialign::kMaxIdxY].shape_[<span class="number">0</span>], in_data[roialign::kBox].shape_[<span class="number">0</span>]);</div><div class="line">  CHECK_NE(req[roialign::kData], kWriteInplace) &lt;&lt;</div><div class="line">    <span class="string">"ROIPooling: Backward doesn't support kWriteInplace."</span>;</div><div class="line">  CHECK_NE(req[roialign::kBox], kWriteInplace) &lt;&lt;</div><div class="line">    <span class="string">"ROIPooling: Backward doesn't support kWriteInplace."</span>;</div><div class="line">  Stream&lt;xpu&gt; *s = ctx.get_stream&lt;xpu&gt;();</div><div class="line"></div><div class="line">  Tensor&lt;xpu, <span class="number">4</span>, DType&gt; grad_out = out_grad[roialign::kOut].get&lt;xpu, <span class="number">4</span>, DType&gt;(s);</div><div class="line">  Tensor&lt;xpu, <span class="number">2</span>, DType&gt; bbox = in_data[roialign::kBox].get&lt;xpu, <span class="number">2</span>, DType&gt;(s);</div><div class="line">  Tensor&lt;xpu, <span class="number">4</span>, DType&gt; max_idx_x = out_data[roialign::kMaxIdxX].get&lt;xpu, <span class="number">4</span>, DType&gt;(s);</div><div class="line">  Tensor&lt;xpu, <span class="number">4</span>, DType&gt; max_idx_y = out_data[roialign::kMaxIdxY].get&lt;xpu, <span class="number">4</span>, DType&gt;(s);</div><div class="line">  Tensor&lt;xpu, <span class="number">4</span>, DType&gt; grad_in = in_grad[roialign::kData].get&lt;xpu, <span class="number">4</span>, DType&gt;(s);</div><div class="line">  Tensor&lt;xpu, <span class="number">2</span>, DType&gt; grad_roi = in_grad[roialign::kBox].get&lt;xpu, <span class="number">2</span>, DType&gt;(s);</div><div class="line"></div><div class="line">  CHECK_EQ(grad_out.CheckContiguous(), <span class="literal">true</span>);</div><div class="line">  CHECK_EQ(bbox.CheckContiguous(), <span class="literal">true</span>);</div><div class="line">  CHECK_EQ(max_idx_x.CheckContiguous(), <span class="literal">true</span>);</div><div class="line">  CHECK_EQ(max_idx_y.CheckContiguous(), <span class="literal">true</span>);</div><div class="line">  CHECK_EQ(grad_in.CheckContiguous(), <span class="literal">true</span>);</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (kAddTo == req[roialign::kData] || kWriteTo == req[roialign::kData]) &#123;</div><div class="line">    <span class="keyword">if</span> (kWriteTo == req[roialign::kData]) &#123;</div><div class="line">      grad_in = <span class="number">0.0f</span>;</div><div class="line">    &#125;</div><div class="line">    ROIAlignBackwardAcc(grad_in, grad_out, bbox, max_idx_x, max_idx_y, param_.spatial_scale);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (kWriteTo == req[roialign::kBox]) &#123;</div><div class="line">    grad_roi = <span class="number">0.0f</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>Backward</code> here are quite similar to <code>Forward</code>. It also need to do checking, obtain tensors and initialize them. In our case, the initialization depends on the request (to do: I’m not sure req is the abbreviation of this. <code>req[i]`` could be *kNullOp*, *kWriteTo*, *kWriteInplace*, *kAddTo* ... ?).</code> Note <code>grad_in = 0.0f;</code> set all gradients to 0. <code>ROIAlignBackwardAcc</code> undertakes the real task.</p>
+<p>An important observation here is that we don’t require all the <code>out_data</code>, <code>out_grad</code>, <code>in_data</code>. For system to recycle memory effectively, we specify these dependencies with the <code>DeclareBackwardDependency</code> interface in <code>OperatorProperty</code>.</p>
+<h5 id="about-req">About <code>req</code></h5>
+<p>I didn’t read the whole document but I guess this term is determined by the engine for the computational graph. For example, if a node bifurcate into two branches, then its gradients need to be accumulated from two sources. Therefore the type of <code>req</code> would be <code>kAddTo</code> in this case. In the normal setting, e.g. sequential connections, <code>kWriteTo</code> should be default.</p>
+<h4 id="factory-function">Factory function</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Decalre Factory function, used for dispatch specialization</span></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> xpu&gt;</div><div class="line"><span class="function">Operator* <span class="title">CreateOp</span><span class="params">(ROIAlignParam param, <span class="keyword">int</span> dtype)</span></span>;</div></pre></td></tr></table></figure>
+<p>To do.</p>
+<h4 id="operator-property">Operator property</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ROIAlignProp</span> :</span> <span class="keyword">public</span> OperatorProperty &#123;</div><div class="line"></div><div class="line">  <span class="comment">//</span></div><div class="line">  <span class="comment">// ... codes ...</span></div><div class="line">  <span class="comment">//</span></div><div class="line"></div><div class="line"> <span class="keyword">private</span>:</div><div class="line">  ROIAlignParam param_;</div><div class="line">&#125;;  <span class="comment">// class ROIPoolingProp</span></div></pre></td></tr></table></figure>
+<p>Here is an important separation: * Operator: implementation interface * OperatorProperty: semantic interface</p>
+<p>The <code>OperatorProperty</code> interface consists of following several functions according to the documentation. * Infer Shapes: Still, from the perspective of a system, this function is used to allocate memory. From the viewpoint of users, this function help us to check the shape of tensors. * Request Resources: See <a href="http://mxnet.io/architecture/overview.html#operators-in-mxnet" target="_blank" rel="external">Operator In Mxnet</a>. It helps to access to additional space for computation. * Backward Dependency: It specify the indispensible ingredients to compute gradients for input so that make it possible for system to recycle the unnecessary ones. * In-place Option: It helps to <em>suggest</em> system to reuse tensors for data and gradients for element-wise operations. See <a href="http://mxnet.io/architecture/overview.html#operators-in-mxnet" target="_blank" rel="external">Operator In Mxnet</a>. * Expose Operator to Python: there are several functions designed for python API, like initial function, <code>ListArguments()</code>, <code>ListOutputs()</code>. See <a href="http://mxnet.io/architecture/overview.html#operators-in-mxnet" target="_blank" rel="external">Operator In Mxnet</a> for a detailed list and explaination.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span>:</div><div class="line"> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt; ListArguments() <span class="keyword">const</span> override &#123;</div><div class="line">   <span class="keyword">return</span> &#123;<span class="string">"data"</span>, <span class="string">"rois"</span>&#125;;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt; ListOutputs() <span class="keyword">const</span> override &#123;</div><div class="line">   <span class="keyword">return</span> &#123;<span class="string">"output"</span>, <span class="string">"max_idx_x"</span>, <span class="string">"max_idx_y"</span> &#125;;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">int</span> <span class="title">NumOutputs</span><span class="params">()</span> <span class="keyword">const</span> override </span>&#123;</div><div class="line">   <span class="keyword">return</span> <span class="number">3</span>;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">int</span> <span class="title">NumVisibleOutputs</span><span class="params">()</span> <span class="keyword">const</span> override </span>&#123;</div><div class="line">   <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">void</span> <span class="title">Init</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::pair&lt;<span class="built_in">std</span>::<span class="built_in">string</span>, <span class="built_in">std</span>::<span class="built_in">string</span>&gt; &gt;&amp; kwargs)</span> override </span>&#123;</div><div class="line">   param_.Init(kwargs);</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="built_in">std</span>::<span class="built_in">map</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>, <span class="built_in">std</span>::<span class="built_in">string</span>&gt; GetParams() <span class="keyword">const</span> override &#123;</div><div class="line">   <span class="keyword">return</span> param_.__DICT__();</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">bool</span> <span class="title">InferShape</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TShape&gt; *in_shape,</span></span></div><div class="line">                 <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TShape&gt; *out_shape,</div><div class="line">                 <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TShape&gt; *aux_shape) <span class="keyword">const</span> override &#123;</div><div class="line">   <span class="keyword">using</span> <span class="keyword">namespace</span> mshadow;</div><div class="line">   CHECK_EQ(in_shape-&gt;size(), <span class="number">2U</span>) &lt;&lt; <span class="string">"Input:[data, rois]"</span>;</div><div class="line"></div><div class="line">   <span class="comment">// data: [batch_size, c, h, w]</span></div><div class="line">   TShape dshape = in_shape-&gt;at(roialign::kData);</div><div class="line">   CHECK_EQ(dshape.ndim(), <span class="number">4U</span>) &lt;&lt; <span class="string">"data should be a 4D tensor"</span>;</div><div class="line"></div><div class="line">   <span class="comment">// bbox: [num_rois, 5]</span></div><div class="line">   TShape bshape = in_shape-&gt;at(roialign::kBox);</div><div class="line">   CHECK_EQ(bshape.ndim(), <span class="number">2U</span>) &lt;&lt; <span class="string">"bbox should be a 2D tensor of shape [batch, 5]"</span>;</div><div class="line">   CHECK_EQ(bshape[<span class="number">1</span>], <span class="number">5U</span>) &lt;&lt; <span class="string">"bbox should be a 2D tensor of shape [batch, 5]"</span>;</div><div class="line"></div><div class="line">   <span class="comment">// out: [num_rois, c, pooled_h, pooled_w]</span></div><div class="line">   <span class="comment">// max_idx_x, max_idx_y: [num_rois, c, pooled_h, pooled_w]</span></div><div class="line">   out_shape-&gt;clear();</div><div class="line">   out_shape-&gt;push_back(</div><div class="line">        Shape4(bshape[<span class="number">0</span>], dshape[<span class="number">1</span>], param_.pooled_size[<span class="number">0</span>], param_.pooled_size[<span class="number">1</span>]));</div><div class="line">   out_shape-&gt;push_back(</div><div class="line">        Shape4(bshape[<span class="number">0</span>], dshape[<span class="number">1</span>], param_.pooled_size[<span class="number">0</span>], param_.pooled_size[<span class="number">1</span>]));</div><div class="line">   out_shape-&gt;push_back(</div><div class="line">        Shape4(bshape[<span class="number">0</span>], dshape[<span class="number">1</span>], param_.pooled_size[<span class="number">0</span>], param_.pooled_size[<span class="number">1</span>]));</div><div class="line">   <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">bool</span> <span class="title">InferType</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; *in_type,</span></span></div><div class="line">                <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; *out_type,</div><div class="line">                <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; *aux_type) <span class="keyword">const</span> override &#123;</div><div class="line">   CHECK_EQ(in_type-&gt;size(), <span class="number">2U</span>);</div><div class="line">   <span class="keyword">int</span> dtype = (*in_type)[<span class="number">0</span>];</div><div class="line">   CHECK_EQ(dtype, (*in_type)[<span class="number">1</span>]);</div><div class="line">   CHECK_NE(dtype, <span class="number">-1</span>) &lt;&lt; <span class="string">"Input must have specified type"</span>;</div><div class="line"></div><div class="line">   out_type-&gt;clear();</div><div class="line">   out_type-&gt;push_back(dtype);</div><div class="line">   out_type-&gt;push_back(dtype);</div><div class="line">   out_type-&gt;push_back(dtype);</div><div class="line"></div><div class="line">   <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function">OperatorProperty* <span class="title">Copy</span><span class="params">()</span> <span class="keyword">const</span> override </span>&#123;</div><div class="line">   ROIAlignProp* roi_align_sym = <span class="keyword">new</span> ROIAlignProp();</div><div class="line">   roi_align_sym-&gt;param_ = <span class="keyword">this</span>-&gt;param_;</div><div class="line">   <span class="keyword">return</span> roi_align_sym;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="built_in">std</span>::<span class="function"><span class="built_in">string</span> <span class="title">TypeString</span><span class="params">()</span> <span class="keyword">const</span> override </span>&#123;</div><div class="line">   <span class="keyword">return</span> <span class="string">"_contrib_ROIAlign"</span>;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="comment">// decalre dependency and inplace optimization options</span></div><div class="line"> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; DeclareBackwardDependency(</div><div class="line">   <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;out_grad,</div><div class="line">   <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;in_data,</div><div class="line">   <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;out_data) <span class="keyword">const</span> override &#123;</div><div class="line">   <span class="keyword">return</span> &#123;out_grad[roialign::kOut], in_data[roialign::kBox],</div><div class="line">   out_data[roialign::kMaxIdxX],out_data[roialign::kMaxIdxY]&#125;;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function">Operator* <span class="title">CreateOperator</span><span class="params">(Context ctx)</span> <span class="keyword">const</span> override </span>&#123;</div><div class="line">   LOG(FATAL) &lt;&lt; <span class="string">"Not Implemented."</span>;</div><div class="line">   <span class="keyword">return</span> <span class="literal">NULL</span>;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function">Operator* <span class="title">CreateOperatorEx</span><span class="params">(Context ctx, <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TShape&gt; *in_shape,</span></span></div><div class="line">                            <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; *in_type) <span class="keyword">const</span> override;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/24/experience/" rel="next" title="经验">
+                <i class="fa fa-chevron-left"></i> 经验
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/05/Tofel/" rel="prev" title="Tofel">
+                Tofel <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="DiligentPanda" />
+          <p class="site-author-name" itemprop="name">DiligentPanda</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/DiligentPanda" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://fatelancer.github.io" target="_blank" title="Lancer">
+                  
+                    <i class="fa fa-fw fa-address-book"></i>
+                  
+                  Lancer
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#implement-roialign-operation-in-mxnet"><span class="nav-number">1.</span> <span class="nav-text">Implement ROIAlign Operation in Mxnet</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#official-guidances"><span class="nav-number">1.1.</span> <span class="nav-text">Official Guidances</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gpu-implementation"><span class="nav-number">1.2.</span> <span class="nav-text">GPU Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#roi_align-inl.h"><span class="nav-number">1.2.1.</span> <span class="nav-text">roi_align-inl.h</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#an-overview"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">An Overview</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#headers-and-enumerations"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">Headers and enumerations</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#operator-parameters"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">Operator parameters</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#operator-operations"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">Operator operations</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#about-req"><span class="nav-number">1.2.1.4.1.</span> <span class="nav-text">About req</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#factory-function"><span class="nav-number">1.2.1.5.</span> <span class="nav-text">Factory function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#operator-property"><span class="nav-number">1.2.1.6.</span> <span class="nav-text">Operator property</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DiligentPanda</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
