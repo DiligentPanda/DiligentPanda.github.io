@@ -2,23 +2,65 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://DiligentPanda.github.io/2017/08/11/FPN/</loc>
+    
+    <lastmod>2017-08-21T08:42:34.361Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://DiligentPanda.github.io/2017/08/19/Segmentation-Aware-CNN-With-Local-Attention-Mask/</loc>
+    
+    <lastmod>2017-08-19T08:13:30.940Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://DiligentPanda.github.io/2017/08/07/Paper-Reading-List-2017/</loc>
     
-    <lastmod>2017-08-10T08:47:51.061Z</lastmod>
+    <lastmod>2017-08-18T04:14:17.641Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://DiligentPanda.github.io/2017/08/16/Faster-R-CNN/</loc>
+    
+    <lastmod>2017-08-18T03:10:43.831Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://DiligentPanda.github.io/2017/08/13/CoupleNet/</loc>
+    
+    <lastmod>2017-08-17T03:39:07.053Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://DiligentPanda.github.io/2017/08/10/R-FCN/</loc>
     
-    <lastmod>2017-08-10T08:47:49.004Z</lastmod>
+    <lastmod>2017-08-17T03:38:34.991Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://DiligentPanda.github.io/2017/08/11/Mxnet-Tips/</loc>
+    
+    <lastmod>2017-08-14T03:01:23.373Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://DiligentPanda.github.io/2017/07/16/Cython-for-NumPy/</loc>
     
-    <lastmod>2017-08-06T14:29:17.340Z</lastmod>
+    <lastmod>2017-08-14T01:37:11.670Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://DiligentPanda.github.io/2017/08/11/Dear-Python-Tools/</loc>
+    
+    <lastmod>2017-08-11T14:01:02.977Z</lastmod>
     
   </url>
   

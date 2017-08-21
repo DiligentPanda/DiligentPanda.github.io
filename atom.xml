@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://DiligentPanda.github.io/"/>
-  <updated>2017-08-10T08:47:49.004Z</updated>
+  <updated>2017-08-19T08:13:30.940Z</updated>
   <id>http://DiligentPanda.github.io/</id>
   
   <author>
@@ -16,11 +16,490 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Segmentation-Aware CNN With Local Attention Mask</title>
+    <link href="http://DiligentPanda.github.io/2017/08/19/Segmentation-Aware-CNN-With-Local-Attention-Mask/"/>
+    <id>http://DiligentPanda.github.io/2017/08/19/Segmentation-Aware-CNN-With-Local-Attention-Mask/</id>
+    <published>2017-08-19T08:01:08.000Z</published>
+    <updated>2017-08-19T08:13:30.940Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="segmentation-aware-convolutional-networks-using-local-attention-masks">Segmentation-Aware Convolutional Networks Using Local Attention Masks</h1>
+<ul>
+<li>Adam W. Harley, Konstantinos G. Derpanis, Iasonas Kokkinos</li>
+<li>ICCV 2017</li>
+<li>https://github.com/aharley/segaware</li>
+</ul>
+<h2 id="abstract">Abstract</h2>
+<ul>
+<li>integrate segmentation information:</li>
+<li><blockquote>
+<p>This counter-acts the tendency of CNNs to smooth information across regions and increases their spatial precision.</p>
+</blockquote></li>
+<li>A CNN to provide an embedding space =&gt; compute a local attention mask relative to each neuron</li>
+<li>Segmentation-aware convolution</li>
+<li>dense prediction tasks</li>
+<li>semantic segmentation: match performance of DenseCRF but faster and simpler</li>
+<li>optical flow： sharper response</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;segmentation-aware-convolutional-networks-using-local-attention-masks&quot;&gt;Segmentation-Aware Convolutional Networks Using Local Attenti
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Faster R-CNN</title>
+    <link href="http://DiligentPanda.github.io/2017/08/16/Faster-R-CNN/"/>
+    <id>http://DiligentPanda.github.io/2017/08/16/Faster-R-CNN/</id>
+    <published>2017-08-16T06:37:05.000Z</published>
+    <updated>2017-08-18T03:10:43.831Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="faster-r-cnn-towards-real-time-object-detection-with-region-proposal-networks">Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks</h1>
+<p>Based on Fast R-CNN as detector, Faster R-CNN incorporate proposal generation stage into net by sharing conv features with detector and sliding a mini-subnet over the feat maps. The computation time for porposals is sharply reduced and the proposals’ quality is high.</p>
+<ul>
+<li>Shaoqing Ren, Kaiming He, Ross Girshick, Jian Sun</li>
+<li>Advances in Neural Information Processing Systems(NIPS), 2015</li>
+<li>https://arxiv.org/abs/1506.01497</li>
+<li>https://github.com/rbgirshick/py-faster-rcnn</li>
+<li>https://github.com/ShaoqingRen/faster_rcnn</li>
+</ul>
+<h2 id="abstract">Abstract</h2>
+<ol style="list-style-type: decimal">
+<li>Introduce Region Proposal Network(RPN)
+<ul>
+<li><em>SPPNet, Fast R-CNN</em> rely on external region proposal algorithms: <strong>slow</strong>.</li>
+<li>RPN shares the fully convolutional features with the detection net.
+<ul>
+<li>cost-free region proposals.</li>
+<li>predict object bounds and objectness scores at each position.</li>
+</ul></li>
+</ul></li>
+<li>Results
+<ul>
+<li>VGG-16</li>
+<li>73.2% voc2007; 70.4% voc2014: 300 proposals</li>
+<li>5fps</li>
+</ul></li>
+</ol>
+<h2 id="introduction">Introduction</h2>
+<ol style="list-style-type: decimal">
+<li>Sharing convolution cross proposals: R-CNN -&gt; Fast R-CNN
+<ul>
+<li>less time</li>
+<li>computational bottleneck lies in region proposal</li>
+</ul></li>
+<li>RPN share features with object detection network.
+<ul>
+<li>On top of shared feature map:
+<ul>
+<li>extract feature vector</li>
+<li>predict objectness and regression for k proposals relative to k anchors of various scales and radios at a location</li>
+</ul></li>
+</ul></li>
+</ol>
+<h2 id="apporach">Apporach</h2>
+<h3 id="region-proposal-networks">Region Proposal Networks</h3>
+<ul>
+<li>Sliding window (size <span class="math inline">\(3*3\)</span>) -&gt; <span class="math inline">\(3*3\)</span> conv -&gt; two <span class="math inline">\(1*1\)</span> conv</li>
+<li>9 anchors at one position: 3 scales, 3 aspect radios, 4k outputs for encoding coords, 2k scores. Total <span class="math inline">\(kHW\)</span> anchors for conv feat map of size <span class="math inline">\(H*W\)</span>.</li>
+<li>traslation invariant: address the problems of obj translation (because it is convolutional.): less paramters compared to <em>MultiBox</em>. <img src="/2017/08/16/Faster-R-CNN/RPN.PNG"></li>
+</ul>
+<h3 id="leaning-region-proposal">Leaning Region Proposal</h3>
+<ul>
+<li>Positive samples:
+<ul>
+<li>the highest IoU overlap with a gt bbox</li>
+<li>IoU overlap with a gt bbox is higher than 0.7</li>
+</ul></li>
+<li>Negative samples:
+<ul>
+<li>IoU overlaps with all gt bboxes are less than 0.3</li>
+</ul></li>
+<li><p>Others: No contrib</p></li>
+<li>Loss <img src="/2017/08/16/Faster-R-CNN/rpn_loss.PNG">
+<ul>
+<li><span class="math inline">\(*\)</span> means gt. <span class="math inline">\(p_i^*\)</span> is either 0 or 1 (gt labels: neg/pos).</li>
+<li><span class="math inline">\(t\)</span> is a encoding of coords (<span class="math inline">\(x,y,h,w\)</span>, center coords and sizes) with respect to anchors.</li>
+<li><img src="/2017/08/16/Faster-R-CNN/coding_of_coords.PNG"></li>
+<li>reg loss is only activated for pos anchor.</li>
+</ul></li>
+<li><p>Learnable weights: <strong>NOT SHARED</strong> for k anchors: one for each (scale, shape).</p></li>
+</ul>
+<h3 id="optimization">Optimization</h3>
+<ul>
+<li>randomly sample 256 rois for rpn loss in a mini-batch.</li>
+<li>for sampled rois, pos:neg = 1:1, pad pos if less pos.</li>
+<li>fix some paramters to conserve memory.</li>
+<li>Sharing convolutional features</li>
+<li>complex 4-step training algo</li>
+</ul>
+<h3 id="implementation-details">Implementation details</h3>
+<ul>
+<li>resize image: shorter side to 600</li>
+<li>total strides of last conv feature in <em>VGG/ZF</em> : 16.</li>
+<li>3 scales: <span class="math inline">\(128^2,256^2,512^2\)</span> (8,16,32 relative to the stride (in the feature map))</li>
+<li>3 aspect radios: <span class="math inline">\(1:1,1:2,2:1\)</span></li>
+<li><span class="math inline">\(1000*600\)</span> image: <span class="math inline">\(60*40*9\)</span> anchors</li>
+<li>ignore boundary boxxes during training</li>
+<li>hard to train.</li>
+<li>6k anchors left.</li>
+<li>NOT in testing.</li>
+<li>RPN NMS</li>
+<li>IoU threshold: 0.7.</li>
+<li>2k proposals for training <em>Fast R-CNN</em>.</li>
+<li>top-N (300 is good) ranked used for detection in test.</li>
+<li>Those proposal are transformed by their predictions to rois as regions for feature extraction in <em>Fast RCNN</em>.</li>
+</ul>
+<h3 id="experiments">Experiments</h3>
+<ul>
+<li><img src="/2017/08/16/Faster-R-CNN/results.PNG"> save time in test:</li>
+<li>shared features</li>
+<li><p>less proposals for detection: reduct the roi-wise fc cost</p></li>
+<li><p><img src="/2017/08/16/Faster-R-CNN/results2.PNG"> pay attetion to table 4.</p></li>
+<li><div class="figure">
+<img src="/2017/08/16/Faster-R-CNN/recall_vs_IoU.PNG">
+
+</div></li>
+</ul>
+<blockquote>
+<p>It is noteworthy that the Recall-to-IoU metric is just loosely related to the ultimate detection accuracy.</p>
+</blockquote>
+<p>Note perfomance drops more quickly for SS &amp; EB than RPN when proposals are fewer.</p>
+<h2 id="other-things">Other things</h2>
+<ol style="list-style-type: decimal">
+<li><p>Why it is called region-base cnn? In my understanding, this is because since its first generation, in the network, there are operations are region-based(or roi-wise). This is inherent in object detection tasks.</p></li>
+<li><p>alternative finetuning or train jointly?</p></li>
+<li><blockquote>
+<p>It is not clear a priori if learning Fast R-CNN while simultaneously changing the proposal mechanism will converge.</p>
+</blockquote></li>
+<li><blockquote>
+<p>We note that our algorithm allows the use of anchor boxes that are larger than the underlying receptive field when predicting large proposals. Such predictions are not impossible, one may still roughly infer the extent of an object if only the middle of the object is visible. I still think there might be improvement.</p>
+</blockquote></li>
+<li><blockquote>
+<p>It is noteworthy that the Recall-to-IoU metric is just loosely related to the ultimate detection accuracy. It is more appropriate to use this metric to diagnose the proposal method than to evaluate it.</p>
+</blockquote></li>
+<li><p>Details about Faster R-CNN with Resnets Backbone.</p></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;faster-r-cnn-towards-real-time-object-detection-with-region-proposal-networks&quot;&gt;Faster R-CNN: Towards Real-Time Object Detection with
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>CoupleNet</title>
+    <link href="http://DiligentPanda.github.io/2017/08/13/CoupleNet/"/>
+    <id>http://DiligentPanda.github.io/2017/08/13/CoupleNet/</id>
+    <published>2017-08-13T14:16:13.000Z</published>
+    <updated>2017-08-17T03:39:07.053Z</updated>
+    
+    <content type="html"><![CDATA[
+]]></content>
+    
+    <summary type="html">
+    
+      
+
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>FPN</title>
+    <link href="http://DiligentPanda.github.io/2017/08/11/FPN/"/>
+    <id>http://DiligentPanda.github.io/2017/08/11/FPN/</id>
+    <published>2017-08-11T13:27:54.000Z</published>
+    <updated>2017-08-21T08:42:34.361Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="feature-pyramid-networks-for-object-detection">Feature Pyramid Networks for Object Detection</h1>
+<ul>
+<li>Tsung-Yi Lin, Piotr Dollar, Ross Girshick, Kaiming He, Bharath Hariharan, Serge Belongie</li>
+<li>CVPR 2017</li>
+<li>https://arxiv.org/abs/1612.03144</li>
+</ul>
+<h2 id="abstract">Abstract</h2>
+<ul>
+<li>Feature Pyramid</li>
+<li>exploit inherent multi-scale, pyramidal hierarchy of DCN: marginal extra cost.</li>
+<li>bottom-up (CNN ifself) + top-down(high-level semantic information) + lateral connection(for information fusion) <img src="/2017/08/11/FPN/FPN.PNG"></li>
+<li>detect objects of different scales.</li>
+<li>Results</li>
+<li>Use on Faster R-CNN &gt; other single model</li>
+<li>5fps</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<ul>
+<li>Feature Pyramid:</li>
+<li>standard solution: image pyramid</li>
+<li>scale-invariant: object scale change = shift its level in pyramid</li>
+<li>applied in testing generally: mutli-scale images as input =&gt; all levels, including high resolution is semantically strong</li>
+<li>limitation: inference time increase + end-to-end training is infeasible + inconsistency between training and testing inference</li>
+<li>Exploit inherent CNN structure:</li>
+<li>high resolution &lt;-&gt; low semantic</li>
+<li><em>SSD</em> doesn’t reuse high resolution feat maps, which is important for small object detection</li>
+<li>FPN = bottom-up + top-down + lateral
+<ul>
+<li>proposals: AR +8%</li>
+<li>detection: COCO AP +2.3%; VOC AP+3.8% &gt; single-scale Faster R-CNN with ResNet</li>
+<li>segmentation</li>
+</ul></li>
+</ul>
+<h2 id="approach">Approach</h2>
+<h3 id="structure">Structure</h3>
+<ul>
+<li>Bottom-up</li>
+<li>stage: layers that output feat maps of the same size.</li>
+<li>last layers of stages to construct pyramid</li>
+<li>Resnet: {C2,C3,C4,C5}=&gt;stride {4,8,16,32}, C1 discarded.</li>
+<li>Top-down path + lateral connection <img src="/2017/08/11/FPN/top-down.PNG"></li>
+<li>add 1*1 conv on C5 =&gt; coarsest feat map for starting iter</li>
+<li>{C2,C3,C4,C5} =&gt; merged feats</li>
+<li>merged feats + conv <span class="math inline">\(3*3\)</span> =&gt; final feats {P2,P3,P4,P5}:
+<ul>
+<li>conv 3*3</li>
+<li>reduce aliasing effect of upsampling</li>
+<li>output channels: 256-d, for shared classifier and regressor</li>
+<li>no nonlinearity</li>
+</ul></li>
+</ul>
+<h3 id="applications">Applications</h3>
+<h4 id="fpn-for-rpn">FPN for RPN</h4>
+<ul>
+<li>original RPN:</li>
+<li>head</li>
+<li>anchor</li>
+<li>on single-scale feature map</li>
+<li>Adapted version:</li>
+<li>on each level of pyramid</li>
+<li>each level deal with one size of anchors.
+<ul>
+<li>{<span class="math inline">\(32^2,64^2,128^2,256^2,512^2\)</span>} on {P2,P3,P4,P5,P6}</li>
+<li>P6: Stride 2 upsampling of P5, only introduced for the <span class="math inline">\(512^2\)</span> scale, not applied in Fast R-CNN detector</li>
+<li>radios: still {<span class="math inline">\(1:1,1:2,2:1\)</span>}</li>
+<li>15 kinds of anchors</li>
+<li>Implementation: the same as original one, see <em>Faster R-CNN</em></li>
+<li>No need to explicitly assign GT bboxes to different levels</li>
+</ul></li>
+<li><blockquote>
+<p>we have also evaluated the alternative without sharing parameters and observed similar accuracy. The good performance of sharing parameters indicates that all levels of our pyramid share similar semantic levels. This advantage is analogous to that of using a featurized image pyramid, where a common head classifier can be applied to features computed at any image scale.</p>
+</blockquote></li>
+</ul>
+<h4 id="fpn-for-fast-r-cnn">FPN for Fast R-CNN</h4>
+<ul>
+<li>assign RoIs of diff scals to diff levels</li>
+<li>roi (w,h) -&gt; <span class="math inline">\(P_k\)</span>: <span class="math display">\[k=\lfloor k_0+log_2(\sqrt{wh}/224) \rfloor\]</span> &gt; Here 224 is the canonical ImageNet pre-training size, and k0 is the target level on which an RoI with w * h = 224 * 224 should be mapped into.</li>
+<li><span class="math inline">\(k_0=4\)</span></li>
+<li>Diff from original Fast R-CNN with ResNets</li>
+<li>original
+<ul>
+<li>conv5 (9-layer sub-network) adopted as the head on top of conv4 feats</li>
+</ul></li>
+<li>In this paper:
+<ul>
+<li>conv5 used for pyramid</li>
+<li>share heads: 7*7 roi-pooling + 2 1024-d fc layers with relu + final classification and bbox regression layers.</li>
+<li>lighter weight and faster</li>
+</ul></li>
+</ul>
+<h2 id="experiments">Experiments</h2>
+<ul>
+<li>coco: 25k trainval + 5k minival</li>
+</ul>
+<h3 id="rpn">RPN</h3>
+<ul>
+<li>AR</li>
+</ul>
+<p><img src="/2017/08/11/FPN/rpn.PNG"> Pay special attention to the improvements of small and middle-size objs.</p>
+<h3 id="fastfaster-r-cnn">Fast/Faster R-CNN</h3>
+<h4 id="fast-r-cnn-on-fixed-proposals">Fast R-CNN (on fixed proposals)</h4>
+<ul>
+<li><p>use proposals from RPN Table 1-(c) (fixed) <img src="/2017/08/11/FPN/Fast.PNG"></p></li>
+<li>Note the lighter 2-fc head used in this model and meaning of conducting experiments (b).</li>
+<li>The problems of exp (f)</li>
+<li><blockquote>
+<p>We argue that this is because RoI pooling is a warping-like operation, which is less sensitive to the region’s scales.</p>
+</blockquote></li>
+<li><p>Note high level top down information is still accessible in P2</p></li>
+</ul>
+<h4 id="faster-r-cnn-on-consistent-proposals">Faster R-CNN (on consistent proposals)</h4>
+<p><img src="/2017/08/11/FPN/Faster.PNG"> * Note why the reproduction is much bettter: more anchors; more RoIs; larger images … * Even tough extra layers, head is lighter: 0.20-0.24s vs 0.32 (Faster R-CNN)</p>
+<h4 id="comparing-with-coco-winners">Comparing with COCO winners</h4>
+<div class="figure">
+<img src="/2017/08/11/FPN/coco.PNG">
+
+</div>
+<ul>
+<li>note only single scale input</li>
+<li>potential imporvements:</li>
+<li>iterative regression</li>
+<li>hard negative mining</li>
+<li>context modeling</li>
+<li>stronger data augmentation</li>
+</ul>
+<h3 id="segmentation">Segmentation</h3>
+<p>to do.</p>
+<h2 id="others">others</h2>
+<ol style="list-style-type: decimal">
+<li><p>region-based detectors are detectors that don’t use sliding windows. Generally, region-based detectors are two-stage detectors. They need select rois from proposals, which are generated by sliding windows.</p></li>
+<li><p>The num of ROIs in Fast/Faster R-CNN</p></li>
+<li><p>The problem of exp (f) in Fast R-CNN</p></li>
+<li><p>Why 4-step training in Faster R-CNN?</p></li>
+<li><blockquote>
+<p>We find that our ResNet-101 model in Table 5 is not sufficiently trained (?) with the default learning rate schedule. So we increase the number of mini-batches by 2× at each learning rate when training the Fast R-CNN step.</p>
+</blockquote></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;feature-pyramid-networks-for-object-detection&quot;&gt;Feature Pyramid Networks for Object Detection&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Tsung-Yi Lin, Piotr Dol
+    
+    </summary>
+    
+      <category term="paper/cv/detection" scheme="http://DiligentPanda.github.io/categories/paper-cv-detection/"/>
+    
+    
+      <category term="Detection" scheme="http://DiligentPanda.github.io/tags/Detection/"/>
+    
+      <category term="cv" scheme="http://DiligentPanda.github.io/tags/cv/"/>
+    
+      <category term="paper_notes" scheme="http://DiligentPanda.github.io/tags/paper-notes/"/>
+    
+      <category term="Object Detection" scheme="http://DiligentPanda.github.io/tags/Object-Detection/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mxnet Tips</title>
+    <link href="http://DiligentPanda.github.io/2017/08/11/Mxnet-Tips/"/>
+    <id>http://DiligentPanda.github.io/2017/08/11/Mxnet-Tips/</id>
+    <published>2017-08-11T11:55:09.000Z</published>
+    <updated>2017-08-14T03:01:23.373Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li>How to retrive all the weights in the network?</li>
+</ul>
+<blockquote>
+<p>see fcis/lib/utils/symbol.py:Symbol.check_parameter_shapes</p>
+</blockquote>
+<p>Using <code>sym.list_arguments()</code> can help us get all the arguments from a network, which include learnable weights, data and label. A straight forward way is to eliminate data and label by their names.</p>
+<p>Of course, we can use the utility provided by fcis.</p>
+<ul>
+<li>It is important to have each layer named. It is useful for:</li>
+<li>initialization for specific layers</li>
+<li><p>understanding debug information (the name of layer may be available in the debug information.)</p></li>
+<li><p>How to vizualize network? use function <code>mx.viz.plot_network(sym,...)</code>.</p></li>
+<li>How to debug?</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>If we want to know the statistics of learnable weights or their gradients.
+<ol style="list-style-type: decimal">
+<li><p>use <code>mx.mon.Monitor</code>.</p>
+<ul>
+<li>https://github.com/apache/incubator-mxnet/blob/master/python/mxnet/monitor.py</li>
+<li>https://github.com/apache/incubator-mxnet/blob/master/example/python-howto/monitor_weights.py</li>
+</ul>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Monitor</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="string">"""Monitor outputs, weights, and gradients for debugging.</span></div><div class="line">    Parameters</div><div class="line">    ----------</div><div class="line">    interval : int</div><div class="line">        Number of batches between printing.</div><div class="line">    stat_func : function</div><div class="line">        A function that computes statistics of tensors.</div><div class="line">        Takes an `NDArray` and returns an `NDArray`. Defaults to mean</div><div class="line">        absolute value |x|/size(x).</div><div class="line">    pattern : str</div><div class="line">        A regular expression specifying which tensors to monitor.</div><div class="line">        Only tensors with names that match `name_pattern` will be included.</div><div class="line">        For example, '.*weight|.*output' will print all weights and outputs and</div><div class="line">        '.*backward.*' will print all gradients.</div><div class="line">    """</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, interval, stat_func=None, pattern=<span class="string">'.*'</span>, sort=False)</span>:</span></div></pre></td></tr></table></figure></p>
+<p>The only difficulty here is how to use pattern to match the names of weights, data or output. See problem <em>How does the naming system in mxnet work?</em>. The easiest way to print all the stuff associated with a layer and a layer can be easily found by its name.</p>
+<p>We should name our each layer in a systematic and elegant way so that we can find them easily.</p></li>
+<li><p>use custom <code>Print</code> operator.</p>
+<p>This is easy to use and flexible, but you have to write the custom operators and insert it in your network. In the implementation, you just need to print input and copy input to output.</p></li>
+</ol></li>
+</ol>
+<ul>
+<li>How does the naming system in mxnet work?</li>
+</ul>
+<p>A network is composed of data blobs and layers. In the usual case, we can name layers at our will, e.g. <code>name='FC_Layer'</code> or it will get default name, e.g. <code>fc1</code>. The default name start counting at 1. It can be read from <code>[sym].name</code>.</p>
+<p>Blobs are associated with layers, generally including input, output and weights. Because input/output data blob would be shared by multiple layers, the name of input data blob is specified/overwriten by the lower layer (the name of output data blob).</p>
+<p>The output blob would be named as <code>[layer_name]_[output_name]</code>, <code>output_name</code> is by default <code>output[id]</code> (possibably multiple outputs). We can get <code>output_name</code> by <code>.list_outputs()</code> method.</p>
+<p>The paramter blob would be named as <code>[layer_name]_[default_paramter_name]</code>, e.g. <code>fc1_weight</code> and <code>fc1_bias</code>. These rules also apply to our self-defined layers. If we provide parameters by a Variable, the name would be overwriten by the name of the Variable. This is consistent with the case when we input other data blobs into this layer. We can read <code>parameter_name</code> from <code>.list_arguments()</code>. But it is still not so straightforward, because <code>.list_arguments()</code> list all the arguments that is required in the whole computation graph rather than this node.</p>
+<p>So, how about gradients of those blob? Their names seems purely defined as <code>[layer_name]_backward_[default_blob_name]</code>, such as <code>fc1_backward_weight</code>, <code>fc1_backward_bias</code>, <code>fc1_backward_data</code>, even if input data blob actually has name <code>data_img</code> for example. Anyway, I really think this is confusing.</p>
+<ul>
+<li>Note that data/label name provided by your data iter should match the ones required by your network.</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;How to retrive all the weights in the network?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;see fcis/lib/utils/symbol.py:Symbol.check_parameter_s
+    
+    </summary>
+    
+    
+      <category term="programming" scheme="http://DiligentPanda.github.io/tags/programming/"/>
+    
+      <category term="mxnet" scheme="http://DiligentPanda.github.io/tags/mxnet/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Dear Python Tools</title>
+    <link href="http://DiligentPanda.github.io/2017/08/11/Dear-Python-Tools/"/>
+    <id>http://DiligentPanda.github.io/2017/08/11/Dear-Python-Tools/</id>
+    <published>2017-08-11T11:52:08.000Z</published>
+    <updated>2017-08-11T14:01:02.977Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="library">library</h1>
+<ul>
+<li>pprint</li>
+<li>argparse</li>
+<li>yaml</li>
+<li>easydict</li>
+</ul>
+<h1 id="func">func</h1>
+<ul>
+<li>enumerate(i) return (idx, i.next())</li>
+<li>zip</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;library&quot;&gt;library&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;pprint&lt;/li&gt;
+&lt;li&gt;argparse&lt;/li&gt;
+&lt;li&gt;yaml&lt;/li&gt;
+&lt;li&gt;easydict&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;func&quot;&gt;func&lt;/h1&gt;
+&lt;
+    
+    </summary>
+    
+      <category term="Programming/Python" scheme="http://DiligentPanda.github.io/categories/Programming-Python/"/>
+    
+    
+      <category term="python" scheme="http://DiligentPanda.github.io/tags/python/"/>
+    
+      <category term="programming" scheme="http://DiligentPanda.github.io/tags/programming/"/>
+    
+  </entry>
+  
+  <entry>
     <title>R-FCN</title>
     <link href="http://DiligentPanda.github.io/2017/08/10/R-FCN/"/>
     <id>http://DiligentPanda.github.io/2017/08/10/R-FCN/</id>
     <published>2017-08-10T06:55:56.000Z</published>
-    <updated>2017-08-10T08:47:49.004Z</updated>
+    <updated>2017-08-17T03:38:34.991Z</updated>
     
     <content type="html"><![CDATA[<h1 id="r-fcn-object-detection-via-region-based-fully-convolutional-networks">R-FCN: Object Detection via Region-based Fully Convolutional Networks</h1>
 <ul>
@@ -28,8 +507,10 @@
 <li>Conference on Neural Information Processing Systems (NIPS), 2016</li>
 <li>https://arxiv.org/abs/1605.06409</li>
 <li>https://github.com/daijifeng001/r-fcn</li>
+<li>https://github.com/YuwenXiong/py-R-FCN</li>
 </ul>
 <h2 id="abstract">Abstract</h2>
+<p>This paper propose a fully convolutional structure for object detection, which removes the heavy roi-wise operations after roi-pooling. To compensate translation invariance which is original addressed by those roi-wise operations, position-sensitive score maps are introduced. This model saves a lot of time by removing roi-wise headers and sharing computations in fully convolutional way.</p>
 <ol style="list-style-type: decimal">
 <li>Fully Convolution and Position-Sensitive Score Maps for Object Detection
 <ul>
@@ -38,6 +519,7 @@
 </ul></li>
 <li>Results:
 <ul>
+<li>Resnet-101</li>
 <li>83.6% map on PASCAL VOC 2007. 82.0% on 2012.</li>
 <li>170ms/img in inference: 2.5-20 times faster then <em>Faster R-CNN</em></li>
 </ul></li>
@@ -52,7 +534,7 @@
 <p>resulted from old classification system.(final spatial pooling layer -&gt; roi pooling layer)</p></li>
 <li>The state-of-art classification system is fully convolutional, like <em>ResNets</em>. In order to use fully convolutional backbone, we have to solve the aforementioned dilemma. Inserting RoI pooling (a region-specific operation) is a solution but it introduce heavy headers(those headers lead to translation variance). See Table 1. <img src="/2017/08/10/R-FCN/table1.PNG">
 <ul>
-<li>TODO Review Faster R-CNN</li>
+<li>TODO Review Fast R-CNN</li>
 <li>Examples:
 <ul>
 <li>Translation of objects should reflect the change of overlap between gt object and bbox.</li>
@@ -76,14 +558,25 @@
 <li>OHEM: online hard example mining.</li>
 <li>hole algorithm.</li>
 </ul>
-<h1 id="archtecture">archtecture</h1>
-<p><img src="/2017/08/10/R-FCN/figure2.PNG"> # visualization <img src="/2017/08/10/R-FCN/figure_3_4.PNG"></p>
+<h3 id="archtecture">Archtecture</h3>
+<p><img src="/2017/08/10/R-FCN/figure2.PNG"> ### Visualization <img src="/2017/08/10/R-FCN/figure_3_4.PNG"></p>
 <h2 id="experiments">Experiments</h2>
-<h3 id="results">results</h3>
+<h3 id="results">Results</h3>
 <ul>
 <li>voc 2007/2012 <img src="/2017/08/10/R-FCN/table_3_4_5.PNG"></li>
 <li>coco <img src="/2017/08/10/R-FCN/table6.PNG"></li>
 </ul>
+<h2 id="other-things">Other Things</h2>
+<ol style="list-style-type: decimal">
+<li>The inference process is easy to understand. How about the training part? Specifically, how do final score maps learn to be position sensitive? Through end-to-end learning, the successive selective pooling shepherds the convolution layer to learn specialized position-sensitive score maps. This position sensitive score maps may be slightly different from the one in fcis. It only shows the potential a point may belong to a certain part of bbox. So a point didn’t belong to an object but belong to another object near this object may be evaluated as high probability. Even tough proposals may not overlap with the gt bbox in a perfect way (So, some one may lead to false learning of locations, e.g. left-up score map shows high value on the center of an object. <strong>Notice gt bboxes are always used in training as addtional proposals</strong>), the high probability region marked by those proposals is still reasonable if we think all proposals follows a gaussian like distribution. (The most centered bbox (the gt bbox) always gets the best score.)</li>
+</ol>
+<p>Anyway the keypoints here we should understand is how <strong>end-to-end learning</strong> plays a critical role in this process and forces the layer to learn what we want.</p>
+<blockquote>
+<p>A great thing about machine learning is that if you give the model flexility to learn critical information, it will always imporve. And if you give the model restrictions, it will learn things more easily.</p>
+</blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li>Compared to another kind of two-step dectors, Faster R-CNN, the current design eliminates the heavy header, which saves a lot of time. Actually, in the second step of Faster R-CNN, the computation time is propotional to the number of propsals from the previous RPN subnet, typically 300 bboxes([300,2048(1024),h,w],to check Faster R-CNN paper), which is a really big cost.</li>
+</ol>
 ]]></content>
     
     <summary type="html">
@@ -110,7 +603,7 @@
     <link href="http://DiligentPanda.github.io/2017/08/07/Paper-Reading-List-2017/"/>
     <id>http://DiligentPanda.github.io/2017/08/07/Paper-Reading-List-2017/</id>
     <published>2017-08-07T10:49:32.000Z</published>
-    <updated>2017-08-10T08:47:51.061Z</updated>
+    <updated>2017-08-18T04:14:17.641Z</updated>
     
     <content type="html"><![CDATA[<h1 id="machine-learning">Machine Learning</h1>
 <h2 id="computer-vision">Computer Vision</h2>
@@ -152,6 +645,14 @@ https://github.com/msracver/Deformable-ConvNets</code></pre>
 <p>Xizhou Zhu, Yujie Wang, Jifeng Dai, Lu Yuan, and Yichen Wei</p>
 <p>International Conference on Computer Vision (ICCV), 2017.</p>
 <p>https://arxiv.org/abs/1703.10025</p></li>
+<li><p>CoupleNet: Coupling Global Structure with Local Parts for Object Detection</p>
+<p>Yousong Zhu, Chaoyang Zhao, Jinqiao Wang, Xu Zhao, Yi Wu, Hanqing Lu</p>
+<p>Accepted by ICCV 2017</p>
+<p>https://arxiv.org/abs/1708.02863v1</p>
+<p>https://github.com/tshizys/CoupleNet (NA)</p></li>
+<li><p>Deep Residual Learning for Image Recognition</p>
+<p>Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun</p>
+<p>CVPR 2016</p></li>
 </ol>
 ]]></content>
     
@@ -255,7 +756,7 @@ https://github.com/msracver/Deformable-ConvNets</code></pre>
     <link href="http://DiligentPanda.github.io/2017/07/16/Cython-for-NumPy/"/>
     <id>http://DiligentPanda.github.io/2017/07/16/Cython-for-NumPy/</id>
     <published>2017-07-16T06:01:28.000Z</published>
-    <updated>2017-08-06T14:29:17.340Z</updated>
+    <updated>2017-08-14T01:37:11.670Z</updated>
     
     <content type="html"><![CDATA[<h1 id="cython-for-numpy">Cython for NumPy</h1>
 <h2 id="cython">Cython</h2>
@@ -338,9 +839,9 @@ https://github.com/msracver/Deformable-ConvNets</code></pre>
       <category term="Programming/Python" scheme="http://DiligentPanda.github.io/categories/Programming-Python/"/>
     
     
-      <category term="cython" scheme="http://DiligentPanda.github.io/tags/cython/"/>
-    
       <category term="python" scheme="http://DiligentPanda.github.io/tags/python/"/>
+    
+      <category term="cython" scheme="http://DiligentPanda.github.io/tags/cython/"/>
     
       <category term="numpy" scheme="http://DiligentPanda.github.io/tags/numpy/"/>
     
@@ -883,13 +1384,13 @@ q_*(s,a)&amp;=E[R_{t+1}+\gamma \max_{a&#39;}q_*(S_{t+1},a&#39;)|S_t=s,A_t=a]\\
       <category term="Reading/Psychology/The Art of Loving" scheme="http://DiligentPanda.github.io/categories/Reading-Psychology-The-Art-of-Loving/"/>
     
     
+      <category term="book" scheme="http://DiligentPanda.github.io/tags/book/"/>
+    
       <category term="psychology" scheme="http://DiligentPanda.github.io/tags/psychology/"/>
     
       <category term="love" scheme="http://DiligentPanda.github.io/tags/love/"/>
     
       <category term="reading" scheme="http://DiligentPanda.github.io/tags/reading/"/>
-    
-      <category term="book" scheme="http://DiligentPanda.github.io/tags/book/"/>
     
   </entry>
   

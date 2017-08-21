@@ -1,0 +1,1253 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Detection,cv,paper_notes,Object Detection," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Playground" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Feature Pyramid Networks for Object Detection  Tsung-Yi Lin, Piotr Dollar, Ross Girshick, Kaiming He, Bharath Hariharan, Serge Belongie CVPR 2017 https://arxiv.org/abs/1612.03144  Abstract  Fe">
+<meta name="keywords" content="Detection,cv,paper_notes,Object Detection">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FPN">
+<meta property="og:url" content="http://DiligentPanda.github.io/2017/08/11/FPN/index.html">
+<meta property="og:site_name" content="Playground">
+<meta property="og:description" content="Feature Pyramid Networks for Object Detection  Tsung-Yi Lin, Piotr Dollar, Ross Girshick, Kaiming He, Bharath Hariharan, Serge Belongie CVPR 2017 https://arxiv.org/abs/1612.03144  Abstract  Fe">
+<meta property="og:image" content="http://diligentpanda.github.io/2017/08/11/FPN/FPN.PNG">
+<meta property="og:image" content="http://diligentpanda.github.io/2017/08/11/FPN/top-down.PNG">
+<meta property="og:image" content="http://diligentpanda.github.io/2017/08/11/FPN/rpn.PNG">
+<meta property="og:image" content="http://diligentpanda.github.io/2017/08/11/FPN/Fast.PNG">
+<meta property="og:image" content="http://diligentpanda.github.io/2017/08/11/FPN/Faster.PNG">
+<meta property="og:image" content="http://diligentpanda.github.io/2017/08/11/FPN/coco.PNG">
+<meta property="og:updated_time" content="2017-08-21T08:42:34.361Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FPN">
+<meta name="twitter:description" content="Feature Pyramid Networks for Object Detection  Tsung-Yi Lin, Piotr Dollar, Ross Girshick, Kaiming He, Bharath Hariharan, Serge Belongie CVPR 2017 https://arxiv.org/abs/1612.03144  Abstract  Fe">
+<meta name="twitter:image" content="http://diligentpanda.github.io/2017/08/11/FPN/FPN.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://DiligentPanda.github.io/2017/08/11/FPN/"/>
+
+
+
+
+
+  <title>FPN | Playground</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Playground</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://DiligentPanda.github.io/2017/08/11/FPN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DiligentPanda">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Playground">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">FPN</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-11T21:27:54+08:00">
+                2017-08-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/paper-cv-detection/" itemprop="url" rel="index">
+                    <span itemprop="name">paper/cv/detection</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="feature-pyramid-networks-for-object-detection">Feature Pyramid Networks for Object Detection</h1>
+<ul>
+<li>Tsung-Yi Lin, Piotr Dollar, Ross Girshick, Kaiming He, Bharath Hariharan, Serge Belongie</li>
+<li>CVPR 2017</li>
+<li>https://arxiv.org/abs/1612.03144</li>
+</ul>
+<h2 id="abstract">Abstract</h2>
+<ul>
+<li>Feature Pyramid</li>
+<li>exploit inherent multi-scale, pyramidal hierarchy of DCN: marginal extra cost.</li>
+<li>bottom-up (CNN ifself) + top-down(high-level semantic information) + lateral connection(for information fusion) <img src="/2017/08/11/FPN/FPN.PNG"></li>
+<li>detect objects of different scales.</li>
+<li>Results</li>
+<li>Use on Faster R-CNN &gt; other single model</li>
+<li>5fps</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<ul>
+<li>Feature Pyramid:</li>
+<li>standard solution: image pyramid</li>
+<li>scale-invariant: object scale change = shift its level in pyramid</li>
+<li>applied in testing generally: mutli-scale images as input =&gt; all levels, including high resolution is semantically strong</li>
+<li>limitation: inference time increase + end-to-end training is infeasible + inconsistency between training and testing inference</li>
+<li>Exploit inherent CNN structure:</li>
+<li>high resolution &lt;-&gt; low semantic</li>
+<li><em>SSD</em> doesn’t reuse high resolution feat maps, which is important for small object detection</li>
+<li>FPN = bottom-up + top-down + lateral
+<ul>
+<li>proposals: AR +8%</li>
+<li>detection: COCO AP +2.3%; VOC AP+3.8% &gt; single-scale Faster R-CNN with ResNet</li>
+<li>segmentation</li>
+</ul></li>
+</ul>
+<h2 id="approach">Approach</h2>
+<h3 id="structure">Structure</h3>
+<ul>
+<li>Bottom-up</li>
+<li>stage: layers that output feat maps of the same size.</li>
+<li>last layers of stages to construct pyramid</li>
+<li>Resnet: {C2,C3,C4,C5}=&gt;stride {4,8,16,32}, C1 discarded.</li>
+<li>Top-down path + lateral connection <img src="/2017/08/11/FPN/top-down.PNG"></li>
+<li>add 1*1 conv on C5 =&gt; coarsest feat map for starting iter</li>
+<li>{C2,C3,C4,C5} =&gt; merged feats</li>
+<li>merged feats + conv <span class="math inline">\(3*3\)</span> =&gt; final feats {P2,P3,P4,P5}:
+<ul>
+<li>conv 3*3</li>
+<li>reduce aliasing effect of upsampling</li>
+<li>output channels: 256-d, for shared classifier and regressor</li>
+<li>no nonlinearity</li>
+</ul></li>
+</ul>
+<h3 id="applications">Applications</h3>
+<h4 id="fpn-for-rpn">FPN for RPN</h4>
+<ul>
+<li>original RPN:</li>
+<li>head</li>
+<li>anchor</li>
+<li>on single-scale feature map</li>
+<li>Adapted version:</li>
+<li>on each level of pyramid</li>
+<li>each level deal with one size of anchors.
+<ul>
+<li>{<span class="math inline">\(32^2,64^2,128^2,256^2,512^2\)</span>} on {P2,P3,P4,P5,P6}</li>
+<li>P6: Stride 2 upsampling of P5, only introduced for the <span class="math inline">\(512^2\)</span> scale, not applied in Fast R-CNN detector</li>
+<li>radios: still {<span class="math inline">\(1:1,1:2,2:1\)</span>}</li>
+<li>15 kinds of anchors</li>
+<li>Implementation: the same as original one, see <em>Faster R-CNN</em></li>
+<li>No need to explicitly assign GT bboxes to different levels</li>
+</ul></li>
+<li><blockquote>
+<p>we have also evaluated the alternative without sharing parameters and observed similar accuracy. The good performance of sharing parameters indicates that all levels of our pyramid share similar semantic levels. This advantage is analogous to that of using a featurized image pyramid, where a common head classifier can be applied to features computed at any image scale.</p>
+</blockquote></li>
+</ul>
+<h4 id="fpn-for-fast-r-cnn">FPN for Fast R-CNN</h4>
+<ul>
+<li>assign RoIs of diff scals to diff levels</li>
+<li>roi (w,h) -&gt; <span class="math inline">\(P_k\)</span>: <span class="math display">\[k=\lfloor k_0+log_2(\sqrt{wh}/224) \rfloor\]</span> &gt; Here 224 is the canonical ImageNet pre-training size, and k0 is the target level on which an RoI with w * h = 224 * 224 should be mapped into.</li>
+<li><span class="math inline">\(k_0=4\)</span></li>
+<li>Diff from original Fast R-CNN with ResNets</li>
+<li>original
+<ul>
+<li>conv5 (9-layer sub-network) adopted as the head on top of conv4 feats</li>
+</ul></li>
+<li>In this paper:
+<ul>
+<li>conv5 used for pyramid</li>
+<li>share heads: 7*7 roi-pooling + 2 1024-d fc layers with relu + final classification and bbox regression layers.</li>
+<li>lighter weight and faster</li>
+</ul></li>
+</ul>
+<h2 id="experiments">Experiments</h2>
+<ul>
+<li>coco: 25k trainval + 5k minival</li>
+</ul>
+<h3 id="rpn">RPN</h3>
+<ul>
+<li>AR</li>
+</ul>
+<p><img src="/2017/08/11/FPN/rpn.PNG"> Pay special attention to the improvements of small and middle-size objs.</p>
+<h3 id="fastfaster-r-cnn">Fast/Faster R-CNN</h3>
+<h4 id="fast-r-cnn-on-fixed-proposals">Fast R-CNN (on fixed proposals)</h4>
+<ul>
+<li><p>use proposals from RPN Table 1-(c) (fixed) <img src="/2017/08/11/FPN/Fast.PNG"></p></li>
+<li>Note the lighter 2-fc head used in this model and meaning of conducting experiments (b).</li>
+<li>The problems of exp (f)</li>
+<li><blockquote>
+<p>We argue that this is because RoI pooling is a warping-like operation, which is less sensitive to the region’s scales.</p>
+</blockquote></li>
+<li><p>Note high level top down information is still accessible in P2</p></li>
+</ul>
+<h4 id="faster-r-cnn-on-consistent-proposals">Faster R-CNN (on consistent proposals)</h4>
+<p><img src="/2017/08/11/FPN/Faster.PNG"> * Note why the reproduction is much bettter: more anchors; more RoIs; larger images … * Even tough extra layers, head is lighter: 0.20-0.24s vs 0.32 (Faster R-CNN)</p>
+<h4 id="comparing-with-coco-winners">Comparing with COCO winners</h4>
+<div class="figure">
+<img src="/2017/08/11/FPN/coco.PNG">
+
+</div>
+<ul>
+<li>note only single scale input</li>
+<li>potential imporvements:</li>
+<li>iterative regression</li>
+<li>hard negative mining</li>
+<li>context modeling</li>
+<li>stronger data augmentation</li>
+</ul>
+<h3 id="segmentation">Segmentation</h3>
+<p>to do.</p>
+<h2 id="others">others</h2>
+<ol style="list-style-type: decimal">
+<li><p>region-based detectors are detectors that don’t use sliding windows. Generally, region-based detectors are two-stage detectors. They need select rois from proposals, which are generated by sliding windows.</p></li>
+<li><p>The num of ROIs in Fast/Faster R-CNN</p></li>
+<li><p>The problem of exp (f) in Fast R-CNN</p></li>
+<li><p>Why 4-step training in Faster R-CNN?</p></li>
+<li><blockquote>
+<p>We find that our ResNet-101 model in Table 5 is not sufficiently trained (?) with the default learning rate schedule. So we increase the number of mini-batches by 2× at each learning rate when training the Fast R-CNN step.</p>
+</blockquote></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Detection/" rel="tag"># Detection</a>
+          
+            <a href="/tags/cv/" rel="tag"># cv</a>
+          
+            <a href="/tags/paper-notes/" rel="tag"># paper_notes</a>
+          
+            <a href="/tags/Object-Detection/" rel="tag"># Object Detection</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/11/Mxnet-Tips/" rel="next" title="Mxnet Tips">
+                <i class="fa fa-chevron-left"></i> Mxnet Tips
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/13/CoupleNet/" rel="prev" title="CoupleNet">
+                CoupleNet <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="DiligentPanda" />
+          <p class="site-author-name" itemprop="name">DiligentPanda</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/DiligentPanda" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://fatelancer.github.io" target="_blank" title="Lancer">
+                  
+                    <i class="fa fa-fw fa-address-book"></i>
+                  
+                  Lancer
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#feature-pyramid-networks-for-object-detection"><span class="nav-number">1.</span> <span class="nav-text">Feature Pyramid Networks for Object Detection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#abstract"><span class="nav-number">1.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#approach"><span class="nav-number">1.3.</span> <span class="nav-text">Approach</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#structure"><span class="nav-number">1.3.1.</span> <span class="nav-text">Structure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#applications"><span class="nav-number">1.3.2.</span> <span class="nav-text">Applications</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#fpn-for-rpn"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">FPN for RPN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fpn-for-fast-r-cnn"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">FPN for Fast R-CNN</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments"><span class="nav-number">1.4.</span> <span class="nav-text">Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rpn"><span class="nav-number">1.4.1.</span> <span class="nav-text">RPN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fastfaster-r-cnn"><span class="nav-number">1.4.2.</span> <span class="nav-text">Fast/Faster R-CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#fast-r-cnn-on-fixed-proposals"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">Fast R-CNN (on fixed proposals)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#faster-r-cnn-on-consistent-proposals"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">Faster R-CNN (on consistent proposals)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#comparing-with-coco-winners"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">Comparing with COCO winners</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#segmentation"><span class="nav-number">1.4.3.</span> <span class="nav-text">Segmentation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#others"><span class="nav-number">1.5.</span> <span class="nav-text">others</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DiligentPanda</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

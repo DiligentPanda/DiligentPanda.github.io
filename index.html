@@ -299,6 +299,1052 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://DiligentPanda.github.io/2017/08/19/Segmentation-Aware-CNN-With-Local-Attention-Mask/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DiligentPanda">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Playground">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/19/Segmentation-Aware-CNN-With-Local-Attention-Mask/" itemprop="url">Segmentation-Aware CNN With Local Attention Mask</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-19T16:01:08+08:00">
+                2017-08-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="segmentation-aware-convolutional-networks-using-local-attention-masks">Segmentation-Aware Convolutional Networks Using Local Attention Masks</h1>
+<ul>
+<li>Adam W. Harley, Konstantinos G. Derpanis, Iasonas Kokkinos</li>
+<li>ICCV 2017</li>
+<li>https://github.com/aharley/segaware</li>
+</ul>
+<h2 id="abstract">Abstract</h2>
+<ul>
+<li>integrate segmentation information:</li>
+<li><blockquote>
+<p>This counter-acts the tendency of CNNs to smooth information across regions and increases their spatial precision.</p>
+</blockquote></li>
+<li>A CNN to provide an embedding space =&gt; compute a local attention mask relative to each neuron</li>
+<li>Segmentation-aware convolution</li>
+<li>dense prediction tasks</li>
+<li>semantic segmentation: match performance of DenseCRF but faster and simpler</li>
+<li>optical flow： sharper response</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://DiligentPanda.github.io/2017/08/16/Faster-R-CNN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DiligentPanda">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Playground">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/16/Faster-R-CNN/" itemprop="url">Faster R-CNN</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-16T14:37:05+08:00">
+                2017-08-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="faster-r-cnn-towards-real-time-object-detection-with-region-proposal-networks">Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks</h1>
+<p>Based on Fast R-CNN as detector, Faster R-CNN incorporate proposal generation stage into net by sharing conv features with detector and sliding a mini-subnet over the feat maps. The computation time for porposals is sharply reduced and the proposals’ quality is high.</p>
+<ul>
+<li>Shaoqing Ren, Kaiming He, Ross Girshick, Jian Sun</li>
+<li>Advances in Neural Information Processing Systems(NIPS), 2015</li>
+<li>https://arxiv.org/abs/1506.01497</li>
+<li>https://github.com/rbgirshick/py-faster-rcnn</li>
+<li>https://github.com/ShaoqingRen/faster_rcnn</li>
+</ul>
+<h2 id="abstract">Abstract</h2>
+<ol style="list-style-type: decimal">
+<li>Introduce Region Proposal Network(RPN)
+<ul>
+<li><em>SPPNet, Fast R-CNN</em> rely on external region proposal algorithms: <strong>slow</strong>.</li>
+<li>RPN shares the fully convolutional features with the detection net.
+<ul>
+<li>cost-free region proposals.</li>
+<li>predict object bounds and objectness scores at each position.</li>
+</ul></li>
+</ul></li>
+<li>Results
+<ul>
+<li>VGG-16</li>
+<li>73.2% voc2007; 70.4% voc2014: 300 proposals</li>
+<li>5fps</li>
+</ul></li>
+</ol>
+<h2 id="introduction">Introduction</h2>
+<ol style="list-style-type: decimal">
+<li>Sharing convolution cross proposals: R-CNN -&gt; Fast R-CNN
+<ul>
+<li>less time</li>
+<li>computational bottleneck lies in region proposal</li>
+</ul></li>
+<li>RPN share features with object detection network.
+<ul>
+<li>On top of shared feature map:
+<ul>
+<li>extract feature vector</li>
+<li>predict objectness and regression for k proposals relative to k anchors of various scales and radios at a location</li>
+</ul></li>
+</ul></li>
+</ol>
+<h2 id="apporach">Apporach</h2>
+<h3 id="region-proposal-networks">Region Proposal Networks</h3>
+<ul>
+<li>Sliding window (size <span class="math inline">\(3*3\)</span>) -&gt; <span class="math inline">\(3*3\)</span> conv -&gt; two <span class="math inline">\(1*1\)</span> conv</li>
+<li>9 anchors at one position: 3 scales, 3 aspect radios, 4k outputs for encoding coords, 2k scores. Total <span class="math inline">\(kHW\)</span> anchors for conv feat map of size <span class="math inline">\(H*W\)</span>.</li>
+<li>traslation invariant: address the problems of obj translation (because it is convolutional.): less paramters compared to <em>MultiBox</em>. <img src="/2017/08/16/Faster-R-CNN/RPN.PNG"></li>
+</ul>
+<h3 id="leaning-region-proposal">Leaning Region Proposal</h3>
+<ul>
+<li>Positive samples:
+<ul>
+<li>the highest IoU overlap with a gt bbox</li>
+<li>IoU overlap with a gt bbox is higher than 0.7</li>
+</ul></li>
+<li>Negative samples:
+<ul>
+<li>IoU overlaps with all gt bboxes are less than 0.3</li>
+</ul></li>
+<li><p>Others: No contrib</p></li>
+<li>Loss <img src="/2017/08/16/Faster-R-CNN/rpn_loss.PNG">
+<ul>
+<li><span class="math inline">\(*\)</span> means gt. <span class="math inline">\(p_i^*\)</span> is either 0 or 1 (gt labels: neg/pos).</li>
+<li><span class="math inline">\(t\)</span> is a encoding of coords (<span class="math inline">\(x,y,h,w\)</span>, center coords and sizes) with respect to anchors.</li>
+<li><img src="/2017/08/16/Faster-R-CNN/coding_of_coords.PNG"></li>
+<li>reg loss is only activated for pos anchor.</li>
+</ul></li>
+<li><p>Learnable weights: <strong>NOT SHARED</strong> for k anchors: one for each (scale, shape).</p></li>
+</ul>
+<h3 id="optimization">Optimization</h3>
+<ul>
+<li>randomly sample 256 rois for rpn loss in a mini-batch.</li>
+<li>for sampled rois, pos:neg = 1:1, pad pos if less pos.</li>
+<li>fix some paramters to conserve memory.</li>
+<li>Sharing convolutional features</li>
+<li>complex 4-step training algo</li>
+</ul>
+<h3 id="implementation-details">Implementation details</h3>
+<ul>
+<li>resize image: shorter side to 600</li>
+<li>total strides of last conv feature in <em>VGG/ZF</em> : 16.</li>
+<li>3 scales: <span class="math inline">\(128^2,256^2,512^2\)</span> (8,16,32 relative to the stride (in the feature map))</li>
+<li>3 aspect radios: <span class="math inline">\(1:1,1:2,2:1\)</span></li>
+<li><span class="math inline">\(1000*600\)</span> image: <span class="math inline">\(60*40*9\)</span> anchors</li>
+<li>ignore boundary boxxes during training</li>
+<li>hard to train.</li>
+<li>6k anchors left.</li>
+<li>NOT in testing.</li>
+<li>RPN NMS</li>
+<li>IoU threshold: 0.7.</li>
+<li>2k proposals for training <em>Fast R-CNN</em>.</li>
+<li>top-N (300 is good) ranked used for detection in test.</li>
+<li>Those proposal are transformed by their predictions to rois as regions for feature extraction in <em>Fast RCNN</em>.</li>
+</ul>
+<h3 id="experiments">Experiments</h3>
+<ul>
+<li><img src="/2017/08/16/Faster-R-CNN/results.PNG"> save time in test:</li>
+<li>shared features</li>
+<li><p>less proposals for detection: reduct the roi-wise fc cost</p></li>
+<li><p><img src="/2017/08/16/Faster-R-CNN/results2.PNG"> pay attetion to table 4.</p></li>
+<li><div class="figure">
+<img src="/2017/08/16/Faster-R-CNN/recall_vs_IoU.PNG">
+
+</div></li>
+</ul>
+<blockquote>
+<p>It is noteworthy that the Recall-to-IoU metric is just loosely related to the ultimate detection accuracy.</p>
+</blockquote>
+<p>Note perfomance drops more quickly for SS &amp; EB than RPN when proposals are fewer.</p>
+<h2 id="other-things">Other things</h2>
+<ol style="list-style-type: decimal">
+<li><p>Why it is called region-base cnn? In my understanding, this is because since its first generation, in the network, there are operations are region-based(or roi-wise). This is inherent in object detection tasks.</p></li>
+<li><p>alternative finetuning or train jointly?</p></li>
+<li><blockquote>
+<p>It is not clear a priori if learning Fast R-CNN while simultaneously changing the proposal mechanism will converge.</p>
+</blockquote></li>
+<li><blockquote>
+<p>We note that our algorithm allows the use of anchor boxes that are larger than the underlying receptive field when predicting large proposals. Such predictions are not impossible, one may still roughly infer the extent of an object if only the middle of the object is visible. I still think there might be improvement.</p>
+</blockquote></li>
+<li><blockquote>
+<p>It is noteworthy that the Recall-to-IoU metric is just loosely related to the ultimate detection accuracy. It is more appropriate to use this metric to diagnose the proposal method than to evaluate it.</p>
+</blockquote></li>
+<li><p>Details about Faster R-CNN with Resnets Backbone.</p></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://DiligentPanda.github.io/2017/08/13/CoupleNet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DiligentPanda">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Playground">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/13/CoupleNet/" itemprop="url">CoupleNet</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-13T22:16:13+08:00">
+                2017-08-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://DiligentPanda.github.io/2017/08/11/FPN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DiligentPanda">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Playground">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/11/FPN/" itemprop="url">FPN</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-11T21:27:54+08:00">
+                2017-08-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/paper-cv-detection/" itemprop="url" rel="index">
+                    <span itemprop="name">paper/cv/detection</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="feature-pyramid-networks-for-object-detection">Feature Pyramid Networks for Object Detection</h1>
+<ul>
+<li>Tsung-Yi Lin, Piotr Dollar, Ross Girshick, Kaiming He, Bharath Hariharan, Serge Belongie</li>
+<li>CVPR 2017</li>
+<li>https://arxiv.org/abs/1612.03144</li>
+</ul>
+<h2 id="abstract">Abstract</h2>
+<ul>
+<li>Feature Pyramid</li>
+<li>exploit inherent multi-scale, pyramidal hierarchy of DCN: marginal extra cost.</li>
+<li>bottom-up (CNN ifself) + top-down(high-level semantic information) + lateral connection(for information fusion) <img src="/2017/08/11/FPN/FPN.PNG"></li>
+<li>detect objects of different scales.</li>
+<li>Results</li>
+<li>Use on Faster R-CNN &gt; other single model</li>
+<li>5fps</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<ul>
+<li>Feature Pyramid:</li>
+<li>standard solution: image pyramid</li>
+<li>scale-invariant: object scale change = shift its level in pyramid</li>
+<li>applied in testing generally: mutli-scale images as input =&gt; all levels, including high resolution is semantically strong</li>
+<li>limitation: inference time increase + end-to-end training is infeasible + inconsistency between training and testing inference</li>
+<li>Exploit inherent CNN structure:</li>
+<li>high resolution &lt;-&gt; low semantic</li>
+<li><em>SSD</em> doesn’t reuse high resolution feat maps, which is important for small object detection</li>
+<li>FPN = bottom-up + top-down + lateral
+<ul>
+<li>proposals: AR +8%</li>
+<li>detection: COCO AP +2.3%; VOC AP+3.8% &gt; single-scale Faster R-CNN with ResNet</li>
+<li>segmentation</li>
+</ul></li>
+</ul>
+<h2 id="approach">Approach</h2>
+<h3 id="structure">Structure</h3>
+<ul>
+<li>Bottom-up</li>
+<li>stage: layers that output feat maps of the same size.</li>
+<li>last layers of stages to construct pyramid</li>
+<li>Resnet: {C2,C3,C4,C5}=&gt;stride {4,8,16,32}, C1 discarded.</li>
+<li>Top-down path + lateral connection <img src="/2017/08/11/FPN/top-down.PNG"></li>
+<li>add 1*1 conv on C5 =&gt; coarsest feat map for starting iter</li>
+<li>{C2,C3,C4,C5} =&gt; merged feats</li>
+<li>merged feats + conv <span class="math inline">\(3*3\)</span> =&gt; final feats {P2,P3,P4,P5}:
+<ul>
+<li>conv 3*3</li>
+<li>reduce aliasing effect of upsampling</li>
+<li>output channels: 256-d, for shared classifier and regressor</li>
+<li>no nonlinearity</li>
+</ul></li>
+</ul>
+<h3 id="applications">Applications</h3>
+<h4 id="fpn-for-rpn">FPN for RPN</h4>
+<ul>
+<li>original RPN:</li>
+<li>head</li>
+<li>anchor</li>
+<li>on single-scale feature map</li>
+<li>Adapted version:</li>
+<li>on each level of pyramid</li>
+<li>each level deal with one size of anchors.
+<ul>
+<li>{<span class="math inline">\(32^2,64^2,128^2,256^2,512^2\)</span>} on {P2,P3,P4,P5,P6}</li>
+<li>P6: Stride 2 upsampling of P5, only introduced for the <span class="math inline">\(512^2\)</span> scale, not applied in Fast R-CNN detector</li>
+<li>radios: still {<span class="math inline">\(1:1,1:2,2:1\)</span>}</li>
+<li>15 kinds of anchors</li>
+<li>Implementation: the same as original one, see <em>Faster R-CNN</em></li>
+<li>No need to explicitly assign GT bboxes to different levels</li>
+</ul></li>
+<li><blockquote>
+<p>we have also evaluated the alternative without sharing parameters and observed similar accuracy. The good performance of sharing parameters indicates that all levels of our pyramid share similar semantic levels. This advantage is analogous to that of using a featurized image pyramid, where a common head classifier can be applied to features computed at any image scale.</p>
+</blockquote></li>
+</ul>
+<h4 id="fpn-for-fast-r-cnn">FPN for Fast R-CNN</h4>
+<ul>
+<li>assign RoIs of diff scals to diff levels</li>
+<li>roi (w,h) -&gt; <span class="math inline">\(P_k\)</span>: <span class="math display">\[k=\lfloor k_0+log_2(\sqrt{wh}/224) \rfloor\]</span> &gt; Here 224 is the canonical ImageNet pre-training size, and k0 is the target level on which an RoI with w * h = 224 * 224 should be mapped into.</li>
+<li><span class="math inline">\(k_0=4\)</span></li>
+<li>Diff from original Fast R-CNN with ResNets</li>
+<li>original
+<ul>
+<li>conv5 (9-layer sub-network) adopted as the head on top of conv4 feats</li>
+</ul></li>
+<li>In this paper:
+<ul>
+<li>conv5 used for pyramid</li>
+<li>share heads: 7*7 roi-pooling + 2 1024-d fc layers with relu + final classification and bbox regression layers.</li>
+<li>lighter weight and faster</li>
+</ul></li>
+</ul>
+<h2 id="experiments">Experiments</h2>
+<ul>
+<li>coco: 25k trainval + 5k minival</li>
+</ul>
+<h3 id="rpn">RPN</h3>
+<ul>
+<li>AR</li>
+</ul>
+<p><img src="/2017/08/11/FPN/rpn.PNG"> Pay special attention to the improvements of small and middle-size objs.</p>
+<h3 id="fastfaster-r-cnn">Fast/Faster R-CNN</h3>
+<h4 id="fast-r-cnn-on-fixed-proposals">Fast R-CNN (on fixed proposals)</h4>
+<ul>
+<li><p>use proposals from RPN Table 1-(c) (fixed) <img src="/2017/08/11/FPN/Fast.PNG"></p></li>
+<li>Note the lighter 2-fc head used in this model and meaning of conducting experiments (b).</li>
+<li>The problems of exp (f)</li>
+<li><blockquote>
+<p>We argue that this is because RoI pooling is a warping-like operation, which is less sensitive to the region’s scales.</p>
+</blockquote></li>
+<li><p>Note high level top down information is still accessible in P2</p></li>
+</ul>
+<h4 id="faster-r-cnn-on-consistent-proposals">Faster R-CNN (on consistent proposals)</h4>
+<p><img src="/2017/08/11/FPN/Faster.PNG"> * Note why the reproduction is much bettter: more anchors; more RoIs; larger images … * Even tough extra layers, head is lighter: 0.20-0.24s vs 0.32 (Faster R-CNN)</p>
+<h4 id="comparing-with-coco-winners">Comparing with COCO winners</h4>
+<div class="figure">
+<img src="/2017/08/11/FPN/coco.PNG">
+
+</div>
+<ul>
+<li>note only single scale input</li>
+<li>potential imporvements:</li>
+<li>iterative regression</li>
+<li>hard negative mining</li>
+<li>context modeling</li>
+<li>stronger data augmentation</li>
+</ul>
+<h3 id="segmentation">Segmentation</h3>
+<p>to do.</p>
+<h2 id="others">others</h2>
+<ol style="list-style-type: decimal">
+<li><p>region-based detectors are detectors that don’t use sliding windows. Generally, region-based detectors are two-stage detectors. They need select rois from proposals, which are generated by sliding windows.</p></li>
+<li><p>The num of ROIs in Fast/Faster R-CNN</p></li>
+<li><p>The problem of exp (f) in Fast R-CNN</p></li>
+<li><p>Why 4-step training in Faster R-CNN?</p></li>
+<li><blockquote>
+<p>We find that our ResNet-101 model in Table 5 is not sufficiently trained (?) with the default learning rate schedule. So we increase the number of mini-batches by 2× at each learning rate when training the Fast R-CNN step.</p>
+</blockquote></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://DiligentPanda.github.io/2017/08/11/Mxnet-Tips/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DiligentPanda">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Playground">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/11/Mxnet-Tips/" itemprop="url">Mxnet Tips</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-11T19:55:09+08:00">
+                2017-08-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>How to retrive all the weights in the network?</li>
+</ul>
+<blockquote>
+<p>see fcis/lib/utils/symbol.py:Symbol.check_parameter_shapes</p>
+</blockquote>
+<p>Using <code>sym.list_arguments()</code> can help us get all the arguments from a network, which include learnable weights, data and label. A straight forward way is to eliminate data and label by their names.</p>
+<p>Of course, we can use the utility provided by fcis.</p>
+<ul>
+<li>It is important to have each layer named. It is useful for:</li>
+<li>initialization for specific layers</li>
+<li><p>understanding debug information (the name of layer may be available in the debug information.)</p></li>
+<li><p>How to vizualize network? use function <code>mx.viz.plot_network(sym,...)</code>.</p></li>
+<li>How to debug?</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>If we want to know the statistics of learnable weights or their gradients.
+<ol style="list-style-type: decimal">
+<li><p>use <code>mx.mon.Monitor</code>.</p>
+<ul>
+<li>https://github.com/apache/incubator-mxnet/blob/master/python/mxnet/monitor.py</li>
+<li>https://github.com/apache/incubator-mxnet/blob/master/example/python-howto/monitor_weights.py</li>
+</ul>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Monitor</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="string">"""Monitor outputs, weights, and gradients for debugging.</span></div><div class="line">    Parameters</div><div class="line">    ----------</div><div class="line">    interval : int</div><div class="line">        Number of batches between printing.</div><div class="line">    stat_func : function</div><div class="line">        A function that computes statistics of tensors.</div><div class="line">        Takes an `NDArray` and returns an `NDArray`. Defaults to mean</div><div class="line">        absolute value |x|/size(x).</div><div class="line">    pattern : str</div><div class="line">        A regular expression specifying which tensors to monitor.</div><div class="line">        Only tensors with names that match `name_pattern` will be included.</div><div class="line">        For example, '.*weight|.*output' will print all weights and outputs and</div><div class="line">        '.*backward.*' will print all gradients.</div><div class="line">    """</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, interval, stat_func=None, pattern=<span class="string">'.*'</span>, sort=False)</span>:</span></div></pre></td></tr></table></figure></p>
+<p>The only difficulty here is how to use pattern to match the names of weights, data or output. See problem <em>How does the naming system in mxnet work?</em>. The easiest way to print all the stuff associated with a layer and a layer can be easily found by its name.</p>
+<p>We should name our each layer in a systematic and elegant way so that we can find them easily.</p></li>
+<li><p>use custom <code>Print</code> operator.</p>
+<p>This is easy to use and flexible, but you have to write the custom operators and insert it in your network. In the implementation, you just need to print input and copy input to output.</p></li>
+</ol></li>
+</ol>
+<ul>
+<li>How does the naming system in mxnet work?</li>
+</ul>
+<p>A network is composed of data blobs and layers. In the usual case, we can name layers at our will, e.g. <code>name='FC_Layer'</code> or it will get default name, e.g. <code>fc1</code>. The default name start counting at 1. It can be read from <code>[sym].name</code>.</p>
+<p>Blobs are associated with layers, generally including input, output and weights. Because input/output data blob would be shared by multiple layers, the name of input data blob is specified/overwriten by the lower layer (the name of output data blob).</p>
+<p>The output blob would be named as <code>[layer_name]_[output_name]</code>, <code>output_name</code> is by default <code>output[id]</code> (possibably multiple outputs). We can get <code>output_name</code> by <code>.list_outputs()</code> method.</p>
+<p>The paramter blob would be named as <code>[layer_name]_[default_paramter_name]</code>, e.g. <code>fc1_weight</code> and <code>fc1_bias</code>. These rules also apply to our self-defined layers. If we provide parameters by a Variable, the name would be overwriten by the name of the Variable. This is consistent with the case when we input other data blobs into this layer. We can read <code>parameter_name</code> from <code>.list_arguments()</code>. But it is still not so straightforward, because <code>.list_arguments()</code> list all the arguments that is required in the whole computation graph rather than this node.</p>
+<p>So, how about gradients of those blob? Their names seems purely defined as <code>[layer_name]_backward_[default_blob_name]</code>, such as <code>fc1_backward_weight</code>, <code>fc1_backward_bias</code>, <code>fc1_backward_data</code>, even if input data blob actually has name <code>data_img</code> for example. Anyway, I really think this is confusing.</p>
+<ul>
+<li>Note that data/label name provided by your data iter should match the ones required by your network.</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://DiligentPanda.github.io/2017/08/11/Dear-Python-Tools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DiligentPanda">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Playground">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/11/Dear-Python-Tools/" itemprop="url">Dear Python Tools</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-11T19:52:08+08:00">
+                2017-08-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming/Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="library">library</h1>
+<ul>
+<li>pprint</li>
+<li>argparse</li>
+<li>yaml</li>
+<li>easydict</li>
+</ul>
+<h1 id="func">func</h1>
+<ul>
+<li>enumerate(i) return (idx, i.next())</li>
+<li>zip</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://DiligentPanda.github.io/2017/08/10/R-FCN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -395,8 +1441,10 @@
 <li>Conference on Neural Information Processing Systems (NIPS), 2016</li>
 <li>https://arxiv.org/abs/1605.06409</li>
 <li>https://github.com/daijifeng001/r-fcn</li>
+<li>https://github.com/YuwenXiong/py-R-FCN</li>
 </ul>
 <h2 id="abstract">Abstract</h2>
+<p>This paper propose a fully convolutional structure for object detection, which removes the heavy roi-wise operations after roi-pooling. To compensate translation invariance which is original addressed by those roi-wise operations, position-sensitive score maps are introduced. This model saves a lot of time by removing roi-wise headers and sharing computations in fully convolutional way.</p>
 <ol style="list-style-type: decimal">
 <li>Fully Convolution and Position-Sensitive Score Maps for Object Detection
 <ul>
@@ -405,6 +1453,7 @@
 </ul></li>
 <li>Results:
 <ul>
+<li>Resnet-101</li>
 <li>83.6% map on PASCAL VOC 2007. 82.0% on 2012.</li>
 <li>170ms/img in inference: 2.5-20 times faster then <em>Faster R-CNN</em></li>
 </ul></li>
@@ -419,7 +1468,7 @@
 <p>resulted from old classification system.(final spatial pooling layer -&gt; roi pooling layer)</p></li>
 <li>The state-of-art classification system is fully convolutional, like <em>ResNets</em>. In order to use fully convolutional backbone, we have to solve the aforementioned dilemma. Inserting RoI pooling (a region-specific operation) is a solution but it introduce heavy headers(those headers lead to translation variance). See Table 1. <img src="/2017/08/10/R-FCN/table1.PNG">
 <ul>
-<li>TODO Review Faster R-CNN</li>
+<li>TODO Review Fast R-CNN</li>
 <li>Examples:
 <ul>
 <li>Translation of objects should reflect the change of overlap between gt object and bbox.</li>
@@ -443,14 +1492,25 @@
 <li>OHEM: online hard example mining.</li>
 <li>hole algorithm.</li>
 </ul>
-<h1 id="archtecture">archtecture</h1>
-<p><img src="/2017/08/10/R-FCN/figure2.PNG"> # visualization <img src="/2017/08/10/R-FCN/figure_3_4.PNG"></p>
+<h3 id="archtecture">Archtecture</h3>
+<p><img src="/2017/08/10/R-FCN/figure2.PNG"> ### Visualization <img src="/2017/08/10/R-FCN/figure_3_4.PNG"></p>
 <h2 id="experiments">Experiments</h2>
-<h3 id="results">results</h3>
+<h3 id="results">Results</h3>
 <ul>
 <li>voc 2007/2012 <img src="/2017/08/10/R-FCN/table_3_4_5.PNG"></li>
 <li>coco <img src="/2017/08/10/R-FCN/table6.PNG"></li>
 </ul>
+<h2 id="other-things">Other Things</h2>
+<ol style="list-style-type: decimal">
+<li>The inference process is easy to understand. How about the training part? Specifically, how do final score maps learn to be position sensitive? Through end-to-end learning, the successive selective pooling shepherds the convolution layer to learn specialized position-sensitive score maps. This position sensitive score maps may be slightly different from the one in fcis. It only shows the potential a point may belong to a certain part of bbox. So a point didn’t belong to an object but belong to another object near this object may be evaluated as high probability. Even tough proposals may not overlap with the gt bbox in a perfect way (So, some one may lead to false learning of locations, e.g. left-up score map shows high value on the center of an object. <strong>Notice gt bboxes are always used in training as addtional proposals</strong>), the high probability region marked by those proposals is still reasonable if we think all proposals follows a gaussian like distribution. (The most centered bbox (the gt bbox) always gets the best score.)</li>
+</ol>
+<p>Anyway the keypoints here we should understand is how <strong>end-to-end learning</strong> plays a critical role in this process and forces the layer to learn what we want.</p>
+<blockquote>
+<p>A great thing about machine learning is that if you give the model flexility to learn critical information, it will always imporve. And if you give the model restrictions, it will learn things more easily.</p>
+</blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li>Compared to another kind of two-step dectors, Faster R-CNN, the current design eliminates the heavy header, which saves a lot of time. Actually, in the second step of Faster R-CNN, the computation time is propotional to the number of propsals from the previous RPN subnet, typically 300 bboxes([300,2048(1024),h,w],to check Faster R-CNN paper), which is a really big cost.</li>
+</ol>
 
           
         
@@ -624,6 +1684,14 @@ https://github.com/msracver/Deformable-ConvNets</code></pre>
 <p>Xizhou Zhu, Yujie Wang, Jifeng Dai, Lu Yuan, and Yichen Wei</p>
 <p>International Conference on Computer Vision (ICCV), 2017.</p>
 <p>https://arxiv.org/abs/1703.10025</p></li>
+<li><p>CoupleNet: Coupling Global Structure with Local Parts for Object Detection</p>
+<p>Yousong Zhu, Chaoyang Zhao, Jinqiao Wang, Xu Zhao, Yi Wu, Hanqing Lu</p>
+<p>Accepted by ICCV 2017</p>
+<p>https://arxiv.org/abs/1708.02863v1</p>
+<p>https://github.com/tshizys/CoupleNet (NA)</p></li>
+<li><p>Deep Residual Learning for Image Recognition</p>
+<p>Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun</p>
+<p>CVPR 2016</p></li>
 </ol>
 
           
@@ -1026,1189 +2094,6 @@ https://github.com/msracver/Deformable-ConvNets</code></pre>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://DiligentPanda.github.io/2017/07/13/Tree-Based-Methods/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="DiligentPanda">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Playground">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/13/Tree-Based-Methods/" itemprop="url">Tree-Based Methods</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-13T11:52:22+08:00">
-                2017-07-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="tree-based-methods">Tree-Based Methods</h1>
-<h2 id="decision-tree">Decision Tree</h2>
-<p>Divide the feature space into multiple regions. Assign each region a value (mean value for regression)/label (majority label for classification).</p>
-<p>Construction:</p>
-<ul>
-<li><p>Binary Split to build an internal nodes. We always split at a feature leading to the most increase in some metrics.</p>
-<ul>
-<li>Continuous Predictor</li>
-<li>Discrete Predictor</li>
-</ul></li>
-<li>Stop when the number of nodes in a region is smaller than a threshold, e.g. 5 observations.</li>
-<li><p>Pruning (Regularization)</p>
-<ul>
-<li>Pre-pruning: Stop futher spliting if increase in some metric is smaller than a threshold</li>
-<li>Post-pruning: Collapse internal nodes to minimize the modified objective = the original objective + <span class="math inline">\(\alpha|T|\)</span>, after a large tree is constuctured. (Here, we talk about Cost Complexity Pruning) ### Regression Tree Train:</li>
-</ul></li>
-<li><p>Minimize Mean Square Error</p></li>
-</ul>
-<p>Valid:</p>
-<ul>
-<li>Mean Square Error</li>
-</ul>
-<h3 id="classification-tree">Classification Tree</h3>
-<p>Train:</p>
-<ul>
-<li>Minimize Gini Index or Entropy, which are capable of evaluating purity of a distribution</li>
-</ul>
-<p>Valid:</p>
-<ul>
-<li>Classification Error Rate</li>
-</ul>
-<h3 id="compared-with-linear-models">Compared with Linear Models</h3>
-<p>Advantage:</p>
-<ul>
-<li>Even more interpretable</li>
-<li>Can handle non-linear mapping</li>
-<li>Mirror human’s decision making</li>
-</ul>
-<p>Disadvantage:</p>
-<ul>
-<li>Not robust. For slightly different datasets, different trees may be constructed.</li>
-<li>Generally not accurate as those linear models.</li>
-</ul>
-<h2 id="bagging">Bagging</h2>
-<p>Sample several subsets from training dataset. Learn a tree for each subset. Combine predictions from those trees. Those tree can grow deep without being pruned.</p>
-<p>Bagging will not result in <em>overfitting</em>.</p>
-<h3 id="bootstrapping">Bootstrapping</h3>
-<h3 id="out-of-bag-error-estimation">Out-of-Bag Error Estimation</h3>
-<h3 id="variable-importance">Variable Importance</h3>
-<h2 id="random-forest">Random Forest</h2>
-<p>As bagging, we build multiple trees on bootstrapped training subset.</p>
-<p>At each split, sample <span class="math inline">\(m\)</span> features out of total <span class="math inline">\(p\)</span> features and restrict the spliting only happens at those features. The core idea here is to decorrelate multiple trees. If features are more correlated, we should pick smaller <span class="math inline">\(m\)</span>.</p>
-<p>Bagging is a special case with <span class="math inline">\(m=p\)</span>.</p>
-<p>No <em>overfitting</em>.</p>
-<h2 id="boosting">Boosting</h2>
-<p>We construct the current tree based on the residual error resulted from the previously construcred trees.</p>
-<p>The algorithm can be described as follows: <img src="/2017/07/13/Tree-Based-Methods/Boosting_Algo.png"></p>
-<p>Tunable Parameters:</p>
-<ol style="list-style-type: decimal">
-<li>The shrinkage parameter <span class="math inline">\(\lambda\)</span>, a small positive number, controlling the rate at which boosting learns. A small <span class="math inline">\(\lambda\)</span> requires more trees to achieve good performance.</li>
-<li>d splits (d=1 could work well: a stump leads to an additive model). d is the <em>interaction depth</em>, controling the interaction between variables (Involving at most d variables.). Small d is sufficient.</li>
-<li>B trees (may overfit, even slowly)</li>
-</ol>
-<h3 id="gdbt">GDBT</h3>
-<h3 id="xgboost">XGBOOST</h3>
-<blockquote>
-<p>Boosting and Bagging are general approaches that can be applied to many statiscal methods.</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://DiligentPanda.github.io/2017/06/26/Traditional-Methods/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="DiligentPanda">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Playground">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/26/Traditional-Methods/" itemprop="url">Traditional Methods</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-26T13:14:28+08:00">
-                2017-06-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Programming-AI-Search-How-to-Solve-it/" itemprop="url" rel="index">
-                    <span itemprop="name">Programming/AI/Search/How to Solve it</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="traditional-methods">Traditional Methods</h1>
-<p>Traditional (optimization) methods:</p>
-<ul>
-<li>NOT robust.</li>
-<li>Effective when appropriate.</li>
-<li>two disjoint classes:</li>
-<li>Only evaluate complete solutions.
-<ul>
-<li>e.g.</li>
-</ul></li>
-<li>Require the evaluation of partially contructed and approximate solutions.
-<ul>
-<li>e.g.</li>
-</ul></li>
-</ul>
-<p>Complete solution: all decision variables are specified.</p>
-<p>e.g. 1111,0000,0101,1010</p>
-<p>Partial solution:</p>
-<ul>
-<li>an incomplete solution to the original proble</li>
-</ul>
-<p>e.g. 11{00,01,10,11}, 01{00,01,10,11} * a complete solution to a reduced problem.</p>
-<p>e.g. {00,01,10,11} | {00,01,10,11}</p>
-<p>Additional difficulties posed by partial solutions:</p>
-<ul>
-<li>devise a way to organize the subspaces so that they can be searched efficiently. (Tree search)</li>
-<li>create a new evaluation function that can assess the quality of partial solutions. (Branch and bound)</li>
-</ul>
-<p>Notice: Different representations of solutions -&gt; different sizes of search space + potentially different manners of search (different optimization methods).</p>
-<h2 id="exhaustive-search">Exhaustive Search</h2>
-<p>Recall that to solve a problem algorithmatically, we have to specify following three things: 1. the representation (of solution) 2. the objective 3. the evaluation function (ordinal or numeric)</p>
-<blockquote>
-<p>The only requirement for exhaustive search is to generate evey possible solution to the problem <em>systematically</em>.</p>
-</blockquote>
-<p>We could reduce the amount of work in many ways, e.g. cut off some branches in a search tree.</p>
-<h3 id="enumerate-sat-tsp-nlp-non-linear-programming">Enumerate SAT, TSP, NLP (Non-Linear Programming)</h3>
-<p>In SAT, we could exhaustively search solutions by DFS.</p>
-<p>In TSP, we have to enumerate the permutations.</p>
-<ol style="list-style-type: decimal">
-<li>Mapping Between permutations and intergers</li>
-<li>Recursive generation</li>
-<li>Successive generation (e.g. in lexicographic ordering)</li>
-</ol>
-<p>Notice: the specific algorithms could be checked on books and wiki.</p>
-<p>In NLP, we use grid methods to approximate exhaustive search. The whole domain is divided into cells, the best of which could be futher divided for finer-granularity results.</p>
-<h2 id="local-search">Local Search</h2>
-<p>Local Search:</p>
-<ol style="list-style-type: decimal">
-<li>Pick a solution as the <em>current</em> solution.</li>
-<li>Apply a transformation in the given set to this solution to generate a new solution</li>
-<li>If the <em>current</em> one is better, discard the new solution; else replace the <em>current</em> one with the new solution.</li>
-<li>Repeat 2. and 3. until no transformation improves the <em>current</em> solution.</li>
-</ol>
-<p>The key lies in the type of trasformation (can be deterministic or stochastic). Two extremes are: 1. select a solution in search space uniformly at random. (Large neighbor) 2. only return the <em>current</em> solution. (Small neighbor)</p>
-<p>Notice: hill climbing methods is similar to this procedure except the solution updating the current solution is required to be the best among all neighbors.</p>
-<p>To avoid local optima, usually a large number of random initializations are required.</p>
-<h3 id="sat">SAT</h3>
-<h4 id="gsat">GSAT</h4>
-<p>Random flip a binary string.</p>
-<h3 id="tsp">TSP</h3>
-<h4 id="k-opt">K-opt</h4>
-<p>Change nonadjacent edges to generate new Hamiltonian cycles.</p>
-<h4 id="lin-kernighan">Lin-Kernighan</h4>
-<ul>
-<li>Representation of solution is based on <span class="math inline">\(\delta\)</span>-path. Hamiltonian cycle is implied. One <span class="math inline">\(\delta\)</span>-path could generate two possible Hamiltonian cycles.</li>
-<li>Using a simple operation called <em>switch</em>, we could generate a new <span class="math inline">\(delta\)</span>-path.</li>
-</ul>
-<p>TODO: There are several lines in the book that are difficult to understand.</p>
-<p>Anyway, this algorithm runs vary fast and generates near-optimal solutions (within 2 percent of optimum path).</p>
-<h3 id="nlp">NLP</h3>
-<p>We also consider the problem of finding the zeros of a function. It could be treated as a optimization problem. For example, we evaluate how close the result is to 0.</p>
-<h4 id="bracketing-methods">Bracketing Methods</h4>
-<ul>
-<li>Methods of bisecting the range.</li>
-<li>Faster convergence: Regula Flasi.</li>
-</ul>
-<p><a href="">an image here</a> * Brent’s method: relies on parabolic auxilary functions (Three points rather than two points in a bracket).</p>
-<h4 id="fixed-point-methods">Fixed-Point Methods</h4>
-<ul>
-<li><p>Newton’s methods: Faster, but may even fail to convege for continous functions.</p></li>
-<li>need good initial guess.</li>
-<li><p>the calculation of derivatives may be computationally expensive.</p></li>
-</ul>
-<p><a href="">an image here</a></p>
-<ul>
-<li>Secant methods: NOT Fixed-Point Methods! Newton’s methods without derivatives.</li>
-</ul>
-<h4 id="gradient-methods-of-minimization">Gradient Methods of Minimization</h4>
-<ul>
-<li>make use of gradients.</li>
-<li>May incorporate second-order derivative (Hessian Matrix) information into update. (Newton’s method)</li>
-</ul>
-<h2 id="linear-programming">Linear Programming</h2>
-<h3 id="the-simplex-method">The Simplex Method</h3>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://DiligentPanda.github.io/2017/06/24/Dynamic-Programming/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="DiligentPanda">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Playground">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/24/Dynamic-Programming/" itemprop="url">Dynamic Programming</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-24T21:35:11+08:00">
-                2017-06-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Programming-AI-Reinforcement-Learning-Reinforcement-Learning-An-Introduction/" itemprop="url" rel="index">
-                    <span itemprop="name">Programming/AI/Reinforcement Learning/Reinforcement Learning An Introduction</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="dynamic-programming">Dynamic Programming</h1>
-<ul>
-<li>Book Name: Reinforcement Learning: An Introduction</li>
-<li>Authors: Richard S.Sutton, Andrew G.Barto</li>
-<li>Version: Second edition, 2016</li>
-<li>Chapter 4</li>
-</ul>
-<p>DP algorithm are obtained by turning Bellman equaltions into update rules for improving <em>approximations</em> of the desired value functions.</p>
-<h2 id="policy-evaluation">Policy Evaluation</h2>
-<p>Policy Evaluation: given a policy <span class="math inline">\(\pi\)</span>, we compute the value functions for this policy.</p>
-<p>The existence and uniqueness of <span class="math inline">\(v_\pi\)</span> (<span class="math inline">\(q_\pi\)</span>) are guaranteed as long as either <span class="math inline">\(\gamma \leq 1\)</span> or this task is episodic(I’m not sure if my understanding is correct. See book.).</p>
-<p><span class="math display">\[
-\begin{align}
-v_\pi(s)&amp;=\sum_a\pi(a|s)\sum_{s&#39;,r|s,a}p(s&#39;,r|s,a)[r+\gamma v_\pi(s&#39;)]\\
-q_\pi(s,a)&amp;=\sum_{s&#39;,r}p(s&#39;,r|s,a)(r+\gamma\sum_{a&#39;}\pi(a&#39;|s&#39;)v_\pi(s&#39;,a&#39;))
-\end{align}
-\]</span></p>
-<p>We have above Bellman equations. If the dynamic of environment is completely known, then we actually have a series of linear equations. We can solver them by linear programming, for example.</p>
-<p>Iterative Policy Evaluation: we use the right part of equation to update the left part. The sequence <span class="math inline">\(\{v_k (q_k)\}\)</span> will finally converge to the true value function.</p>
-<p>Full Backup: All backups, such as in DP, are based on all possible next states rather than on sampled next states.</p>
-<h3 id="algorithm-iterative-policy-evaluation">Algorithm: Iterative Policy Evaluation</h3>
-<p>NOTICE: We always use in-place version algorithm whenever it ensure correctness. It is usually faster, besides. We usually pick state-value function as example. But it is similar for action-value function.</p>
-<div class="figure">
-<img src="/2017/06/24/Dynamic-Programming/policy_evaluation.png">
-
-</div>
-<p>Termination of algorithm:</p>
-<ul>
-<li>obtain small differences (see <span class="math inline">\(\Delta\)</span>) between successive estimations.</li>
-<li>exceed an upper bound of the number of iterations.</li>
-</ul>
-<h2 id="policy-improvement">Policy Improvement</h2>
-<p>How could we obtain a better policy <span class="math inline">\(\pi &#39;\)</span> from current policy <span class="math inline">\(\pi\)</span>, given its value function? (We think about policies that are deterministic without lose of generality: we can always find a deterministic optimal policy. It may not optimal for the real world problem but it is optimal theoretically to the MDP. Besides the following Policy Improvement Theorem carries through for the stochastic case.)</p>
-<p>Policy Improvement Theorem: Let <span class="math inline">\(\pi&#39;,\pi\)</span> be deterministic policies, if <span class="math display">\[
-q_\pi(s,\pi&#39;(s))\geq v_\pi(s)
-\]</span> for all <span class="math inline">\(s\in S\)</span>, then <span class="math display">\[
-v_{\pi&#39;}(s)\geq v_\pi(s)
-\]</span> for all <span class="math inline">\(s\in S\)</span>. Namely <span class="math inline">\(\pi&#39;\)</span> is a better policy than <span class="math inline">\(\pi\)</span>. If the inequality is satisfied strictly at any（任何一个） state in the condition, then the inequality would be satisfied at at least one state in the result.</p>
-<p>The proof of this theorem is rather easy. We can simply expand <span class="math inline">\(q_\pi\)</span> repeatly.</p>
-<p>A natual choice for <span class="math inline">\(\pi&#39;\)</span> is the <em>greedy</em> policy w.r.t the value function of <span class="math inline">\(\pi\)</span>.</p>
-<p><span class="math display">\[
-\pi&#39;(s)=\mathop{\arg\max}_a q_\pi(s,a)\quad (1)
-\]</span></p>
-<p>for all <span class="math inline">\(s \in S\)</span>. This process is called <em>policy improvement</em>.</p>
-<p>If we have <span class="math inline">\(v_{\pi&#39;}(s)= v_\pi(s)\)</span>, then <span class="math inline">\(v_\pi(s)=\max_aq_\pi(s,a)\)</span>, which is the same as Bellman optimality equation. So, both <span class="math inline">\(\pi&#39;\)</span> and <span class="math inline">\(\pi\)</span> are optimal policies.</p>
-<blockquote>
-<p>Policy improvement this must give us a strictly better policy except when the original policy is already optimal.</p>
-</blockquote>
-<p>For the stochastic case, each maximizing action can be given a portion of the probability of being selected in the new greedy policy, when there is a tie appearing in (1).</p>
-<h2 id="policy-iteration">Policy Iteration</h2>
-<p>Policy Iteration: repeat</p>
-<ul>
-<li>policy evaluation</li>
-<li>policy imporvement</li>
-</ul>
-<p>until policy conveges (unchanges).</p>
-<div class="figure">
-<img src="/2017/06/24/Dynamic-Programming/policy_iteration.png">
-
-</div>
-<h2 id="value-iteration-a-special-case-of-policy-iteration">Value Iteration: a Special Case of Policy Iteration</h2>
-<p>We can truncate the policy evaluation to only one sweep, instead of waiting value function to converge. The final convergence of policy is still guaranteed.</p>
-<p>Then we have a simple backup operation that combines the policy improvement and trucated policy evaluation steps: <span class="math display">\[
-  v_{k+1}(s)\leftarrow \mathop{\max}_a\sum_{s&#39;,r}p(s&#39;,r|s,a)\{r+\gamma v_k(s&#39;)\}
-\]</span></p>
-<p>This update rule can also be understood by referencing to the Bellman optimality equation.</p>
-<p>Besides, this update rule is identical to the one of policy evaluation except that it requires the maximum to be taken over all actions.</p>
-<p>Termination: the same as policy evaluation.</p>
-<div class="figure">
-<img src="/2017/06/24/Dynamic-Programming/value_iteration.png">
-
-</div>
-<p>Truncated policy iteration algorithm (including value iteration) combines multiple sweeps in policy evaluation and one sweep of policy improvement.</p>
-<h2 id="asynchronous-dynamic-programming">Asynchronous Dynamic Programming</h2>
-<p>Asynchronous DP are in-place iterative DP that are not organized in terms of systematic sweeps of the state set. A crucial requirement of convergence is that the algorithm must continue to backup the values of all the states.</p>
-<blockquote>
-<p>It allows great flexibility in selecting states to which backup operations are applied. For example, we can focus the backups onto parts of the state sets that are most relavant to the agent.</p>
-</blockquote>
-<h2 id="generalized-policy-iteration-efficiency-of-dynamic-programming">Generalized Policy Iteration &amp; Efficiency of Dynamic Programming</h2>
-<p>Generalized Policy Iteration: the general idea of letting policy evaluation and policy improvement processes interact, independent of the granularity and other details of the two processes.</p>
-<div class="figure">
-<img src="/2017/06/24/Dynamic-Programming/GPI.png" alt="Policy Iteration">
-<p class="caption">Policy Iteration</p>
-</div>
-<p>DP algorithm can usually handle much more states (by a factor of 100) than correponding linear programming. Futher, in Problems with large state spaces, asynchronous DP methods are often preferred.</p>
-<p>Bootstrapping: updating estimates on the basis of other estimates.</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://DiligentPanda.github.io/2017/06/17/Finite-Markov-Decision-Processes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="DiligentPanda">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Playground">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/17/Finite-Markov-Decision-Processes/" itemprop="url">Finite Markov Decision Processes</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-17T14:24:08+08:00">
-                2017-06-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Programming-AI-Reinforcement-Learning-Reinforcement-Learning-An-Introduction/" itemprop="url" rel="index">
-                    <span itemprop="name">Programming/AI/Reinforcement Learning/Reinforcement Learning An Introduction</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="finite-markov-decision-processes">Finite Markov Decision Processes</h1>
-<ul>
-<li>Book Name: Reinforcement Learning: An Introduction</li>
-<li>Authors: Richard S.Sutton, Andrew G.Barto</li>
-<li>Version: Second edition, 2016</li>
-<li>Chapter 3</li>
-</ul>
-<h2 id="the-mathematical-structure-of-the-rl-problem">The Mathematical Structure of the RL Problem</h2>
-<h3 id="the-agent-environment-interface">The Agent-Environment Interface</h3>
-<p>RL Problem: learning from interaction to achieve goal. Interaction between:</p>
-<ul>
-<li>agent: learner and decision maker</li>
-<li>environment</li>
-</ul>
-<p>over a sequence of steps.</p>
-<p>The specification of their interface defines a particular task:</p>
-<ul>
-<li>states: some representation of the env (Notice that this representation depends on how env looks like, how agent observes the env (probably limited) and how agent concludes the received information(see MDP).)</li>
-<li>actions: The set of feasible acitons at a state, <span class="math inline">\(A(S_t)\)</span></li>
-<li>rewards: Specified by env.</li>
-</ul>
-<p>policy: Probability of actions at states s, <span class="math inline">\(\pi_t(a|s)\)</span>.</p>
-<blockquote>
-<p>Everything inside the agent is <em>completely</em> known and controllable; everything outside (env) is <em>incomepletely</em> controllable but may or may not be complete known.</p>
-</blockquote>
-<p>The agent affects environment through its actions.</p>
-<p>Notice all of there is how we model the world.</p>
-<h3 id="goals-rewards-and-returns">Goals, Rewards and Returns</h3>
-<p>Reward hypothesis: Goals = maxmization of the <em>expected cumulative sum</em> of reward.</p>
-<blockquote>
-<p>It is crucial that the rewards we set up truly indicate what we want accomplished.</p>
-</blockquote>
-<ul>
-<li>Rewards = intermediate feedback from env.</li>
-<li>Returns = the sum of rewards. (A long-run term)</li>
-<li>Episodic tasks: <span class="math inline">\(G_T=R_{t+1}+R_{t+2}+...+R_T\)</span></li>
-<li>Continuing tasks: <span class="math inline">\(G_T=R_{t+1}+\gamma R_{t+2}+\gamma^2R_{t+3}+...\)</span> (discounted return, could be applied to episodic tasks as well.)</li>
-</ul>
-<p>To unify episodic tasks and continuing tasks, we can consider episode termination to be the entering of a special absorbing state that transitions only to itself with zero rewards.</p>
-<h3 id="markov-property">Markov Property</h3>
-<p>If the state signal has the <em>Markov property</em>, env’s dynamics can be defined by specifying only</p>
-<p><span class="math display">\[p(s&#39;,r|s,a)=Pr\{S_{t+1}=s&#39;,R_{t+1}=r|S_t=s,A_t=a\}\quad(1)\]</span></p>
-<p>State signals are a complete (and compact) summary of all history.</p>
-<h3 id="markov-decision-processes-mdp">Markov Decision Processes (MDP)</h3>
-<p>If action and state spaces are finite, then it is called a <em>finite MDP</em>.</p>
-<p>The dynamics of env as described above can be specified only by <span class="math inline">\(p(s&#39;,r|s,a)\)</span>.</p>
-<p>Some other useful values:</p>
-<ul>
-<li>Expected rewards for state-action pairs, <span class="math inline">\(r(s,a)\)</span></li>
-<li>State-transition probabilities, <span class="math inline">\(p(s&#39;|s,a)\)</span></li>
-<li>Expected rewards for state-action-next-state triples <span class="math inline">\(r(s,a,s&#39;)\)</span></li>
-</ul>
-<p><strong>Transition graph</strong></p>
-<h3 id="value-functions">Value Functions</h3>
-<blockquote>
-<p>A <em>policy’s value function</em> assign to each state or state-action pair, the expected return from that state or state-action pair, given that agent uses the policy.</p>
-</blockquote>
-<p>They are evaluated for comparing the policies.</p>
-<ul>
-<li>State-value function <span class="math display">\[V_{\pi}(s)=E_\pi[G_t|S_t=s]=E_\pi[\sum^\inf_{k=0}\gamma^kR_{t+1+k}|S_t=s]\]</span></li>
-<li>Action-value function <span class="math display">\[Q_\pi(s,a)=E_\pi[G_t|S_t=s,A_t=a]=E_\pi[\sum^\inf_{k=0}\gamma^kR_{t+1+k}|S_t=s,A_t=a]\]</span></li>
-</ul>
-<p>They can be estimated:</p>
-<ul>
-<li>Mento Carlo methods + average</li>
-<li>Parameterization</li>
-</ul>
-<h4 id="bellman-equation">Bellman Equation</h4>
-<p><span class="math display">\[
-\begin{align}
-v_\pi(s)&amp;=E_\pi[R_{t+1}+\gamma v_\pi(S_{t+1})|S_t=s]\\
-&amp;=\sum_a\pi(a|s)\sum_{s&#39;,r|s,a}p(s&#39;,r|s,a)[r+\gamma v_\pi(s&#39;)]\\
-q_\pi(s,a)&amp;=E_\pi[R_{t+1}+\gamma q_\pi(S_{t+1},A_{t+1})|S_t=s,A_t=a]\\
-&amp;=\sum_{s&#39;,r}p(s&#39;,r|s,a)(r+\gamma\sum_{a&#39;}\pi(a&#39;|s&#39;)v_\pi(s&#39;,a&#39;))
-\end{align}
-\]</span></p>
-<p>The value function is the unique solution to its Bellman equation.</p>
-<p><strong>Backup diagrams</strong></p>
-<div class="figure">
-<img src="/2017/06/17/Finite-Markov-Decision-Processes/backup_diagrams_1.png">
-
-</div>
-<h4 id="optimal-value-functions">Optimal Value Functions</h4>
-<p>Policy <span class="math inline">\(\pi\)</span> is better than or equal to Policy <span class="math inline">\(\pi&#39;\)</span>: <span class="math display">\[v_\pi(s)\geq v_{\pi&#39;}(s)\]</span> for <em>all</em> <span class="math inline">\(s\in S\)</span>.</p>
-<p>We have a <em>unique</em> optimal value function (state <span class="math inline">\(v_*\)</span>; action <span class="math inline">\(q_*\)</span>), but possibly multiple optimal policies (<span class="math inline">\(\pi_*\)</span>).</p>
-<h4 id="bellman-optimality-equation">Bellman Optimality Equation</h4>
-<p>First of all, we pick the best action for each state. So we have: <span class="math display">\[V_*(s)=\max_{a\in A(s)}q_{\pi_*}(s,a)\]</span></p>
-<p>We have two equations as well: <span class="math display">\[
-\begin{align}
-v_*(s)&amp;=\max_aE[R_{t+1}+\gamma v_*(S_{t+1})|S_t=s,A_t=a]\\
-&amp;=\max_{a\in A(s)}\sum_{s&#39;,r}p(s&#39;,r|s,a)(r+\gamma v_*(s&#39;))\\
-q_*(s,a)&amp;=E[R_{t+1}+\gamma \max_{a&#39;}q_*(S_{t+1},a&#39;)|S_t=s,A_t=a]\\
-&amp;=\sum_{s&#39;,r}p(s&#39;,r|s,a)[r+\gamma \max_{a&#39;}q_*(s&#39;,a&#39;)]\\
-\end{align}
-\]</span></p>
-<p><strong>Backup diagrams</strong></p>
-<div class="figure">
-<img src="/2017/06/17/Finite-Markov-Decision-Processes/backup_diagrams_2.png">
-
-</div>
-<p>Notice that at cost of representing a function of state-action pairs instead of just of states, the optimal action-value funciton <span class="math inline">\(q_*\)</span> allows optimal actions to be selected without having to know anything about the env’s dynamics.</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://DiligentPanda.github.io/2017/06/16/The-Theory-of-Love/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="DiligentPanda">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Playground">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/16/The-Theory-of-Love/" itemprop="url">The Theory of Love</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-16T13:00:49+08:00">
-                2017-06-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Reading-Psychology-The-Art-of-Loving/" itemprop="url" rel="index">
-                    <span itemprop="name">Reading/Psychology/The Art of Loving</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="ii.-the-theory-of-love">II. The Theory of Love</h1>
-<h2 id="i.-love-the-answer-to-the-problem-of-human-existence">I. Love, The Answer To The Problem Of Human Existence</h2>
-<h3 id="separateness">Separateness</h3>
-<p>Human has emerged from animal kingdom and transcended nature. As a result, he is trown out of the state of original oneness with nature. Man can only develop his reason, by finding a new harmony because the prehuman harmony is irretrievably lost.</p>
-<p>Human is gifted with reason and is capable of awaring of itself. This awareness of himself as a <em>separate</em> entity, of helplessness before the forces of nature and of society, makes him desire to unite himself with men, with the world outside.</p>
-<p>This experience of separateness is the source of all anxiety. Thus, the deepest need of human is to overcome this separateness. All man is confonted with the solution of this question: how to overcome separateness and achieve union.</p>
-<p>The answer, to some extent, depends on the individualization reached by an individual. Infant has develop little I-ness and thus, would be satisfied with the physical presence of mother. Similarly, the human race in its infancy still feels one with nature. More intense becomes the need to find new ways of escaping separateness as human race emerges from the primary bonds.</p>
-<h3 id="solutions-without-love">Solutions Without Love</h3>
-<h4 id="orgiastic-union">Orgiastic Union</h4>
-<p>Examples: * Social patterned solution: * Rituals of primitive tribes * (Close related) Sexual orgasm (e.g. Rites of communal sexual orgies) * In a non-orgiastic culture (guilt and remorse): * Alcoholism and drug addiction * Compulsive sexual orgasm (out of control)</p>
-<p>Main Characteristics: * Intense and violent * Occur in both body and mind * Transitory and periodical</p>
-<h4 id="conformity">Conformity</h4>
-<p>Opposite to orgiastic union in characteristics. The most frequent solution.</p>
-<p>Dictorial systems: * threatsand and terror -&gt; conformity * non-conformity is possible and by no means absent.</p>
-<p>Democratic systems: * suggestion and propaganda -&gt; conformity * only few, like unusual herods, can be expected to refuse obedience.</p>
-<p>Actually, people want to conform to a much higher degree than they are forced to conform.</p>
-<p>…</p>
-<p>Thus, it is a pseudo-unity.</p>
-<h4 id="creative-acitivity">Creative Acitivity</h4>
-<p>In any kind of creative work, the creating person unites himself with his material, which represents the world outside them.</p>
-<p>In some morden jobs like clerk, little is left of this uniting quality of work. The worker becomes an appendix to the machine or to the bureaucratic organization.</p>
-<p>But not Interpesonal!</p>
-<h3 id="words-and-phrases">Words and Phrases</h3>
-<ul>
-<li>instinctive: 本能的；直觉的；天生的</li>
-<li>transcend: 胜过；超越</li>
-<li>tear away: 逼xxx离开</li>
-<li>reason: 理性</li>
-<li>irretrievably: 不能挽回地；不能补救地</li>
-<li>disunited: 分裂的；不和的</li>
-<li>disobey</li>
-<li>emancipate</li>
-<li>prudish: 装正经的；过分规矩的</li>
-<li>inasmuch as: 因为，由于</li>
-<li>insanity</li>
-<li>atonement</li>
-<li>ascetic</li>
-<li>renunciation: 放弃；抛弃；弃权</li>
-<li>innumerable</li>
-<li>individuation: 个性化</li>
-<li>totem: 图腾</li>
-<li>worship</li>
-<li>orgiastic: 狂欢的</li>
-<li>exaltation: 异常兴奋；提拔</li>
-<li>transitory: 短暂的</li>
-<li>trance: 恍惚；入迷</li>
-<li>refuge: 避难；庇护</li>
-<li>recourse: 求助；援助</li>
-<li>assume a function</li>
-<li>bridge the gap</li>
-<li>scepticism: 怀疑论；怀疑论主义</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://DiligentPanda.github.io/2017/06/16/Formula-Test/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="DiligentPanda">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Playground">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/16/Formula-Test/" itemprop="url">Formula Test</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-16T11:02:58+08:00">
-                2017-06-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/test/" itemprop="url" rel="index">
-                    <span itemprop="name">test</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><span class="math display">\[
-\begin{align}
-\theta_i = 3\\
-a=3
-\end{align}
-\]</span></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2258,7 +2143,7 @@ a=3
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -2280,7 +2165,7 @@ a=3
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
