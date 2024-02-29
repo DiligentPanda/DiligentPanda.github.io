@@ -117,33 +117,33 @@
     <video playsinline autoplay loop muted src="videos/psb_demo.mp4" poster="./images/loading-icon.gif" alt="sym" width="90%" style="padding-top:0px;padding-bottom:0px;border-radius:15px;"></video>
     </a></td>
     <td width="60%" valign="top">
-      <p><a href="https://arxiv.org/abs/2311.14145" id="PARKOUR">
+      <p><a href="https://ieeexplore.ieee.org/document/10423806" id="PARKOUR">
       <heading>Multi-Agent Motion Planning with Bézier Curve Optimization under Kinodynamic Constraints</heading></a><br>
       <b>Jingtian Yan</b>, Jiaoyang Li<br>
-      IEEE Robotics and Automation Letters (RA-L), Accepted.<br>
+      IEEE Robotics and Automation Letters (RA-L), 2024.<br>
       </p>
 
       <div class="paper" id="psb">
       <a href="https://arxiv.org/pdf/2311.14145.pdf">pdf</a> |
       <a href="javascript:toggleblock('psb_abs')">abstract</a> |
       <!-- <a shape="rect" href="javascript:togglebib('psb')" class="togglebib">bibtex</a> | -->
+      <a shape="rect" href="javascript:togglebib('psb')" class="togglebib">bibtex</a> |
       <a href="https://arxiv.org/abs/2311.14145">arXiv</a> |
-      <!-- <a href="https://github.com/ZiwenZhuang/parkour">code</a> | -->
+      <a href="https://github.com/JingtianYan/PSB-RAL.git">code</a>
       <!-- <a href="https://www.youtube.com/watch?v=M7lDCSF0KP0">video</a> -->
 
       <p align="justify"> <i id="psb_abs">Multi-Agent Motion Planning (MAMP) is a problem that seeks collision-free dynamically-feasible trajectories for multiple moving agents in a known environment while minimizing their travel time. MAMP is closely related to the well-studied Multi-Agent Path-Finding (MAPF) problem. Recently, MAPF methods have achieved great success in finding collision-free paths for a substantial number of agents. However, those methods often overlook the kinodynamic constraints of the agents, assuming instantaneous movement, which limits their practicality and realism. In this paper, we present a three-level MAPF-based planner called PSB to address the challenges posed by MAMP. PSB fully considers the kinodynamic capability of the agents and produces solutions with smooth speed profiles that can be directly executed by the controller. Empirically, we evaluate PSB within the domains of traffic intersection coordination for autonomous vehicles and obstacle-rich grid map navigation for mobile robots. PSB shows up to 49.79% improvements in solution cost compared to existing methods.</i></p>
 
-<!-- <pre xml:space="preserve">
-@inproceedings{zhuang2023robot,
-  author = {Zhuang, Ziwen and Fu, Zipeng and 
-          Wang, Jianren and Atkeson, Christopher and 
-          Schwertfeger, Sören and Finn, Chelsea and
-          Zhao, Hang},
-  title = {Robot Parkour Learning},
-  booktitle = {Conference on Robot Learning ({CoRL})},
-  year = {2023}
+<pre xml:space="preserve">
+    @article{YanRAL24,
+        author    = {Jingtian Yan and Jiaoyang Li},
+        title     = {Multi-Agent Motion Planning With Bézier Curve Optimization Under Kinodynamic Constraints},
+        journal   = {IEEE Robotics and Automation Letters},
+        doi       = {https://doi.org/10.1109/LRA.2024.3363543},
+        year      = {2024}
+      }
 }
-</pre> -->
+</pre>
       </div>
     </td>
   </tr>
@@ -270,6 +270,9 @@ hideallbibs();
   </script>
 <script xml:space="preserve" language="JavaScript">
     hideblock('muitare_abs');
+  </script>
+  <script xml:space="preserve" language="JavaScript">
+    hideblock('psb_abs');
   </script>
 <script xml:space="preserve" language="JavaScript">
     hideblock('exploration_isaac_sim_abs');
